@@ -1,0 +1,35 @@
+#! /bin/sh
+# This script installs dotfiles to ~/.dotfiles.
+set -e
+
+DOTPATH=$HOME/.dotfiles
+GITHUB_REPO=tueda/dotfiles
+GIT_URL=https://github.com/$GITHUB_REPO.git
+TARBALL_URL=https://github.com/$GITHUB_REPO/archive/master.tar.gz
+TARBALL_DIR=dotfiles-master
+
+if [ -d "$DOTPATH" ]; then
+  echo "error: $DOTPATH already exists" >&2
+  exit 1
+fi
+
+if type git >/dev/null 2>&1; then
+  git clone --recursive "$GIT_URL" "$DOTPATH"
+elif type curl >/dev/null 2>&1 || type wget >/dev/null 2>&1; then
+  if [ -d "TARBALL_DIR" ]; then
+    echo "error: $TARBALL_DIR already exists" >&2
+    exit 1
+  fi
+  if type curl >/dev/null 2>&1; then
+    curl -L "$TARBALL_URL"
+  else
+    wget -O - "$TARBALL_URL"
+  fi | gzip -dc | tar xvf -
+  mv "$TARBALL_DIR" "$DOTPATH"
+else
+  echo "error: git or curl or wget required" >&2
+  exit 1
+fi
+
+"$DOTPATH/deploy.sh"
+echo "dotfiles were successfully installed to $DOTPATH." >&2
