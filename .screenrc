@@ -1,0 +1,65 @@
+autodetach on
+caption splitonly "%?%F%{+b}%?[%n %t] %h"
+defscrollback 20000
+hardstatus on
+hardstatus string "[%w] %h"
+shell /bin/bash
+shelltitle "$ |bash"
+startup_message off
+vbell off
+
+#escape ^zz
+escape ^Qq
+
+# F11 and F12 for moving to the previous/next window.
+#bindkey -k F1 prev
+#bindkey -k F2 next
+
+# Resize (Ctrl+a r)
+bind r eval 'echo "Resize window"' 'command -c resize'
+bind -c resize ^] command
+bind -c resize j eval 'resize +1' 'command -c resize'
+bind -c resize k eval 'resize -1' 'command -c resize'
+bind -c resize ^[[A eval 'resize +1' 'command -c resize'
+bind -c resize ^[[B eval 'resize -1' 'command -c resize'
+
+#bind c stuff "screen -X chdir \"\$PWD\";\screen^M"
+#bind ^c stuff "screen -X chdir \"\$PWD\";\screen^M"
+
+#aterm
+bindkey "^[[c" next
+bindkey "^[[d" prev
+bindkey "^[Oc" next
+bindkey "^[Od" prev
+
+# xterm
+bindkey "^[[5D" prev
+bindkey "^[[5C" next
+bindkey "^[[5A" focus up
+bindkey "^[[5B" focus down
+
+# PuTTY
+bindkey "^[OD" prev        # Ctrl+Left or Shift+Left
+bindkey "^[OC" next        # Ctrl+Right or Shift+Right
+bindkey "^[OA" focus up    # Ctrl+Up or Shift+Up
+bindkey "^[OB" focus down  # Ctrl+Down or Shift+Down
+
+# GNOME Terminal
+bindkey "^[[1;5D" prev  # Ctrl+Left
+bindkey "^[[1;5C" next  # Ctrl+Right
+
+term screen-256color
+attrcolor b ".I"
+defbce on
+termcapinfo xterm* 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+
+termcapinfo xterm* 'hs:ts=\E]0;:fs=\007:ds=\E]0;\007'
+termcapinfo xterm* 'ks=\E[?1l\E=:ku=\E[A:kd=\E[B:kl=\E[D:kr=\E[C:kh=\E[5~:kH=\E[F'
+
+# scrollwheel
+termcapinfo xterm* ti@:te@
+
+#termcapinfo xterm 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
+#termcapinfo xterm "hs:ts=\E]0;:fs=\007:ds=\E]0;\007"
+#termcapinfo xterm "ks=\E[?1l\E:ku=\E[A:kd=\E[B:kl=\E[D:kr=\E[C"
+#termcapinfo xterm "ks=\E[?1l\E=:ku=\E[A:kd=\E[B:kl=\E[D:kr=\E[C:kh=\E[5~:kH=\E[F"

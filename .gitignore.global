@@ -1,0 +1,18 @@
+## vim.gitignore
+.*.s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+*~
+
+# tags file
+tags
+TAGS
+
+# plenv, pyenv and rbenv
+.perl-version
+.python-version
+.ruby-version
+
+# silly rename of Linux NFS
+.nfs*

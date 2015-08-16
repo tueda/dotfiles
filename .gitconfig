@@ -1,0 +1,14 @@
+[include]
+	path = ~/.gitconfig.local
+[color]
+	ui = auto
+[pager]
+	diff = diff-highlight | less -S -R
+	show = diff-highlight | less -S -R
+	log = diff-highlight | less -S -R
+[core]
+	editor = vim
+	excludesfile = ~/.gitignore.global
+	pager = less -S -R
+[alias]
+	graph = log --graph --date=short --format=\"%C(yellow)%h%C(reset) %C(magenta)[%ad]%C(reset)%C(auto)%d%C(reset) %s %C(cyan)@%an%C(reset)\"
