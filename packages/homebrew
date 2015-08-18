@@ -1,0 +1,56 @@
+HOMEBREW_REPO_ROOT=https://github.com/Homebrew
+
+uname=`uname -s`
+if [ "$uname" = Darwin ]; then
+  prefix=/usr/local
+  pkgname=homebrew
+elif [ `expr substr "$uname" 1 5` = Linux ]; then
+  prefix="$HOME/.linuxbrew"
+  pkgname=linuxbrew
+else
+  prefix=$HOME/homebrew
+  pkgname=homebrew
+fi
+
+if [ -n "$LOCAL_BUILD_ROOT" ]; then
+  prefix="$LOCAL_BUILD_ROOT/$pkgname"
+fi
+
+do_install() {
+  if type git >/dev/null 2>&1; then :; else
+    echo "error: git required" 2>&1
+    return 1
+  fi
+  if [ "$prefix" = "/usr/local" ]; then
+#   TODO
+    echo "error: Dawrin is unsupported"
+    return 1
+  fi
+  git clone $HOMEBREW_REPO_ROOT/$pkgname "$prefix"
+
+  for cc in gcc g++ gfortran; do
+    src=/usr/bin/$cc
+    if [ -f "$src" ]; then
+      ver=`dump_version "$src"`
+      case $ver in
+        4.1)
+          ver=4.2  # hack
+          ;;
+      esac
+      dst=$prefix/bin/$cc-$ver
+      if [ -e "$dst" ] || [ -h "$dst" ]; :; then
+        ln -s $src $dst
+      fi
+    fi
+  done
+
+  export PATH="$prefix/bin:$PATH"
+  brew doctor || :
+  brew install hello && brew test hello; brew remove hello
+}
+
+dump_version() {
+  # Note that old versions of gfortran have bug in -dumpversion.
+  # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=41080
+  $1 -dumpversion | head -1 | sed 's/[^0-9]*\([0-9][0-9]*\.[0-9][0-9]*\).*/\1/'
+}

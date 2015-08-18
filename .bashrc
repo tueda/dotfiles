@@ -126,14 +126,15 @@ init_homebrew() {
     export HOMEBREW_PREFIX=$dir
     export HOMEBREW_CACHE="$dir/Cache"
     export HOMEBREW_LOGS="$dir/Logs"
+    prepend_path_c PATH "$dir/sbin"
     prepend_path PATH "$dir/bin"
     prepend_path MANPATH "$dir/share/man"
-    prepend_path INFOPATH "$dir/share/info"
-    prepend_path C_INCLUDE_PATH "$dir/include"
-    prepend_path CPLUS_INCLUDE_PATH "$dir/include"
-    prepend_path OBJC_INCLUDE_PATH "$dir/include"
-    prepend_path LIBRARY_PATH "$dir/lib"
-    prepend_path LD_RUN_PATH "$dir/lib"
+    prepend_path_c INFOPATH "$dir/share/info"
+    prepend_path_c C_INCLUDE_PATH "$dir/include"
+    prepend_path_c CPLUS_INCLUDE_PATH "$dir/include"
+    prepend_path_c OBJC_INCLUDE_PATH "$dir/include"
+    prepend_path_c LIBRARY_PATH "$dir/lib"
+    prepend_path_c LD_RUN_PATH "$dir/lib"
     if [ -f "$dir/bin/plenv" ]; then
       export PLENV_ROOT="$dir/var/plenv"
       eval "$(plenv init - --no-rehash)"
@@ -163,16 +164,34 @@ init_texlive() {
 
 ################################################################################
 
-# In the case that the quota for the home directory is small, it would be nice
-# to install software to another local storage.
-unset LOCAL_BUILD_ROOT
+if [ -z "$BASHRC_LOCAL_LOADED" ]; then
+  # In the case that the quota for the home directory is small, it would be nice
+  # to install software to another local storage.
+  unset LOCAL_BUILD_ROOT
 
-# Local settings.
-[ -f ~/.bashrc.local ] && . ~/.bashrc.local
+  # Local settings.
+  [ -f ~/.bashrc.local ] && . ~/.bashrc.local
+  [ -d "$LOCAL_BUILD_ROOT" ] && [ -f "$LOCAL_BUILD_ROOT/bashrc.local" ] && \
+    . "$LOCAL_BUILD_ROOT/bashrc.local"
 
-prepend_path_c PATH ~/bin
-append_path_c FORMPATH ~/lib/form
-set_path_c FORMTMP $TMPDIR
+  prepend_path_c PATH ~/bin
+  append_path_c FORMPATH ~/lib/form
+  set_path_c FORMTMP $TMPDIR
+
+  export BASHRC_LOCAL_LOADED=1
+fi
+
+reload_path() {
+  # Reinitialize everything to keep the order of pathes.
+  unset BASHRC_LOCAL_LOADED
+  unset LOCAL_BUILD_ROOT
+  unset HOMEBREW_PREFIX
+  unset PLENV_ROOT
+  unset PYENV_ROOT
+  unset RBENV_ROOT
+  unset TEXLIVE_ROOT
+  . ~/.bashrc
+}
 
 ################################################################################
 

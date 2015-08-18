@@ -25,7 +25,7 @@ git clone https://github.com/tueda/dotfiles.git ~/.dotfiles && ~/.dotfiles/deplo
 Optionally make/edit `.bashrc.local` and `.gitconfig.local`:
 
 ```
-LOCAL_BUILD_ROOT=/path/to/local/build/directory/for/linuxbrew/etc
+export LOCAL_BUILD_ROOT=/path/to/local/build/directory/for/linuxbrew/etc
 prepend_path PATH /additional/path/to/bin
 ```
 
@@ -34,6 +34,23 @@ prepend_path PATH /additional/path/to/bin
 [user]
     name = "My Name"
     email = myemail@example.com
+```
+
+### Install Linuxbrew
+
+Make sure `LOCAL_BUILD_ROOT` is set as in the previous step if you don't want to
+install software in your home directory.
+
+If Ruby (>=1.8.6) is not installed:
+```
+~/.dotfiles/install.sh ruby
+reload_path
+```
+
+Install Linuxbrew:
+```
+~/.dotfiles/install.sh linuxbrew
+reload_path
 ```
 
 ### SSH URL
