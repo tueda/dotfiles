@@ -234,6 +234,19 @@ if [ -z "$BASH_COMPLETION" ]; then
   fi
 fi
 
+# Define __git_ps1.
+if __git_ps1 > /dev/null 2>&1; then :;else
+  for f in /usr/share/git-core/contrib/completion/git-prompt.sh; do
+    if [ -f "$f" ]; then
+      . "$f"
+      break
+    fi
+  done
+fi
+if __git_ps1 > /dev/null 2>&1; then :;else
+  __git_ps1() { :; }
+fi
+
 # Prompts
 #
 # \[...\]              - Sequence for non-printing characters, which allows bash
@@ -276,11 +289,6 @@ case "$TERM" in
     export PS1='[\u@\h \W$(__git_ps1 " (%s)")]\n\$ '
     ;;
 esac
-
-# Define __git_ps1 if undefined.
-if __git_ps1 > /dev/null 2>&1; then :;else
-  __git_ps1() { :; }
-fi
 
 # Terminal capabilities.
 case "$TERM" in
@@ -350,7 +358,7 @@ fi
 
 # Process Status Tree: show the currently-running processes in the tree format.
 #   Usage: pst
-alias pst='ps f -o user,pid,ppid,pgid,tty,stime,time,command'
+alias pst='ps f -o user,pid,ppid,pgid,tty,stat,stime,time,command'
 
 # Disk Usage Directory: show file space usage in the current directory.
 #   Usage: dud
