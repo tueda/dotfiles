@@ -247,7 +247,13 @@ fi
 # $(__git_ps1 " (%s)") - Current Git branch.
 #
 case "$TERM" in
-  xterm*|putty*|linux)
+  linux)
+    # prompt:
+    #   [user@host Wd]
+    #   $ ...
+    export PS1='[\[\e[32;1m\]\u@\h \[\e[34;1m\]\W\[\e[31;1m\]$(__git_ps1 " (%s)")\[\e[0m\]]\n\$ '
+    ;;
+  xterm*|putty*)
     # titlebar:
     #   user@host:wd
     # prompt:
