@@ -46,6 +46,8 @@ If Ruby (>=1.8.6) is not installed:
 ~/.dotfiles/install.sh ruby
 reload_path
 ```
+Some features may be missing (e.g., openssl) and you may still need to reinstall
+Ruby via Linuxbrew.
 
 Install Linuxbrew:
 ```
