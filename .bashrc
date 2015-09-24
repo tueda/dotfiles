@@ -358,7 +358,7 @@ fi
 
 # Process Status Tree: show the currently-running processes in the tree format.
 #   Usage: pst
-alias pst='ps f -o user,pid,ppid,pgid,tty,stat,stime,time,command'
+alias pst='ps f -o user,pid,ppid,pgid,tty,stat,stime,time,%cpu,%mem,command'
 
 # Disk Usage Directory: show file space usage in the current directory.
 #   Usage: dud
