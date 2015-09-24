@@ -431,13 +431,15 @@ try
 catch /^Vim\%((\a\+)\)\=:E185/
 endtry
 
+if v:version > 701 || (v:version == 701 && has('patch40'))
 " Highlight unwanted spaces.
-highlight link ExtraWhitespace Error
-match ExtraWhitespace /\s\+$\| \+\ze\t/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$\| \+\ze\t/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$\| \+\ze\t/
-autocmd BufWinLeave * call clearmatches()
+  highlight link ExtraWhitespace Error
+  match ExtraWhitespace /\s\+$\| \+\ze\t/
+  autocmd BufWinEnter * match ExtraWhitespace /\s\+$\| \+\ze\t/
+  autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+  autocmd InsertLeave * match ExtraWhitespace /\s\+$\| \+\ze\t/
+  autocmd BufWinLeave * call clearmatches()
+endif
 
 "-------------------------------------------------------------------------------
 " Searching
@@ -499,6 +501,9 @@ augroup SaveView
   autocmd BufWinLeave ?* silent mkview
   autocmd BufWinEnter ?* silent loadview
 augroup END
+
+" Automatically change the current directory
+autocmd BufEnter * silent! lcd %:p:h
 
 "-------------------------------------------------------------------------------
 " Keyboard
