@@ -45,6 +45,10 @@ else
 " NeoBundle 'zah/nim.vim'
 " NeoBundle 'rust-lang/rust.vim'
 " NeoBundle 'scrooloose/syntastic'  " too slow!
+" NeoBundle 'nvie/vim-flake8'
+
+  NeoBundle 'andviro/flake8-vim', '7cecb3a'
+  let g:PyFlakeOnWrite = 0
 
 " indentLine
 
