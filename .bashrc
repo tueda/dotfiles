@@ -312,6 +312,31 @@ case "$TERM" in
     ;;
 esac
 
+screen-update-env() {
+  case "$1" in
+    xterm*)
+      export VIM_256COLOR=1
+      export VIM_BACKGROUND=light
+      export VIM_POWERLINE=
+      \screen -X setenv VIM_256COLOR 1
+      \screen -X setenv VIM_BACKGROUND light
+      \screen -X setenv VIM_POWERLINE ''
+      ;;
+    putty*)
+      export VIM_256COLOR=1
+      export VIM_BACKGROUND=dark
+      export VIM_POWERLINE=1
+      \screen -X setenv VIM_256COLOR 1
+      \screen -X setenv VIM_BACKGROUND dark
+      \screen -X setenv VIM_POWERLINE 1
+      ;;
+    *)
+      echo 'Usage: screen-update-env [xterm|putty]' 2>&1
+      return 1
+      ;;
+  esac
+}
+
 # Other Bash settings.
 
 shopt -u histappend
@@ -327,7 +352,7 @@ fi
 export HISTSIZE=100000
 export HISTFILESIZE=100000
 export HISTCONTROL=ignoreboth
-export HISTIGNORE='&:fg:bg:exit:history*:screen*'
+export HISTIGNORE='&:fg:bg:exit:history'
 
 # Aliases.
 
