@@ -164,6 +164,8 @@ init_texlive() {
 
 ################################################################################
 
+[ -z "$TMPDIR" ] && set_path_c TMPDIR /tmp
+
 if [ -z "$BASHRC_LOCAL_LOADED" ]; then
   # In the case that the quota for the home directory is small, it would be nice
   # to install software to another local storage.
@@ -176,7 +178,7 @@ if [ -z "$BASHRC_LOCAL_LOADED" ]; then
 
   prepend_path_c PATH ~/bin
   append_path_c FORMPATH ~/lib/form
-  set_path_c FORMTMP $TMPDIR
+  [ -z "$FORMTMP" ] && set_path_c FORMTMP $TMPDIR
 
   export BASHRC_LOCAL_LOADED=1
 fi
