@@ -45,10 +45,28 @@ else
 " NeoBundle 'zah/nim.vim'
 " NeoBundle 'rust-lang/rust.vim'
 " NeoBundle 'scrooloose/syntastic'  " too slow!
-" NeoBundle 'nvie/vim-flake8'
 
-  NeoBundle 'andviro/flake8-vim', '7cecb3a'
-  let g:PyFlakeOnWrite = 0
+  NeoBundle 'haya14busa/incsearch.vim'
+  map /  <Plug>(incsearch-forward)
+  map ?  <Plug>(incsearch-backward)
+  map g/ <Plug>(incsearch-stay)
+
+  NeoBundle 'osyo-manga/vim-anzu'
+  nmap n <Plug>(anzu-n-with-echo)
+  nmap N <Plug>(anzu-N-with-echo)
+  nmap * <Plug>(anzu-star-with-echo)
+  nmap # <Plug>(anzu-sharp-with-echo)
+
+  NeoBundle 'nvie/vim-flake8'
+  let g:flake8_show_quickfix=1
+  let g:flake8_show_in_gutter=1
+  let g:flake8_show_in_file=1
+
+" NeoBundle 'andviro/flake8-vim', '7cecb3a'
+" let g:PyFlakeOnWrite = 0
+
+" NeoBundle 'hynek/vim-python-pep8-indent'
+" NeoBundle 'klen/python-mode'
 
 " indentLine
 
@@ -531,6 +549,25 @@ augroup vimrcAutoView
     autocmd BufWinEnter ?* if MakeViewCheck() | silent loadview | endif
 augroup end
 
+" https://github.com/vim-scripts/delview/blob/master/plugin/delview.vim
+function! MyDeleteView()
+  let path = fnamemodify(bufname('%'),':p')
+  " vim's odd =~ escaping for /
+  let path = substitute(path, '=', '==', 'g')
+  if empty($HOME)
+  else
+    let path = substitute(path, '^'.$HOME, '\~', '')
+  endif
+  let path = substitute(path, '/', '=+', 'g') . '='
+  " view directory
+  let path = &viewdir.'/'.path
+  call delete(path)
+  echo "Deleted: ".path
+endfunction
+command! Delview call MyDeleteView()
+" Lower-case user commands: http://vim.wikia.com/wiki/Replace_a_builtin_command_using_cabbrev
+cabbrev delview <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Delview' : 'delview')<CR>
+
 " Automatically change the current directory
 autocmd BufEnter * silent! lcd %:p:h
 
@@ -655,20 +692,21 @@ augroup END
 
 "-------------------------------------------------------------------------------
 " File type specific settings
+" TODO: Move to ftplugin or after/ftplugin
 "-------------------------------------------------------------------------------
 
+autocmd FileType automake execute 'TabIndent 4'
 autocmd FileType gitcommit setlocal spell | setlocal colorcolumn=73
-autocmd FileType unite highlight link ExtraWhitespace Normal
-autocmd FileType python execute 'SpaceIndent 4'
+autocmd FileType make execute 'TabIndent 4'
+autocmd FileType python execute 'SpaceIndent 4' | setlocal colorcolumn=80
+autocmd FileType qf setlocal colorcolumn=0
 autocmd FileType tex setlocal spell
-
-autocmd BufNewFile,BufRead *.m setlocal filetype=mma
+autocmd FileType unite highlight link ExtraWhitespace Normal
 
 autocmd BufNewFile,BufRead */form*/sources/*.c  call FORMCSource()
 autocmd BufNewFile,BufRead */form*/sources/*.cc call FORMCSource()
 autocmd BufNewFile,BufRead */form*/sources/*.h  call FORMCSource()
 autocmd BufNewFile,BufRead */form*/configure.ac execute 'TabIndent 4'
-autocmd BufNewFile,BufRead */form*/Makefile*    execute 'TabIndent 4'
 
 function! FORMCSource()
   execute 'TabIndent 4'
@@ -677,9 +715,11 @@ endfunction
 
 "-------------------------------------------------------------------------------
 " File type detection
+" TODO: Move to ftdetect
 "-------------------------------------------------------------------------------
 
-au BufNewFile,BufRead * call DetectFileType()
+autocmd BufNewFile,BufRead *.m setlocal filetype=mma
+autocmd BufNewFile,BufRead * call DetectFileType()
 
 function! DetectFileType()
   let l = getline(1)
@@ -741,6 +781,16 @@ function! DetectFileType()
     endif
   endif
 endfunction
+
+"-------------------------------------------------------------------------------
+" Close Quickfix window when no other windows.
+" http://hail2u.net/blog/software/vim-auto-close-quickfix-window.html
+"-------------------------------------------------------------------------------
+
+augroup QfAutoCommands
+  autocmd!
+  autocmd WinEnter * if (winnr('$') == 1) && (getbufvar(winbufnr(0), '&buftype')) == 'quickfix' | quit | endif
+augroup END
 
 "-------------------------------------------------------------------------------
 " Some commands
