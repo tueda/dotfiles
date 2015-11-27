@@ -491,10 +491,10 @@ set   smartindent
 set nosmarttab
 
 command! -nargs=1 TabIndent setlocal noexpandtab shiftwidth=<args> softtabstop=0 tabstop=<args>
-command! -nargs=1 SpaceIndent setlocal expandtab shiftwidth=<args> softtabstop=<args> tabstop=<args>
+command! -nargs=1 SpaceIndent setlocal expandtab shiftwidth=<args> softtabstop=<args> tabstop=8
 
 " Default indent (SpaceIndent 2)
-set expandtab shiftwidth=2 softtabstop=2 tabstop=2
+set expandtab shiftwidth=2 softtabstop=2 tabstop=8
 
 "-------------------------------------------------------------------------------
 " General behaviour
@@ -840,8 +840,10 @@ function! s:AppendModeLine()
     let l:modeline = printf("* vim: %s", l:modeline)
   elseif &filetype == "tex"
     let l:modeline = printf("%% vim: %s", l:modeline)
-  elseif &filetype == "sh" || &filetype == "perl" || &filetype == "python"
+  elseif &filetype == "sh" || &filetype == "perl" || &filetype == "python" || &filetype == "ruby"
     let l:modeline = printf("# vim: %s", l:modeline)
+  elseif &filetype == "vim"
+    let l:modeline = printf("\" vim: %s", l:modeline)
   elseif &filetype == "mma"  " strange &commentstring @ v7.3.62
     let l:modeline = printf("(* vim: set %s: *)", l:modeline)
   else
@@ -853,4 +855,4 @@ endfunction
 
 command! AppendModeLine call s:AppendModeLine()
 
-" vim: ft=vim et ts=2 sts=2 sw=2
+" vim: ft=vim et ts=8 sts=2 sw=2
