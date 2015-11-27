@@ -55,6 +55,50 @@ Install Linuxbrew:
 reload_path
 ```
 
+Install other software packages via Linuxbrew:
+```
+# You may want to install Ruby within Homebrew.
+brew install ruby
+
+# Latest git
+brew install curl git
+# brew install git --without-tcl-tk  # if no Xlib
+
+# Python via pyenv
+brew install pyenv
+reload_path  # set $PYENV_ROOT
+brew install bzip2 sqlite gdbm
+CPPFLAGS="-I$(brew --prefix)/include" \
+  LDFLAGS="-L$(brew --prefix)/lib -Wl,-rpath,$(brew --prefix)/lib" \
+  pyenv install 2.7.10
+CPPFLAGS="-I$(brew --prefix)/include" \
+  LDFLAGS="-L$(brew --prefix)/lib -Wl,-rpath,$(brew --prefix)/lib" \
+  pyenv install 3.5.0
+pyenv global 2.7.10 3.5.0
+pip install --upgrade pip
+pip3 install --upgrade pip
+
+# IPython
+pip install ipython
+pip3 install ipython
+pyenv rehash
+
+# Latest Vim
+brew install lua luajit vim --ignore-dependencies  # Use the installed Python
+
+# Latest gnuplot
+brew edit fontconfig  # Add "--disable-docs"
+brew install gnuplot --with-pdflib-lite --with-x11
+
+# FORM
+brew tap tueda/loops
+brew install form --HEAD --with-debug --with-mpi  # Put --ignore-dependencies for preinstalled mpi
+
+# Misc.
+brew install bash-completion
+brew install https://raw.githubusercontent.com/Homebrew/homebrew/master/Library/Formula/colordiff.rb  # v1.0.15 not found
+```
+
 ### SSH URL
 
 ```
