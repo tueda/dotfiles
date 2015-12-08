@@ -18,12 +18,12 @@ fi
 
 do_install() {
   if type git >/dev/null 2>&1; then :; else
-    echo "error: git required" 2>&1
+    echo "error: git required" >&2
     return 1
   fi
   if [ "$prefix" = "/usr/local" ]; then
 #   TODO
-    echo "error: Dawrin is unsupported"
+    echo "error: Darwin is unsupported" >&2
     return 1
   fi
   git clone $HOMEBREW_REPO_ROOT/$pkgname "$prefix"

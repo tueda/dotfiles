@@ -140,7 +140,8 @@ END
     echo "You may need to reload PATH"
     echo "  reload_path"
   else
-    echo "Failed to install $1."
+    echo "error: failed to install $1." >&2
+    return 1
   fi
 }
 
@@ -158,7 +159,7 @@ for a; do
       if [ -f "packages/$a" ]; then
         install_package "$a"
       else
-        echo "Package $1 not available" >&2
+        echo "error: package $1 not available" >&2
         show_help
         exit 1
       fi

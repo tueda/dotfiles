@@ -191,7 +191,7 @@ reload_path() {
   unset PLENV_ROOT
   unset PYENV_ROOT
   unset RBENV_ROOT
-  unset TEXLIVE_ROOT
+# unset TEXLIVE_ROOT
   . ~/.bashrc
 }
 
@@ -206,8 +206,8 @@ if [ -d "$LOCAL_BUILD_ROOT" ]; then
     init_pyenv "$LOCAL_BUILD_ROOT/pyenv"
   [ -z "$RBENV_ROOT" ] && [ -d "$LOCAL_BUILD_ROOT/rbenv" ] && \
     init_rbenv "$LOCAL_BUILD_ROOT/rbenv"
-  [ -z "$TEXLIVE_ROOT" ] && [ -d "$LOCAL_BUILD_ROOT/texlive" ] && \
-    init_texlive "$LOCAL_BUILD_ROOT/texlive"
+# [ -z "$TEXLIVE_ROOT" ] && [ -d "$LOCAL_BUILD_ROOT/texlive" ] && \
+#   init_texlive "$LOCAL_BUILD_ROOT/texlive"
 fi
 
 [ -z "$HOMEBREW_PREFIX" ] && [ -d "~/.linuxbrew" ] && \

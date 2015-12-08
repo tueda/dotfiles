@@ -1,0 +1,18 @@
+pkgname=texlive
+pkgver=2015
+
+do_install() {
+  osname=`uname -s`
+  if [ `expr substr "$osname" 1 5` = Linux ]; then :; else
+    echo "error: only Linux is supported" >&2
+    return 1
+  fi
+
+  download http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+  cd install-tl-$pkgver????
+  echo I | TEXLIVE_INSTALL_PREFIX="$prefix" ./install-tl
+
+  prepend_path PATH `echo $prefix/$pkgver/bin/*`
+  prepend_path MANPATH "$prefix/$pkgver/texmf-dist/doc/man"
+  prepend_path INFOPATH "$prefix/$pkgver/texmf-dist/doc/info"
+}
