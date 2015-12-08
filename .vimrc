@@ -571,6 +571,9 @@ cabbrev delview <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Delview' : 'delvie
 " Automatically change the current directory
 autocmd BufEnter * silent! lcd %:p:h
 
+set wildignore+=*.o
+set wildignore+=*.pyc,*.pyo
+
 "-------------------------------------------------------------------------------
 " Keyboard
 "-------------------------------------------------------------------------------
