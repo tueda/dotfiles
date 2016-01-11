@@ -96,6 +96,9 @@ init_pyenv() {
     prepend_path PATH "$dir/bin"
     export PYENV_ROOT=$dir
     eval "$(pyenv init - --no-rehash)"
+    if which pyenv-virtualenv-init > /dev/null; then
+      eval "$(pyenv virtualenv-init -)"
+    fi
   fi
 }
 
