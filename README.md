@@ -70,13 +70,24 @@ reload_path  # set $PYENV_ROOT
 brew install bzip2 sqlite gdbm
 CPPFLAGS="-I$(brew --prefix)/include" \
   LDFLAGS="-L$(brew --prefix)/lib -Wl,-rpath,$(brew --prefix)/lib" \
-  pyenv install 2.7.10
+  pyenv install 2.7.11
 CPPFLAGS="-I$(brew --prefix)/include" \
   LDFLAGS="-L$(brew --prefix)/lib -Wl,-rpath,$(brew --prefix)/lib" \
-  pyenv install 3.5.0
-pyenv global 2.7.10 3.5.0
+  pyenv install 3.5.1
+pyenv install -v pypy3-2.4.0
+pyenv install -v pypy-4.0.1
+pyenv global 2.7.11 3.5.1 pypy-4.0.1 pypy3-2.4.0
+
 pip install --upgrade pip
 pip3 install --upgrade pip
+pypy -m pip install --upgrade pip
+pypy3 -m pip install --upgrade pip
+
+pip install numpy
+pip3 install numpy
+pypy -m pip install git+https://bitbucket.org/pypy/numpy.git@pypy-4.0.1
+
+pip install flake8 flake8-pep257 pep8-naming flake8-import-order
 
 # IPython
 pip install ipython
@@ -96,7 +107,7 @@ brew install form --HEAD --with-debug --with-mpi  # Put --ignore-dependencies fo
 
 # Misc.
 brew install bash-completion
-brew install https://raw.githubusercontent.com/Homebrew/homebrew/master/Library/Formula/colordiff.rb  # v1.0.15 not found
+brew install colordiff
 ```
 
 ### SSH URL
