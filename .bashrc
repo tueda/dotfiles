@@ -386,6 +386,9 @@ else
   alias diff='diff -u'
 fi
 
+alias top='nice top'
+alias htop='nice htop'
+
 # Process Status Tree: show the currently-running processes in the tree format.
 #   Usage: pst
 alias pst='ps f -o user,pid,ppid,pgid,tty,stat,stime,time,%cpu,%mem,command'
