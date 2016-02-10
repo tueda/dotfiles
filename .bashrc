@@ -150,6 +150,12 @@ init_homebrew() {
       export RBENV_ROOT="$dir/var/rbenv"
       eval "$(rbenv init - --no-rehash)"
     fi
+    # Installing bottles on Linux requires installing a recent version of glibc,
+    # which horribly messes up my system.
+    local uname=`uname -s`
+    if [ `expr substr "$uname" 1 5` = Linux ]; then
+      export HOMEBREW_BUILD_FROM_SOURCE=1
+    fi
   fi
 }
 
