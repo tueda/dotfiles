@@ -61,12 +61,14 @@ else
   let g:flake8_show_quickfix=1
   let g:flake8_show_in_gutter=1
   let g:flake8_show_in_file=1
+  let g:flake8_max_markers=5000
 
 " NeoBundle 'andviro/flake8-vim', '7cecb3a'
 " let g:PyFlakeOnWrite = 0
 
 " NeoBundle 'hynek/vim-python-pep8-indent'
 " NeoBundle 'klen/python-mode'
+  NeoBundle 'vim-scripts/jpythonfold.vim'
 
 " indentLine
 
@@ -326,8 +328,9 @@ else
   endfunction
 
   if s:meet_unite_requirements()
-    NeoBundle 'Shougo/unite-outline'
     NeoBundle 'Shougo/unite.vim'
+    NeoBundle 'Shougo/unite-outline'
+"   NeoBundle 'osyo-manga/unite-fold'  " broken
 
     let s:hooks = neobundle#get_hooks("unite.vim")
     function! s:hooks.on_source(bundle)
@@ -702,6 +705,7 @@ autocmd FileType automake execute 'TabIndent 4'
 autocmd FileType gitcommit setlocal spell | setlocal colorcolumn=73
 autocmd FileType make execute 'TabIndent 4'
 autocmd FileType python execute 'SpaceIndent 4' | setlocal colorcolumn=80
+autocmd FileType fortran setlocal colorcolumn=73
 autocmd FileType qf setlocal colorcolumn=0
 autocmd FileType tex setlocal spell
 autocmd FileType unite highlight link ExtraWhitespace Normal
@@ -824,6 +828,12 @@ function! FORMFold()
     setlocal foldmethod=marker foldmarker=#[,#] foldcolumn=4
   elseif &foldmethod == "marker"
     setlocal foldmethod=manual foldmarker={{{,}}} foldcolumn=0
+  else
+    if &foldcolumn == 0
+      setlocal foldcolumn=4
+    elseif &foldcolumn == 4
+      setlocal foldcolumn=0
+    endif
   endif
 endfunction
 
