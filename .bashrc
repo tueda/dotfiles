@@ -228,6 +228,9 @@ fi
 [ -z "$RBENV_ROOT" ] && [ -d "~/.rbenv" ] && \
   init_plenv "~/.rbenv"
 
+type brew >/dev/null 2>&1 && \
+  append_path_c FORMPATH $(brew --prefix)/share/form
+
 ################################################################################
 
 # If not running interactively, don't do anything.
