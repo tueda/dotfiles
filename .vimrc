@@ -40,6 +40,7 @@ else
   NeoBundle 'Shougo/neomru.vim'
 " NeoBundle 'nathanaelkane/vim-indent-guides'
   NeoBundle 'jonathanfilip/vim-lucius'
+" NeoBundle 'altercation/vim-colors-solarized'
 " NeoBundle 'tyru/caw.vim.git'
   NeoBundle 'tueda/form.vim'
 " NeoBundle 'zah/nim.vim'
@@ -435,25 +436,14 @@ if exists('+colorcolumn')
   set colorcolumn=81
 endif
 
-function! FixColorScheme()
-  highlight Normal ctermbg=NONE
-  highlight LineNr ctermbg=NONE
-  if exists("g:colors_name")
-    if g:colors_name == 'lucius'
-      if &background == 'dark'
-        highlight ColorColumn ctermbg=239
-      elseif &background == 'light'
-        highlight ColorColumn ctermbg=255
-      endif
-    endif
-  endif
-endfunction
-
-autocmd ColorScheme * call FixColorScheme()
-let g:lucius_contrast = 'high'
 try
+  let g:lucius_contrast = 'high'
+  let g:lucius_no_term_bg = 1
   colorscheme lucius
-catch /^Vim\%((\a\+)\)\=:E185/
+" let g:solarized_termcolors=256
+" let g:solarized_termtrans=1
+" colorscheme solarized
+catch /^Vim\%((\a\+)\)\=:E185/  " E185: Cannot find color scheme
 endtry
 
 if v:version > 701 || (v:version == 701 && has('patch40'))
