@@ -77,6 +77,14 @@ split_path() {
   done
 }
 
+# clean_path [VAR] - removes duplicates in VAR
+clean_path() {
+  local var=${1:-PATH}
+  local val=$(eval "echo \$$var" \
+    | awk -v RS=: -v ORS=: '!a[$1]++{if(NR>1)printf ORS;printf $a[$1]}')
+  eval "$var='$val'"
+}
+
 ################################################################################
 
 # init_plenv [ROOT_DIR]
