@@ -385,6 +385,7 @@ alias ssh='ssh -X -2 -C'
 if type vim >/dev/null 2>&1; then
   alias vi='vim'
   alias view='vim -R'
+  alias uvi='vim -c ":e ++enc=utf8"'
   export EDITOR=`which vim`
   export GIT_EDITOR=$EDITOR
 fi
