@@ -1,14 +1,20 @@
 pkgname=ruby
-pkgver=2.2.3
+pkgver=2.3.1
 
 do_install() {
   PATH=/usr/local/bin:/usr/bin:/bin
   unset LD_LIBRARY_PATH LD_RUN_PATH
-  download https://cache.ruby-lang.org/pub/ruby/2.2/$pkgname-$pkgver.tar.gz
+  download https://cache.ruby-lang.org/pub/ruby/2.3/$pkgname-$pkgver.tar.gz
   cd $pkgname-$pkgver
-  ./configure --prefix="$prefix" --disable-install-doc
+  args=--disable-install-doc
+  if [ -d $LOCAL_BUILD_ROOT/openssl-1.0.2h ]; then
+    args="$args --with-opt-dir=$LOCAL_BUILD_ROOT/openssl-1.0.2h --enable-shared"
+  fi
+  ./configure --prefix="$prefix" $args
   make
-  make check
+# make check
   make install
   prepend_path PATH "$prefix/bin"
 }
+
+# vim: ft=sh et ts=8 sts=2 sw=2

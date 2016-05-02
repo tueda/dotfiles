@@ -1,0 +1,15 @@
+pkgname=openssl
+pkgver=1.0.2h
+
+do_install() {
+  PATH=/usr/local/bin:/usr/bin:/bin
+  unset LD_LIBRARY_PATH LD_RUN_PATH
+  download https://www.openssl.org/source/$pkgname-$pkgver.tar.gz
+  cd $pkgname-$pkgver
+  ./config --prefix="$prefix" shared
+  make
+# make test
+  make install
+}
+
+# vim: ft=sh et ts=8 sts=2 sw=2

@@ -16,3 +16,5 @@ do_install() {
   prepend_path MANPATH "$prefix/$pkgver/texmf-dist/doc/man"
   prepend_path INFOPATH "$prefix/$pkgver/texmf-dist/doc/info"
 }
+
+# vim: ft=sh et ts=8 sts=2 sw=2

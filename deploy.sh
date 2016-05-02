@@ -43,3 +43,5 @@ done
 if $backup; then
   echo "info: backup files are in `pwd`/$backupdir"
 fi
+
+# vim: ft=sh et ts=8 sts=2 sw=2

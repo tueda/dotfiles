@@ -5,6 +5,7 @@ if [ "$uname" = Darwin ]; then
   prefix=/usr/local
   pkgname=homebrew
 elif [ `expr substr "$uname" 1 5` = Linux ]; then
+  HOMEBREW_REPO_ROOT=https://github.com/Linuxbrew
   prefix="$HOME/.linuxbrew"
   pkgname=linuxbrew
 else
@@ -26,7 +27,17 @@ do_install() {
     echo "error: Darwin is unsupported" >&2
     return 1
   fi
-  git clone $HOMEBREW_REPO_ROOT/$pkgname "$prefix"
+
+  git clone $HOMEBREW_REPO_ROOT/brew "$prefix" --depth=1
+
+# Patches for old git.
+  sed -i 's/ --config core.autocrlf=false//' \
+    "$prefix/Library/Homebrew/tap.rb"
+  sed -i 's/"git", "config", "--local"/"git", "config"/' \
+    "$prefix/Library/Homebrew/tap.rb"
+
+  export HOMEBREW_BUILD_FROM_SOURCE=1
+  export HOMEBREW_NO_ANALYTICS=1
 
   for cc in gcc g++ gfortran; do
     src=/usr/bin/$cc
@@ -46,7 +57,16 @@ do_install() {
 
   export PATH="$prefix/bin:$PATH"
   brew doctor || :
-  brew install hello && brew test hello; brew remove hello
+  brew install hello && brew test hello || :; brew remove hello || :
+
+  prepend_path PATH "$prefix/bin"
+  prepend_path MANPATH "$prefix/share/man"
+  prepend_path INFOPATH "$prefix/share/info"
+  set_path HOMEBREW_PREFIX "$prefix"
+  set_path HOMEBREW_CACHE "$prefix/Cache"
+  set_path HOMEBREW_LOGS "$prefix/Logs"
+  set_path HOMEBREW_BUILD_FROM_SOURCE 1
+  set_path HOMEBREW_NO_ANALYTICS 1
 }
 
 dump_version() {
@@ -54,3 +74,5 @@ dump_version() {
   # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=41080
   $1 -dumpversion | head -1 | sed 's/[^0-9]*\([0-9][0-9]*\.[0-9][0-9]*\).*/\1/'
 }
+
+# vim: ft=sh et ts=8 sts=2 sw=2

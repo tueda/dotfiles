@@ -1,16 +1,15 @@
-#! /bin/sh
+#! /bin/bash
 set -e
 cd `dirname $0`
 
-# Currently the user has to explicitly specify
-#   MAKEFLAGS=-j4 ./install.sh <package>
-# for parallel make.
-#
-#JOBS=0
-#if [ -e /proc/cpuinfo ]; then
-#  JOBS=`grep -c ^processor /proc/cpuinfo 2>/dev/null`
-#  MAKEFLAGS="-j$JOBS $MAKEFLAGS"
-#fi
+JOBS=0
+if [ -e /proc/cpuinfo ]; then
+  JOBS=`grep -c ^processor /proc/cpuinfo 2>/dev/null`
+  if [ $JOBS -ge 1 ]; then
+    MAKEFLAGS="-j $JOBS $MAKEFLAGS"
+    export MAKEFLAGS
+  fi
+fi
 
 # Portable "echo -n"
 echo_n() {
@@ -81,26 +80,56 @@ download() {
   esac
 }
 
-# Adds the given path in .bashrc.local.
-prepend_path() {
-  bashrc_local=
+make_bin=`type -p make`  # requires bash
+
+# Wraps "make ..."
+make() {
+  $make_bin $* || exit 1
+}
+
+# Prints bashrc.local file.
+get_bashrc_local() {
   if [ -n "$LOCAL_BUILD_ROOT" ]; then
-    bashrc_local="$LOCAL_BUILD_ROOT/bashrc.local"
+    echo "$LOCAL_BUILD_ROOT/bashrc.local"
   else
-    bashrc_local="$HOME/.bashrc.local"
-  fi
-  if grep -q -F "$2" $bashrc_local 2>/dev/null; then :; else
-    echo "prepend_path $1 \"$2\"" >>"$bashrc_local"
+    echo "$HOME/.bashrc.local"
   fi
 }
 
+first_bashrc_local=:
+
+# Adds the given path in .bashrc.local.
+prepend_path() {
+  if $first_bashrc_local; then
+    first_bashrc_local=false
+    echo "# $prefix" >>`get_bashrc_local`
+  fi
+  echo "$1=\"$2:\$$1\"" >>`get_bashrc_local`
+  echo "export $1" >>`get_bashrc_local`
+}
+
+# Sets the given path in .bashrc.local.
+set_path() {
+  if $first_bashrc_local; then
+    first_bashrc_local=false
+    echo "# $prefix" >>`get_bashrc_local`
+  fi
+  echo "$1=\"$2\"" >>`get_bashrc_local`
+  echo "export $1" >>`get_bashrc_local`
+}
+
 show_help() {
-  cat << 'END'
+  cat << END
 Usage: install.sh <package>
 
 Available packages:
 END
 ls packages
+  cat << END
+
+Environment variables:
+LOCAL_BUILD_ROOT=$LOCAL_BUILD_ROOT
+END
 }
 
 install_package() {
@@ -137,10 +166,14 @@ END
   trap 'rm -rf "$tmpdir"' 0 1 2 13 15
   if (cd "$tmpdir" && do_install); then
     echo "Succeeded to install $1."
-    echo "You may need to reload PATH"
-    echo "  reload_path"
+    bashrc_local=`get_bashrc_local`
+    if [ -f "$bashrc_local" ]; then
+      echo "Run/Put the following line in .bashrc:"
+      echo "  . $bashrc_local"
+    fi
   else
     echo "error: failed to install $1." >&2
+    rm -rf "$prefix"
     return 1
   fi
 }
@@ -167,14 +200,4 @@ for a; do
   esac
 done
 
-## Gives the default installation directory.
-#opt_dir() {
-#  if [ -n "$LOCAL_BUILD_ROOT" ]; then
-#    echo "$LOCAL_BUILD_ROOT"
-#  else
-#    echo "$HOME/opt"
-#  fi
-#}
-
-#tempdir=`mktemp_d "${TMPDOR:-/tmp}/tmp"`
-#echo $tempdir
+# vim: ft=sh et ts=8 sts=2 sw=2
