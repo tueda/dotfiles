@@ -67,7 +67,6 @@ Install Linuxbrew:
 
 Install the latest GCC:
 ```
-wget https://gmplib.org/download/gmp/gmp-6.1.0.tar.xz -O $HOMEBREW_CACHE/gmp-6.1.0.tar.xz  # avoid "curl: (35) SSL connect error"
 brew install gcc --without-glibc
 ```
 
@@ -86,7 +85,7 @@ Install other software packages via Linuxbrew:
 ```
 # Python via pyenv
 brew install pyenv
-# set $PYENV_ROOT
+reload_path  # or set $PYENV_ROOT manually
 brew install bzip2 sqlite gdbm
 CPPFLAGS="-I$(brew --prefix)/include" LDFLAGS="-L$(brew --prefix)/lib -Wl,-rpath,$(brew --prefix)/lib" pyenv install 2.7.11
 CPPFLAGS="-I$(brew --prefix)/include" LDFLAGS="-L$(brew --prefix)/lib -Wl,-rpath,$(brew --prefix)/lib" pyenv install 3.5.1
@@ -125,6 +124,7 @@ brew install tueda/loops/form --HEAD --with-debug --with-mpi  # Put --ignore-dep
 # Misc.
 brew install bash-completion
 brew install colordiff
+brew install htop
 ```
 
 ### SSH URL

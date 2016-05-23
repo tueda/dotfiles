@@ -164,6 +164,7 @@ init_homebrew() {
     if [ `expr substr "$uname" 1 5` = Linux ]; then
       export HOMEBREW_BUILD_FROM_SOURCE=1
     fi
+    export HOMEBREW_NO_ANALYTICS=1
   fi
 }
 
