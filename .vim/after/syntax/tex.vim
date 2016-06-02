@@ -17,13 +17,13 @@ endif
 " Sections, subsections, etc: {{{1
 if s:tex_fast =~ 'p'
   if !exists("g:tex_nospell") || !g:tex_nospell
-   if g:tex_fold_enabled && has("folding")
+   if exists("g:tex_fold_enabled") && g:tex_fold_enabled && has("folding")
     syn region texTitle			matchgroup=texSection start='\\abstract\>\s*{' end='}'													fold contains=@texFoldGroup,@Spell
    else
     syn region texTitle			matchgroup=texSection start='\\abstract\>\s*{' end='}'													contains=@texFoldGroup,@Spell
    endif
   else
-   if g:tex_fold_enabled && has("folding")
+   if exists("g:tex_fold_enabled") && g:tex_fold_enabled && has("folding")
     syn region texTitle			matchgroup=texSection start='\\abstract\>\s*{' end='}'													fold contains=@texFoldGroup
    else
     syn region texTitle			matchgroup=texSection start='\\abstract\>\s*{' end='}'													contains=@texFoldGroup

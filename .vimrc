@@ -697,8 +697,10 @@ autocmd FileType make execute 'TabIndent 4'
 autocmd FileType python execute 'SpaceIndent 4' | setlocal colorcolumn=80
 autocmd FileType fortran setlocal colorcolumn=73
 autocmd FileType qf setlocal colorcolumn=0
-autocmd FileType tex setlocal spell
+autocmd FileType tex setlocal spell | setlocal colorcolumn=81
 autocmd FileType unite highlight link ExtraWhitespace Normal
+autocmd BufNewFile,BufRead *.dtx setlocal spell | setlocal colorcolumn=73
+autocmd BufNewFile,BufRead *.ins setlocal spell | setlocal colorcolumn=73
 
 autocmd BufNewFile,BufRead */form*/sources/*.c  call FORMCSource()
 autocmd BufNewFile,BufRead */form*/sources/*.cc call FORMCSource()
