@@ -98,22 +98,23 @@ get_bashrc_local() {
 
 first_bashrc_local=:
 
-# Adds the given path in .bashrc.local.
-prepend_path() {
+# Write a line into .bashrc.local.
+write_rc() {
   if $first_bashrc_local; then
     first_bashrc_local=false
     echo "# $prefix" >>`get_bashrc_local`
   fi
-  echo "$1=\"$2:\$$1\"; export $1" >>`get_bashrc_local`
+  echo "$1" >>`get_bashrc_local`
+}
+
+# Adds the given path in .bashrc.local.
+prepend_path() {
+  write_rc "$1=\"$2:\$$1\"; export $1"
 }
 
 # Sets the given path in .bashrc.local.
 set_path() {
-  if $first_bashrc_local; then
-    first_bashrc_local=false
-    echo "# $prefix" >>`get_bashrc_local`
-  fi
-  echo "$1=\"$2\"; export $1" >>`get_bashrc_local`
+  write_rc "$1=\"$2\"; export $1"
 }
 
 show_help() {

@@ -67,6 +67,24 @@ do_install() {
   set_path HOMEBREW_LOGS "$prefix/Logs"
   set_path HOMEBREW_BUILD_FROM_SOURCE 1
   set_path HOMEBREW_NO_ANALYTICS 1
+
+  write_rc "if [ -f \"\$HOMEBREW_PREFIX/bin/rbenv\" ]; then"
+  set_path RBENV_ROOT "\$HOMEBREW_PREFIX/var/rbenv"
+  write_rc "eval \"\$(rbenv init - --no-rehash)\""
+  write_rc "fi"
+
+  write_rc "if [ -f \"\$HOMEBREW_PREFIX/bin/pyenv\" ]; then"
+  set_path PYENV_ROOT "\$HOMEBREW_PREFIX/var/pyenv"
+  write_rc "eval \"\$(pyenv init - --no-rehash)\""
+  write_rc "if [ -f \"\$HOMEBREW_PREFIX/bin/pyenv-virtualenv-init\" ]; then"
+  write_rc "eval \"\$(pyenv virtualenv-init -)\""
+  write_rc "fi"
+  write_rc "fi"
+
+  write_rc "if [ -f \"\$HOMEBREW_PREFIX/bin/plenv\" ]; then"
+  set_path PLENV_ROOT "\$HOMEBREW_PREFIX/var/plenv"
+  write_rc "eval \"\$(plenv init - --no-rehash)\""
+  write_rc "fi"
 }
 
 dump_version() {
