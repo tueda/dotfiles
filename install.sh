@@ -65,7 +65,7 @@ download() {
   if type curl >/dev/null 2>&1; then
     curl -O -L "$1"
   elif type wget >/dev/null 2>&1; then
-    wget "$1"
+    wget -O `basename "$1"` "$1"
   else
     echo "error: curl or wget required" >&2
     return 1
@@ -135,6 +135,7 @@ install_package() {
   pkgname=$1
   pkgver=
   prefix=
+  overwrite=false
   . "packages/$1"
   if [ -z "$prefix" ]; then
     if [ -n "$LOCAL_BUILD_ROOT" ]; then
@@ -146,10 +147,12 @@ install_package() {
       prefix="$prefix-$pkgver"
     fi
   fi
-  if [ -e "$prefix" ]; then
-    echo "error: $prefix already exists" >&2
-    exit 1
-  fi
+  $overwrite || {
+    if [ -e "$prefix" ]; then
+      echo "error: $prefix already exists" >&2
+      exit 1
+    fi
+  }
   cat << END
 This script will install $1 to
   $prefix
@@ -171,7 +174,7 @@ END
     fi
   else
     echo "error: failed to install $1." >&2
-    rm -rf "$prefix"
+    $overwrite || rm -rf "$prefix"
     return 1
   fi
 }
