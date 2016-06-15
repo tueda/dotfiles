@@ -694,7 +694,7 @@ augroup END
 autocmd FileType automake execute 'TabIndent 4'
 autocmd FileType gitcommit setlocal spell | setlocal colorcolumn=73
 autocmd FileType make execute 'TabIndent 4'
-autocmd FileType python execute 'SpaceIndent 4' | setlocal colorcolumn=80
+autocmd FileType python execute 'SpaceIndent 4' | setlocal colorcolumn=80 | setlocal foldcolumn=4
 autocmd FileType fortran setlocal colorcolumn=73
 autocmd FileType qf setlocal colorcolumn=0
 autocmd FileType tex setlocal spell | setlocal colorcolumn=81
