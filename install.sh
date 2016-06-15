@@ -107,7 +107,12 @@ write_rc() {
   echo "$1" >>`get_bashrc_local`
 }
 
-# Adds the given path in .bashrc.local.
+# Appends the given path in .bashrc.local.
+append_path() {
+  write_rc "$1=\"\$$1:$2\"; export $1"
+}
+
+# Prepends the given path in .bashrc.local.
 prepend_path() {
   write_rc "$1=\"$2:\$$1\"; export $1"
 }

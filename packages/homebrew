@@ -30,7 +30,7 @@ do_install() {
 
   git clone $HOMEBREW_REPO_ROOT/brew "$prefix" --depth=1
 
-# Patches for old git.
+  # Patches for old git.
   sed -i 's/ --config core.autocrlf=false//' \
     "$prefix/Library/Homebrew/tap.rb"
   sed -i 's/"git", "config", "--local"/"git", "config"/' \
@@ -84,6 +84,10 @@ do_install() {
   write_rc "if [ -f \"\$HOMEBREW_PREFIX/bin/plenv\" ]; then"
   set_path PLENV_ROOT "\$HOMEBREW_PREFIX/var/plenv"
   write_rc "eval \"\$(plenv init - --no-rehash)\""
+  write_rc "fi"
+
+  write_rc "if [ -d \"\$HOMEBREW_PREFIX/share/form\" ]; then"
+  append_path FORMPATH "\$HOMEBREW_PREFIX/share/form"
   write_rc "fi"
 }
 
