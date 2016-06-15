@@ -100,7 +100,15 @@ pypy3 -m pip install --upgrade pip
 
 pip install numpy
 pip3 install numpy
-pypy -m pip install git+https://bitbucket.org/pypy/numpy.git
+# pypy -m pip install git+https://bitbucket.org/pypy/numpy.git
+
+pip install sympy
+pip3 install sympy
+pypy -m pip install sympy
+pypy3 -m pip install sympy
+
+pip install matplotlib
+# pip3 install matplotlib
 
 pip install ipython
 pip3 install ipython
@@ -110,7 +118,8 @@ pip install flake8 flake8-pep257 pep8-naming flake8-import-order
 ```
 ```
 # Vim
-brew install lua luajit vim --without-perl --ignore-dependencies  # Use the installed Python
+brew install lua luajit vim --ignore-dependencies  # Use the installed Python
+# brew install lua luajit vim --without-perl --ignore-dependencies  # Use the installed Python
 ```
 ```
 # Gnuplot
@@ -119,6 +128,28 @@ brew install gnuplot --with-pdflib-lite --with-x11
 ```
 # FORM
 brew install tueda/loops/form --HEAD --with-debug --with-mpi  # Put --ignore-dependencies for preinstalled mpi
+pip install python-form
+pip3 install python-form
+pypy -m pip install python-form
+pypy3 -m pip install python-form
+```
+```
+# igraph
+brew install homebrew/science/openblas  # OS X has own blas but Linux not
+brew install homebrew/science/igraph
+pip install python-igraph
+pip3 install python-igraph
+```
+```
+# GiNaC
+brew install ginac
+```
+```
+# Snappy
+brew install snappy
+pip install python-snappy
+pip3 install python-snappy
+pypy -m pip install python-snappy
 ```
 ```
 # Misc.
