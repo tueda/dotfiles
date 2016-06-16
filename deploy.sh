@@ -96,6 +96,8 @@ mkdir -p "$HOME/bin"
 (
   cd "$HOME/bin"
 
+  download https://gist.githubusercontent.com/tueda/6718638/raw/path-manip.bash
+
   download https://gist.githubusercontent.com/tueda/7777291/raw/tarb
   chmod +x tarb
 
