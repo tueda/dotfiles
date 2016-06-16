@@ -1,164 +1,19 @@
-# file mode creation mask
+# File mode creation mask.
 umask 022
 
+# Ensure $TMPDIR.
+[ -z "$TMPDIR" ] && export TMPDIR=/tmp
+
+# Loading other files.
 [ -f ~/bin/path-manip.bash ] && . ~/bin/path-manip.bash
+[ -f ~/bin/copyd.sh ] &&  . ~/bin/copyd.sh
+[ -f ~/.bashrc.local ] && . ~/.bashrc.local
+[ -n "$LOCAL_BUILD_ROOT" ] && [ -d "$LOCAL_BUILD_ROOT" ] && \
+  [ -f "$LOCAL_BUILD_ROOT/bashrc.local" ] && . "$LOCAL_BUILD_ROOT/bashrc.local"
 
-################################################################################
-
-# init_plenv [ROOT_DIR]
-init_plenv() {
-  local dir=${1:-~/.plenv}
-  if [ -d "$dir" ]; then
-    prepend_path PATH "$dir/bin"
-    export PLENV_ROOT=$dir
-    eval "$(plenv init - --no-rehash)"
-  fi
-}
-
-# init_pyenv [ROOT_DIR]
-init_pyenv() {
-  local dir=${1:-~/.pyenv}
-  if [ -d "$dir" ]; then
-    prepend_path PATH "$dir/bin"
-    export PYENV_ROOT=$dir
-    eval "$(pyenv init - --no-rehash)"
-    if which pyenv-virtualenv-init > /dev/null; then
-      eval "$(pyenv virtualenv-init -)"
-    fi
-  fi
-}
-
-# init_rbenv [ROOT_DIR]
-init_rbenv() {
-  local dir=${1:-~/.rbenv}
-  if [ -d "$dir" ]; then
-    prepend_path PATH "$dir/bin"
-    export RBENV_ROOT=$dir
-    eval "$(rbenv init - --no-rehash)"
-  fi
-}
-
-# init_homebrew [ROOT_DIR]
-init_homebrew() {
-  local dir=$1
-  if [ -z "$dir" ]; then
-    local uname=`uname -s`
-    if [ "$uname" = Darwin ]; then
-      dir=/usr/local
-    elif [ `expr substr "$uname" 1 5` = Linux ]; then
-      dir=~/.linuxbrew
-    else
-      dir=~/homebrew
-    fi
-  fi
-  if [ -d "$dir" ]; then
-    export HOMEBREW_PREFIX=$dir
-    export HOMEBREW_CACHE="$dir/Cache"
-    export HOMEBREW_LOGS="$dir/Logs"
-    prepend_path_c PATH "$dir/sbin"
-    prepend_path PATH "$dir/bin"
-    prepend_path MANPATH "$dir/share/man"
-    prepend_path_c INFOPATH "$dir/share/info"
-    prepend_path_c C_INCLUDE_PATH "$dir/include"
-    prepend_path_c CPLUS_INCLUDE_PATH "$dir/include"
-    prepend_path_c OBJC_INCLUDE_PATH "$dir/include"
-    prepend_path_c LIBRARY_PATH "$dir/lib"
-    prepend_path_c LD_RUN_PATH "$dir/lib"
-    if [ -f "$dir/bin/plenv" ]; then
-      export PLENV_ROOT="$dir/var/plenv"
-      eval "$(plenv init - --no-rehash)"
-    fi
-    if [ -f "$dir/bin/pyenv" ]; then
-      export PYENV_ROOT="$dir/var/pyenv"
-      eval "$(pyenv init - --no-rehash)"
-    fi
-    if [ -f "$dir/bin/rbenv" ]; then
-      export RBENV_ROOT="$dir/var/rbenv"
-      eval "$(rbenv init - --no-rehash)"
-    fi
-    # Installing bottles on Linux requires installing a recent version of glibc,
-    # which horribly messes up my system.
-    local uname=`uname -s`
-    if [ `expr substr "$uname" 1 5` = Linux ]; then
-      export HOMEBREW_BUILD_FROM_SOURCE=1
-    fi
-    export HOMEBREW_NO_ANALYTICS=1
-  fi
-}
-
-# init_texlive [ROOT_DIR]
-init_texlive() {
-  local dir=${1:-~/texlive}
-  if [ -d "$dir" ]; then
-     for dir in `echo $dir/20??`; do :; done
-     export TEXLIVE_ROOT=$dir
-     prepend_path PATH "$dir"/bin/*
-     prepend_path MANPATH "$dir"/texmf-dist/doc/man
-     prepend_path INFOPATH "$dir"/texmf-dist/doc/info
-  fi
-}
-
-################################################################################
-
-[ -z "$TMPDIR" ] && set_path_c TMPDIR /tmp
-
-if [ -z "$BASHRC_LOCAL_LOADED" ]; then
-  # In the case that the quota for the home directory is small, it would be nice
-  # to install software to another local storage.
-  unset LOCAL_BUILD_ROOT
-
-  # Local settings.
-  [ -f ~/.bashrc.local ] && . ~/.bashrc.local
-  [ -d "$LOCAL_BUILD_ROOT" ] && [ -f "$LOCAL_BUILD_ROOT/bashrc.local" ] && \
-    . "$LOCAL_BUILD_ROOT/bashrc.local"
-
-  prepend_path_c PATH ~/bin
-  append_path_c FORMPATH ~/lib/form
-  [ -z "$FORMTMP" ] && set_path_c FORMTMP $TMPDIR
-
-  export BASHRC_LOCAL_LOADED=1
-fi
-
-reload_path() {
-  # Reinitialize everything to keep the order of pathes.
-  unset BASHRC_LOCAL_LOADED
-  unset LOCAL_BUILD_ROOT
-  unset HOMEBREW_PREFIX
-  unset PLENV_ROOT
-  unset PYENV_ROOT
-  unset RBENV_ROOT
-# unset TEXLIVE_ROOT
-  . ~/.bashrc
-}
-
-################################################################################
-
-if [ -d "$LOCAL_BUILD_ROOT" ]; then
-  [ -z "$HOMEBREW_PREFIX" ] && [ -d "$LOCAL_BUILD_ROOT/linuxbrew" ] && \
-    init_homebrew "$LOCAL_BUILD_ROOT/linuxbrew"
-  [ -z "$PLENV_ROOT" ] && [ -d "$LOCAL_BUILD_ROOT/plenv" ] && \
-    init_plenv "$LOCAL_BUILD_ROOT/plenv"
-  [ -z "$PYENV_ROOT" ] && [ -d "$LOCAL_BUILD_ROOT/pyenv" ] && \
-    init_pyenv "$LOCAL_BUILD_ROOT/pyenv"
-  [ -z "$RBENV_ROOT" ] && [ -d "$LOCAL_BUILD_ROOT/rbenv" ] && \
-    init_rbenv "$LOCAL_BUILD_ROOT/rbenv"
-# [ -z "$TEXLIVE_ROOT" ] && [ -d "$LOCAL_BUILD_ROOT/texlive" ] && \
-#   init_texlive "$LOCAL_BUILD_ROOT/texlive"
-fi
-
-[ -z "$HOMEBREW_PREFIX" ] && [ -d "~/.linuxbrew" ] && \
-  init_homebrew "~/.linuxbrew"
-[ -z "$PLENV_ROOT" ] && [ -d "~/.plenv" ] && \
-  init_plenv "~/.plenv"
-[ -z "$PYENV_ROOT" ] && [ -d "~/.pyenv" ] && \
-  init_pyenv "~/.pyenv"
-[ -z "$RBENV_ROOT" ] && [ -d "~/.rbenv" ] && \
-  init_plenv "~/.rbenv"
-
-type brew >/dev/null 2>&1 && \
-  append_path_c FORMPATH $(brew --prefix)/share/form
-
-################################################################################
+# PATHs.
+prepend_path_c PATH ~/bin
+clean_path
 
 # If not running interactively, don't do anything.
 [ -z "$PS1" ] && return
@@ -356,6 +211,3 @@ cl() {
   resize -s 43 132
   clear
 }
-
-# copyd & pasted
-[ -f ~/bin/copyd.sh ] &&  . ~/bin/copyd.sh

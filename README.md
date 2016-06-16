@@ -85,7 +85,7 @@ Install other software packages via Linuxbrew:
 ```
 # Python via pyenv
 brew install pyenv
-reload_path  # or set $PYENV_ROOT manually
+. $LOCAL_BUILD_ROOT/bashrc.local # set $PYENV_ROOT and initialize pyenv
 brew install bzip2 sqlite gdbm
 CPPFLAGS="-I$(brew --prefix)/include" LDFLAGS="-L$(brew --prefix)/lib -Wl,-rpath,$(brew --prefix)/lib" pyenv install 2.7.11
 CPPFLAGS="-I$(brew --prefix)/include" LDFLAGS="-L$(brew --prefix)/lib -Wl,-rpath,$(brew --prefix)/lib" pyenv install 3.5.1
