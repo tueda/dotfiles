@@ -54,7 +54,7 @@ If Ruby (>=1.8.6) is not installed:
 ```
 ~/.dotfiles/install.sh openssl
 ~/.dotfiles/install.sh ruby
-. $LOCAL_BUILD_ROOT/bashrc.local
+. $LOCAL_BUILD_ROOT/bashrc.local  # add ruby to PATH
 ```
 Some features of Ruby may be missing (e.g., readline) and you may need to
 reinstall it via Linuxbrew later.
@@ -62,7 +62,7 @@ reinstall it via Linuxbrew later.
 Install Linuxbrew:
 ```
 ~/.dotfiles/install.sh linuxbrew
-. $LOCAL_BUILD_ROOT/bashrc.local
+. $LOCAL_BUILD_ROOT/bashrc.local  # add brew to PATH
 ```
 
 Install the latest GCC:
@@ -89,9 +89,9 @@ brew install pyenv
 brew install bzip2 sqlite gdbm
 CPPFLAGS="-I$(brew --prefix)/include" LDFLAGS="-L$(brew --prefix)/lib -Wl,-rpath,$(brew --prefix)/lib" pyenv install 2.7.11
 CPPFLAGS="-I$(brew --prefix)/include" LDFLAGS="-L$(brew --prefix)/lib -Wl,-rpath,$(brew --prefix)/lib" pyenv install 3.5.1
-pyenv install pypy-5.0.1
+pyenv install pypy-5.1.1
 pyenv install pypy3-2.4.0
-pyenv global 2.7.11 3.5.1 pypy-5.0.1 pypy3-2.4.0
+pyenv global 2.7.11 3.5.1 pypy-5.1.1 pypy3-2.4.0
 
 pip install --upgrade pip
 pip3 install --upgrade pip
@@ -136,6 +136,7 @@ pypy3 -m pip install python-form
 ```
 # igraph
 brew install homebrew/science/openblas  # OS X has own blas but Linux not
+# brew install libxml2  # if missing
 brew install homebrew/science/igraph
 pip install python-igraph
 pip3 install python-igraph

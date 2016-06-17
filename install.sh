@@ -60,11 +60,18 @@ mktemp_d() {(
   echo "$dir"
 )}
 
+curl_enabled=:
+wget_enabled=:
+
+# Even if curl fails, wget may work.
+[ -n "$INSTALL_SH_DISABLE_CURL" ] && [ "$INSTALL_SH_DISABLE_CURL" == 1 ] && \
+  curl_enabled=false
+
 # Wraps "wget $1"
 download() {
-  if type curl >/dev/null 2>&1; then
+  if $curl_enabled && type curl >/dev/null 2>&1; then
     curl -O -L "$1"
-  elif type wget >/dev/null 2>&1; then
+  elif $wget_enabled && type wget >/dev/null 2>&1; then
     wget -O `basename "$1"` "$1"
   else
     echo "error: curl or wget required" >&2

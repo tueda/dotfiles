@@ -46,6 +46,7 @@ else
 " NeoBundle 'zah/nim.vim'
 " NeoBundle 'rust-lang/rust.vim'
 " NeoBundle 'scrooloose/syntastic'  " too slow!
+  NeoBundle 'Konfekt/FastFold'
 
   NeoBundle 'haya14busa/incsearch.vim'
   map /  <Plug>(incsearch-forward)

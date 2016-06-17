@@ -6,7 +6,6 @@ umask 022
 
 # Loading other files.
 [ -f ~/bin/path-manip.bash ] && . ~/bin/path-manip.bash
-[ -f ~/bin/copyd.sh ] &&  . ~/bin/copyd.sh
 [ -f ~/.bashrc.local ] && . ~/.bashrc.local
 [ -n "$LOCAL_BUILD_ROOT" ] && [ -d "$LOCAL_BUILD_ROOT" ] && \
   [ -f "$LOCAL_BUILD_ROOT/bashrc.local" ] && . "$LOCAL_BUILD_ROOT/bashrc.local"
@@ -210,4 +209,12 @@ st() {
 cl() {
   resize -s 43 132
   clear
+}
+
+[ -f ~/bin/copyd.sh ] &&  . ~/bin/copyd.sh
+
+[ -d ~/bin/enhancd ] && { type fzf >/dev/null 2>&1 || \
+                          type peco >/dev/null 2>&1 || \
+                          type percol >/dev/null 2>&1; } && {
+  . ~/bin/enhancd/init.sh
 }
