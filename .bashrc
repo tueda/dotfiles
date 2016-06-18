@@ -180,31 +180,33 @@ fi
 alias top='nice top'
 alias htop='nice htop'
 
-# Process Status Tree: show the currently-running processes in the tree format.
+# Process Status Tree: shows the currently-running processes in the tree format.
 #   Usage: pst
 alias pst='ps f -o user,pid,ppid,pgid,tty,stat,stime,time,%cpu,%mem,command'
 
-# Disk Usage Directory: show file space usage in the current directory.
+# Disk Usage Directory: shows file space usage in the current directory.
 #   Usage: dud
 alias dud='du --max-depth=1 --block-size=1M --total | sort -n'
 
-# Screen Directory: set the starting directory of GNU screen.
+# Screen Directory: sets the starting directory of GNU screen.
 #   Usage: sd [<dir>]
 sd() {
   \screen -X chdir "`pwd`/$*"
 }
 
-# Screen Title: set the session name in GNU screen.
-#   Usage: st [<oldname>] <newname>
+# Screen Title: sets the session name in GNU screen.
+#   Usage: st [[<oldname>] <newname>]
 st() {
-  if [ -n "$2" ]; then
-    \screen -S "$1" -X sessionname "$2"
-  else
+  if [ -z "$1" ]; then
+    \screen -X sessionname `basename "$PWD"`
+  elif [ -z "$2" ]; then
     \screen -X sessionname "$1"
-  fi;
+  else
+    \screen -S "$1" -X sessionname "$2"
+  fi
 }
 
-# CLear: clear the terminal window. Doesn't work under GNU screen.
+# CLear: clears the terminal window. Doesn't work under GNU screen.
 #   Usage: cl
 cl() {
   resize -s 43 132
