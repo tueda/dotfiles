@@ -1,5 +1,5 @@
 pkgname=texlive
-pkgver=2015
+pkgver=2016
 
 do_install() {
   osname=`uname -s`
