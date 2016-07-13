@@ -67,6 +67,7 @@ Install Linuxbrew:
 
 Install the latest GCC:
 ```
+# brew install binutils  # if any problem for new CPU instructions
 brew install gcc --without-glibc
 ```
 
