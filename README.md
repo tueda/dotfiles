@@ -160,6 +160,16 @@ brew install colordiff
 brew install htop
 ```
 
+### Caveats
+
+After installing `gcc` in the above procedure, upgrading one of the libraries
+which `gcc` depends on, for example `gmp`, requires to make Linuxbrew believe
+that the brewed-`gcc` is not installed: upgrading `gmp` first removes the
+brewed-`gmp`, so that the brwed-`gcc` does not work. Unlinking `brew unlink gcc`
+is not enough because Linuxbrew checks executables in
+`${HOMEBREW_PREFIX}/opt/gcc/bin`. So this directory has to be temporarily
+renamed, or some code in `developement_tools.rb` has to be modified.
+
 ### SSH URL
 
 ```
