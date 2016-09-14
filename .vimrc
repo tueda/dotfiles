@@ -499,6 +499,7 @@ set   hidden
 set   mouse=a
 set   showcmd
 set   showmatch
+set   visualbell t_vb=  " no beep or flash
 
 if !has('gui_running')
   set ttimeoutlen=10

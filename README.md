@@ -71,6 +71,11 @@ Install the latest GCC:
 brew install gcc --without-glibc
 ```
 
+Debugging tools might be also updated:
+```
+brew install gdb valgrind
+```
+
 Reinstall Ruby via Linuxbrew:
 ```
 brew install ruby
@@ -124,7 +129,7 @@ brew install lua luajit vim --ignore-dependencies  # Use the installed Python
 ```
 ```
 # Gnuplot
-brew install gnuplot --with-pdflib-lite --with-x11
+brew install gnuplot --with-cairo --with-pdflib-lite --with-x11
 ```
 ```
 # FORM
@@ -169,6 +174,9 @@ brewed-`gmp`, so that the brwed-`gcc` does not work. Unlinking `brew unlink gcc`
 is not enough because Linuxbrew checks executables in
 `${HOMEBREW_PREFIX}/opt/gcc/bin`. So this directory has to be temporarily
 renamed, or some code in `developement_tools.rb` has to be modified.
+
+`fontconfig` may need to be configured with `--disable-docs`. See
+https://github.com/Linuxbrew/legacy-linuxbrew/issues/824.
 
 ### SSH URL
 
