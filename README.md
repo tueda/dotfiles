@@ -92,12 +92,12 @@ Install other software packages via Linuxbrew:
 # Python via pyenv
 brew install pyenv
 . $LOCAL_BUILD_ROOT/bashrc.local # set $PYENV_ROOT and initialize pyenv
-brew install bzip2 sqlite gdbm
-CPPFLAGS="-I$(brew --prefix)/include" LDFLAGS="-L$(brew --prefix)/lib -Wl,-rpath,$(brew --prefix)/lib" pyenv install 2.7.11
-CPPFLAGS="-I$(brew --prefix)/include" LDFLAGS="-L$(brew --prefix)/lib -Wl,-rpath,$(brew --prefix)/lib" pyenv install 3.5.1
-pyenv install pypy-5.1.1
-pyenv install pypy3-2.4.0
-pyenv global 2.7.11 3.5.1 pypy-5.1.1 pypy3-2.4.0
+brew install berkeley-db4 bzip2 gdbm openssl readline sqlite
+CPPFLAGS="-I$(brew --prefix)/include" LDFLAGS="-L$(brew --prefix)/lib -Wl,-rpath,$(brew --prefix)/lib" pyenv install 2.7.12
+CPPFLAGS="-I$(brew --prefix)/include" LDFLAGS="-L$(brew --prefix)/lib -Wl,-rpath,$(brew --prefix)/lib" pyenv install 3.5.2
+pyenv install pypy-5.4.1
+pyenv install pypy3.3-5.2-alpha1
+pyenv global 2.7.12 3.5.2 pypy-5.4.1 pypy3.3-5.2-alpha1
 
 pip install --upgrade pip
 pip3 install --upgrade pip
@@ -106,7 +106,9 @@ pypy3 -m pip install --upgrade pip
 
 pip install numpy
 pip3 install numpy
-# pypy -m pip install git+https://bitbucket.org/pypy/numpy.git
+pypy -m pip install numpy
+pypy3 -m pip install numpy
+# pypy -m pip install git+https://bitbucket.org/pypy/numpy.git  # alternatively
 
 pip install sympy
 pip3 install sympy
@@ -114,7 +116,14 @@ pypy -m pip install sympy
 pypy3 -m pip install sympy
 
 pip install matplotlib
-# pip3 install matplotlib
+pip3 install matplotlib
+pypy -m pip install matplotlib
+# pypy3 -m pip install matplotlib  # error
+
+pip install cython
+pip3 install cython
+pypy -m pip install cython
+pypy3 -m pip install cython
 
 pip install ipython
 pip3 install ipython
@@ -146,6 +155,8 @@ brew install homebrew/science/openblas  # OS X has own blas but Linux not
 brew install homebrew/science/igraph
 pip install python-igraph
 pip3 install python-igraph
+pypy -m pip install python-igraph
+pypy3 -m pip install python-igraph
 ```
 ```
 # GiNaC
@@ -157,6 +168,15 @@ brew install snappy
 pip install python-snappy
 pip3 install python-snappy
 pypy -m pip install python-snappy
+# pypy3 -m pip install python-snappy  # error
+```
+```
+# PPL
+brew install ppl
+pip install pplpy
+# pip3 install pplpy  # error
+# pypy -m pip install pplpy  # error
+# pypy3 -m pip install pplpy  # error
 ```
 ```
 # Misc.
