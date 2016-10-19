@@ -85,25 +85,13 @@ case "$TERM" in
     ;;
 esac
 
-# Terminal capabilities.
 case "$TERM" in
-  xterm*)
+  xterm)
     case "$COLORTERM" in
       gnome-terminal)
         export TERM=xterm-256color
         ;;
-      *)
-        if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-          export VIM_256COLOR=1
-        fi
-        ;;
     esac
-    ;;
-  putty*)
-    export VIM_256COLOR=1
-    export VIM_BACKGROUND=dark
-    # My Windows laptop has Powerline fonts :-)
-    export VIM_POWERLINE=1
     ;;
 esac
 

@@ -39,8 +39,8 @@ else
 
   NeoBundle 'Shougo/neomru.vim'
 " NeoBundle 'nathanaelkane/vim-indent-guides'
-  NeoBundle 'jonathanfilip/vim-lucius'
-" NeoBundle 'altercation/vim-colors-solarized'
+" NeoBundle 'jonathanfilip/vim-lucius'
+  NeoBundle 'altercation/vim-colors-solarized'
 " NeoBundle 'tyru/caw.vim.git'
   NeoBundle 'tueda/form.vim'
 " NeoBundle 'zah/nim.vim'
@@ -438,12 +438,13 @@ if exists('+colorcolumn')
 endif
 
 try
-  let g:lucius_contrast = 'high'
-  let g:lucius_no_term_bg = 1
-  colorscheme lucius
-" let g:solarized_termcolors=256
-" let g:solarized_termtrans=1
-" colorscheme solarized
+" let g:lucius_contrast = 'high'
+" let g:lucius_no_term_bg = 1
+" colorscheme lucius
+  let g:solarized_termcolors = &t_Co
+  let g:solarized_termtrans = 1
+  let g:solarized_visibility = "low"
+ colorscheme solarized
 catch /^Vim\%((\a\+)\)\=:E185/  " E185: Cannot find color scheme
 endtry
 
