@@ -129,7 +129,7 @@ pip install ipython
 pip3 install ipython
 pyenv rehash
 
-pip install flake8 flake8-pep257 pep8-naming flake8-import-order
+pip install flake8 flake8_docstrings pep8-naming flake8-import-order
 ```
 ```
 # Vim
