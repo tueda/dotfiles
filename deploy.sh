@@ -96,21 +96,30 @@ mkdir -p "$HOME/bin"
 (
   cd "$HOME/bin"
 
-  download https://gist.githubusercontent.com/tueda/6718638/raw/path-manip.bash
+  download https://gist.githubusercontent.com/tueda/8146d9a44b5b1ec18fee/raw/ndiff
+  chmod +x ndiff
 
   download https://gist.githubusercontent.com/tueda/7777291/raw/tarb
   chmod +x tarb
 
-  download https://raw.githubusercontent.com/git/git/master/contrib/diff-highlight/diff-highlight
-  chmod +x diff-highlight
+  download https://gist.githubusercontent.com/tueda/6744aadd5b423c838b44/raw/git-wc
+  chmod +x git-wc
+
+  download https://gist.githubusercontent.com/tueda/f44b42a12ac16c1966e9743e344615a1/raw/formset.py
+  chmod +x formset.py
+
+  download https://gist.githubusercontent.com/tueda/3e1b2bec8545c48737c7/raw/formprof.py
+  chmod +x formprof.py
 
   download https://gist.githubusercontent.com/hSATAC/1095100/raw/256color.pl
   chmod +x 256color.pl
 
-# download https://gist.githubusercontent.com/tueda/9253579/raw/copyd.sh
+  download https://raw.githubusercontent.com/git/git/master/contrib/diff-highlight/diff-highlight
+  chmod +x diff-highlight
 
-# download https://gist.githubusercontent.com/tueda/3e1b2bec8545c48737c7/raw/formprof.py
-# chmod +x formprof.py
+# download https://gist.githubusercontent.com/tueda/6718638/raw/path-manip.bash
+
+# download https://gist.githubusercontent.com/tueda/9253579/raw/copyd.sh
 
 # download http://particle.uni-wuppertal.de/harlander/software/sortref/sortref
 # chmod +x sortref
