@@ -103,7 +103,7 @@ screen-update-env() {
       export VIM_POWERLINE=
       \screen -X setenv VIM_256COLOR 1
       \screen -X setenv VIM_BACKGROUND light
-      \screen -X setenv VIM_POWERLINE ''
+#      \screen -X setenv VIM_POWERLINE ''
       ;;
     putty*)
       export VIM_256COLOR=1
@@ -111,7 +111,7 @@ screen-update-env() {
       export VIM_POWERLINE=1
       \screen -X setenv VIM_256COLOR 1
       \screen -X setenv VIM_BACKGROUND dark
-      \screen -X setenv VIM_POWERLINE 1
+#      \screen -X setenv VIM_POWERLINE 1
       ;;
     *)
       echo 'Usage: screen-update-env [xterm|putty]' 2>&1
