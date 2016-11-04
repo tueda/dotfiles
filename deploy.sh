@@ -105,6 +105,9 @@ mkdir -p "$HOME/bin"
   download https://gist.githubusercontent.com/tueda/6744aadd5b423c838b44/raw/git-wc
   chmod +x git-wc
 
+  download https://gist.githubusercontent.com/tueda/139acbc4d354633d42c5c2f022d650ae/raw/git-lsearch
+  chmod +x git-lsearch
+
   download https://gist.githubusercontent.com/tueda/f44b42a12ac16c1966e9743e344615a1/raw/formset.py
   chmod +x formset.py
 
