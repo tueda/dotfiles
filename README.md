@@ -68,7 +68,7 @@ Install Linuxbrew:
 Install the latest GCC:
 ```
 # brew install binutils  # if any problem for new CPU instructions
-brew install gcc --without-glibc
+brew install gcc --without-glibc  # installing glibc always makes a mess
 ```
 
 Debugging tools might be also updated:
@@ -90,14 +90,16 @@ brew install git --without-tcl-tk  # if no Xlib
 Install other software packages via Linuxbrew:
 ```
 # Python via pyenv
-brew install pyenv
+brew install pyenv --HEAD
+# brew install pyenv
 . $LOCAL_BUILD_ROOT/bashrc.local # set $PYENV_ROOT and initialize pyenv
 brew install berkeley-db4 bzip2 gdbm openssl readline sqlite
 CPPFLAGS="-I$(brew --prefix)/include" LDFLAGS="-L$(brew --prefix)/lib -Wl,-rpath,$(brew --prefix)/lib" pyenv install 2.7.12
 CPPFLAGS="-I$(brew --prefix)/include" LDFLAGS="-L$(brew --prefix)/lib -Wl,-rpath,$(brew --prefix)/lib" pyenv install 3.5.2
 pyenv install pypy-5.4.1
-pyenv install pypy3.3-5.2-alpha1
-pyenv global 2.7.12 3.5.2 pypy-5.4.1 pypy3.3-5.2-alpha1
+pyenv install pypy3.3-5.5-alpha
+
+pyenv global 2.7.12 3.5.2 pypy-5.4.1 pypy3.3-5.5-alpha
 
 pip install --upgrade pip
 pip3 install --upgrade pip
