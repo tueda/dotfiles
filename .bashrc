@@ -95,27 +95,20 @@ case "$TERM" in
     ;;
 esac
 
-screen-update-env() {
-  case "$1" in
-    xterm*)
-      export VIM_256COLOR=1
-      export VIM_BACKGROUND=light
-      export VIM_POWERLINE=
-      \screen -X setenv VIM_256COLOR 1
+light() {
+  export VIM_BACKGROUND=light
+  case "$TERM" in
+    screen*)
       \screen -X setenv VIM_BACKGROUND light
-#      \screen -X setenv VIM_POWERLINE ''
       ;;
-    putty*)
-      export VIM_256COLOR=1
-      export VIM_BACKGROUND=dark
-      export VIM_POWERLINE=1
-      \screen -X setenv VIM_256COLOR 1
+  esac
+}
+
+dark() {
+  export VIM_BACKGROUND=dark
+  case "$TERM" in
+    screen*)
       \screen -X setenv VIM_BACKGROUND dark
-#      \screen -X setenv VIM_POWERLINE 1
-      ;;
-    *)
-      echo 'Usage: screen-update-env [xterm|putty]' 2>&1
-      return 1
       ;;
   esac
 }
@@ -201,10 +194,10 @@ cl() {
   clear
 }
 
-[ -f ~/bin/copyd.sh ] &&  . ~/bin/copyd.sh
-
-[ -d ~/bin/enhancd ] && { type fzf >/dev/null 2>&1 || \
-                          type peco >/dev/null 2>&1 || \
-                          type percol >/dev/null 2>&1; } && {
-  . ~/bin/enhancd/init.sh
-}
+# [ -f ~/bin/copyd.sh ] &&  . ~/bin/copyd.sh
+# 
+# [ -d ~/bin/enhancd ] && { type fzf >/dev/null 2>&1 || \
+#                           type peco >/dev/null 2>&1 || \
+#                           type percol >/dev/null 2>&1; } && {
+#   . ~/bin/enhancd/init.sh
+# }

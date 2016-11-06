@@ -1,0 +1,238 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'Shougo/vimproc.vim'
+build = 'make'
+
+[[plugins]]
+repo = 'altercation/vim-colors-solarized'
+hook_add = '''
+  let g:solarized_termcolors = &t_Co
+  let g:solarized_termtrans = 1
+  let g:solarized_visibility = "low"
+  autocmd vimrc VimEnter * nested colorscheme solarized | highlight link ExtraWhitespace Visual
+'''
+
+[[plugins]]
+repo = 'Konfekt/FastFold'
+
+[[plugins]]
+repo = 'dietsche/vim-lastplace'
+hook_add = '''
+  let g:lastplace_ignore = 'gitcommit,gitrebase,svn,hgcommit'
+'''
+
+[[plugins]]
+repo = 'ConradIrwin/vim-bracketed-paste'
+
+[[plugins]]
+repo = 'haya14busa/incsearch.vim'
+hook_add = '''
+  map /  <Plug>(incsearch-forward)
+  map ?  <Plug>(incsearch-backward)
+  map g/ <Plug>(incsearch-stay)
+'''
+
+[[plugins]]
+repo = 'osyo-manga/vim-anzu'
+hook_add = '''
+  nmap n <Plug>(anzu-n-with-echo)
+  nmap N <Plug>(anzu-N-with-echo)
+  nmap * <Plug>(anzu-star-with-echo)
+  nmap # <Plug>(anzu-sharp-with-echo)
+'''
+
+[[plugins]]
+repo = 'YankRing.vim'
+hook_add = '''
+  let g:yankring_history_file = ".yankring_history"
+'''
+
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]]
+repo = 'osyo-manga/vim-precious'
+depends = 'context_filetype.vim'
+
+[[plugins]]
+repo = 'nvie/vim-flake8'
+hook_add = '''
+  let g:flake8_show_quickfix=1
+  let g:flake8_show_in_gutter=1
+  let g:flake8_show_in_file=1
+  let g:flake8_max_markers=5000
+'''
+on_ft = 'python'
+
+[[plugins]]
+repo = 'vim-scripts/jpythonfold.vim'
+on_ft = 'python'
+if = 0
+
+[[plugins]]
+repo =  'tmhedberg/SimpylFold'
+on_ft = 'python'
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
+
+[[plugins]]
+repo = 'tueda/form.vim'
+hook_add = '''
+  let g:form_enhanced_color = 0
+'''
+on_ft = 'form'
+
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+hook_add = '''
+  set   laststatus=2
+  set noshowmode
+
+  let g:lightline = {
+        \ 'active': {
+        \   'left': [ [ 'mode', 'paste' ], [ 'filename' ], [ 'bufhist' ] ],
+        \ },
+        \ 'component_function': {
+        \   'readonly': 'MyReadonly',
+        \   'modified': 'MyModified',
+        \   'filename': 'MyFilename',
+        \   'bufhist' : 'Mline_bufhist',
+        \ },
+        \ }
+
+  if $VIM_POWERLINE != "" && g:term_utf8
+    let s:SYM_RO = '⭤'
+    let g:lightline.separator = {
+          \   'left'  : '⮀',
+          \   'right' : '⮂' ,
+          \ }
+    let g:lightline.subseparator = {
+          \   'left'  : '⮁',
+          \   'right' : '⮃',
+          \ }
+  else
+    let s:SYM_RO = 'x'
+    let g:lightline.separator = {
+          \   'left'  : '',
+          \   'right' : '' ,
+          \ }
+    let g:lightline.subseparator = {
+          \   'left'  : '|',
+          \   'right' : '|',
+          \ }
+  endif
+
+  if g:term_utf8
+    let s:SYM_ELLIPSIS = '…'
+  else
+    let s:SYM_ELLIPSIS = '..'
+  endif
+
+  function! MyModified()
+    if &filetype == 'help'
+      return ''
+    elseif &modified
+      return '+'
+    elseif &modifiable
+      return ''
+    else
+      return '-'
+    endif
+  endfunction
+
+  function! MyReadonly()
+    if &filetype == 'help'
+      return ''
+    elseif &readonly
+      return s:SYM_RO
+    else
+      return ''
+    endif
+  endfunction
+
+  function! MyFilename()
+    return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+         \ printf('[%d]:%s', bufnr('%'),
+              \ ('' != expand('%:t') ? expand('%:t') : '[No Name]')) .
+         \ ('' != MyModified() ? ' ' . MyModified() : '')
+  endfunction
+
+  let g:mline_bufhist_queue = []
+  let g:mline_bufhist_limit = 20
+  let g:mline_bufhist_width = 15
+  let g:mline_bufhist_exclution_pat = '^$\|.jax$\|vimfiler:\|\[unite\]\|tagbar'
+
+  let g:mline_bufhist_enable = 1
+  command! Btoggle :let g:mline_bufhist_enable = g:mline_bufhist_enable ? 0 : 1
+        \ | :redrawstatus!
+
+  function! Mline_bufhist()
+    if &filetype =~? 'unite\|vimfiler\|tagbar' || !&modifiable ||
+            \ len(g:mline_bufhist_queue) == 0 || g:mline_bufhist_enable == 0
+      return ''
+    endif
+
+    let max_len = winwidth(0) - 80 + g:mline_bufhist_width -
+          \ strlen(s:SYM_ELLIPSIS)
+
+    let current_buf_nr = bufnr('%')
+    let buf_names_str = ''
+    let last = g:mline_bufhist_queue[-1]
+
+    for file in g:mline_bufhist_queue
+      let f = fnamemodify(file, ':t')
+      let n = bufnr(f)
+
+      if n != current_buf_nr
+        let str = buf_names_str .
+                \ printf('[%d]:%s', n, f) . (file == last ? '' : ' | ')
+        let len = strlen(str)
+        if len > max_len
+          if buf_names_str != ''
+            let buf_names_str .= s:SYM_ELLIPSIS
+          endif
+          break
+        endif
+        let buf_names_str = str
+      endif
+    endfor
+
+    return buf_names_str
+  endfunction
+
+  function! s:update_recent_buflist(file)
+    if a:file =~? g:mline_bufhist_exclution_pat
+      " exclusion from queue
+      return
+    endif
+
+    if len(g:mline_bufhist_queue) == 0
+      " init
+      for i in range(min( [ bufnr('$'), g:mline_bufhist_limit + 1 ] ))
+        let t = bufname(i)
+        if bufexists(i) && t !~? g:mline_bufhist_exclution_pat
+          call add(g:mline_bufhist_queue, fnamemodify(t, ':p'))
+        endif
+      endfor
+    endif
+
+    " update exist buffer
+    let idx = index(g:mline_bufhist_queue, a:file)
+    if 0 <= idx
+      call remove(g:mline_bufhist_queue, idx)
+    endif
+
+    call insert(g:mline_bufhist_queue, a:file)
+
+    if g:mline_bufhist_limit + 1 < len(g:mline_bufhist_queue)
+      call remove(g:mline_bufhist_queue, -1)
+    endif
+  endfunction
+
+  autocmd vimrc TabEnter,BufWinEnter * call s:update_recent_buflist(expand('<amatch>'))
+'''
