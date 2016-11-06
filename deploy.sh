@@ -96,6 +96,8 @@ mkdir -p "$HOME/bin"
 (
   cd "$HOME/bin"
 
+  download https://gist.githubusercontent.com/tueda/6718638/raw/path-manip.bash
+
   download https://gist.githubusercontent.com/tueda/8146d9a44b5b1ec18fee/raw/ndiff
   chmod +x ndiff
 
@@ -119,8 +121,6 @@ mkdir -p "$HOME/bin"
 
   download https://raw.githubusercontent.com/git/git/master/contrib/diff-highlight/diff-highlight
   chmod +x diff-highlight
-
-# download https://gist.githubusercontent.com/tueda/6718638/raw/path-manip.bash
 
 # download https://gist.githubusercontent.com/tueda/9253579/raw/copyd.sh
 
