@@ -62,9 +62,11 @@ set nospell
 set   visualbell t_vb=  " no beep or flash
 set   whichwrap=b,s,<,>,[,]
 
-set   wildignore+=*.o
+set   wildignore+=*.o,*.exe
 set   wildignore+=*.pyc,*.pyo
-set   wildignore+=*.aux,*.ax1,*.ax2,*.bbl,*.blg,*.dvi,*.fls,*.pdf,*.spl,*.toc
+set   wildignore+=*.aux,*.ax1,*.ax2,*.bbl,*.blg,*.fls,*.spl,*.toc
+set   wildignore+=*.nav,*.spl,*.snm,*.vrb
+set   wildignore+=*.dvi,*.pdf
 
 " Prevent a delay when pressing ESC.
 if !has('gui_running')
@@ -347,12 +349,15 @@ if v:version >= 704
   if dein#load_state(s:dein_dir)
     call dein#begin(s:dein_dir)
 
-    let s:rc_dir    = expand("~/.vim")
+    let s:rc_dir    = expand('~/.vim')
     let s:toml      = s:rc_dir . '/dein.toml'
     let s:lazy_toml = s:rc_dir . '/dein_lazy.toml'
 
     call dein#load_toml(s:toml,      {'lazy': 0})
     call dein#load_toml(s:lazy_toml, {'lazy': 1})
+
+    " For developing plugins.
+    " call dein#local(s:rc_dir . '/bundle')
 
     call dein#end()
     call dein#save_state()

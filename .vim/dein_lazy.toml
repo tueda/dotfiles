@@ -1,0 +1,61 @@
+[[plugins]]
+repo = 'Shougo/neco-syntax'
+
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+depends = 'neco-syntax'
+if = "has('nvim') && has('python3')"
+on_i = 1
+hook_source = '''
+  let g:deoplete#enable_at_startup = 1
+  " <TAB>: completion.
+  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+'''
+
+[[plugins]]
+repo = 'Shougo/neocomplete.vim'
+depends = 'neco-syntax'
+if = "!(has('nvim') && has('python3')) && has('lua')"
+on_i = 1
+hook_source = '''
+  let g:neocomplete#enable_at_startup = 1
+  let g:neocomplete#sources#syntax#min_keyword_length = 3
+  let g:neocomplete#skip_auto_completion_time = '0.1'
+  " <TAB>: completion.
+  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+'''
+
+[[plugins]]
+repo = 'nvie/vim-flake8'
+hook_source = '''
+  let g:flake8_show_quickfix=1
+  let g:flake8_show_in_gutter=1
+  let g:flake8_show_in_file=1
+  let g:flake8_max_markers=5000
+'''
+on_ft = 'python'
+
+[[plugins]]
+#repo = 'vim-scripts/jpythonfold.vim'
+repo = 'mbadran/jpythonfold.vim'
+on_ft = 'python'
+
+[[plugins]]
+repo =  'tmhedberg/SimpylFold'
+on_ft = 'python'
+if = 0
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
+
+[[plugins]]
+repo = 'matze/vim-tex-fold'
+on_ft = 'tex'
+
+[[plugins]]
+repo = 'tueda/form.vim'
+hook_source = '''
+  let g:form_enhanced_color = 0
+'''
+on_ft = 'form'

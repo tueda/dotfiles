@@ -44,8 +44,23 @@ download() {
 list_dotfiles() {
   for file in .*; do
     case $file in
-      .|..|.git|.gitignore|.gitmodules|*.swp)
+      .|..|.git|.gitignore|.gitmodules|*.swp|.nfs*)
         continue
+        ;;
+      .config)
+        (
+          cd $file
+          for subfile in *; do
+            case $subfile in
+              .|..|.git|.gitignore|.gitmodules|*.swp|.nfs*)
+                continue
+                ;;
+            esac
+            echo $file/$subfile
+          done
+        )
+        continue
+        ;;
     esac
     echo $file
   done
@@ -88,6 +103,11 @@ for file in `list_dotfiles`; do
     backup=:
   fi
   echo "info: link $file"
+  case "$file" in
+    .config/*)
+      mkdir -p "$HOME/.config"
+      ;;
+  esac
   ln -s `pwd`/"$file" "$HOME/$file"
 done
 
