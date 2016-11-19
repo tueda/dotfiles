@@ -18,13 +18,21 @@ hook_add = '''
 repo = 'Konfekt/FastFold'
 
 [[plugins]]
+repo = 'kopischke/vim-stay'
+hook_add = '''
+  setlocal viewoptions=cursor,folds,options,slash,unix
+'''
+
+[[plugins]]
 repo = 'dietsche/vim-lastplace'
 hook_add = '''
   let g:lastplace_ignore = 'gitcommit,gitrebase,svn,hgcommit'
 '''
+if = 0
 
 [[plugins]]
-repo = 'ConradIrwin/vim-bracketed-paste'
+#repo = 'ConradIrwin/vim-bracketed-paste'
+repo = 'redneb/vim-bracketed-paste'
 
 [[plugins]]
 repo = 'haya14busa/incsearch.vim'
@@ -49,13 +57,16 @@ hook_add = '''
   let g:yankring_history_file = ".yankring_history"
 '''
 
-
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'
 
 [[plugins]]
 repo = 'osyo-manga/vim-precious'
 depends = 'context_filetype.vim'
+hook_add = '''
+" Don't save ft for toml for toml-vim.
+  autocmd BufNewFile,BufRead *.toml setlocal viewoptions=cursor,folds,slash,unix
+'''
 
 [[plugins]]
 repo = 'nvie/vim-flake8'
@@ -68,17 +79,22 @@ hook_add = '''
 on_ft = 'python'
 
 [[plugins]]
-repo = 'vim-scripts/jpythonfold.vim'
+#repo = 'vim-scripts/jpythonfold.vim'
+repo = 'mbadran/jpythonfold.vim'
 on_ft = 'python'
-if = 0
 
 [[plugins]]
 repo =  'tmhedberg/SimpylFold'
 on_ft = 'python'
+if = 0
 
 [[plugins]]
 repo = 'cespare/vim-toml'
 on_ft = 'toml'
+
+[[plugins]]
+repo = 'matze/vim-tex-fold'
+on_ft = 'tex'
 
 [[plugins]]
 repo = 'tueda/form.vim'
