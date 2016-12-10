@@ -87,6 +87,13 @@ do_install() {
   write_rc "eval \"\$(plenv init - --no-rehash)\""
   write_rc "fi"
 
+  write_rc "if [ -f \"\$HOMEBREW_PREFIX/bin/opam\" ]; then"
+  set_path OPAMROOT "\$HOMEBREW_PREFIX/var/opam"
+  write_rc "if [ -f \"\$HOMEBREW_PREFIX/var/opam/config\" ]; then"
+  write_rc "eval \"\$(opam config env)\""
+  write_rc "fi"
+  write_rc "fi"
+
   write_rc "if [ -d \"\$HOMEBREW_PREFIX/share/form\" ]; then"
   append_path FORMPATH "\$HOMEBREW_PREFIX/share/form"
   write_rc "fi"
