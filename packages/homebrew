@@ -67,6 +67,7 @@ do_install() {
   set_path HOMEBREW_LOGS "$prefix/Logs"
   set_path HOMEBREW_BUILD_FROM_SOURCE 1
   set_path HOMEBREW_NO_ANALYTICS 1
+  set_path HOMEBREW_NO_EMOJI 1
 
   write_rc "if [ -f \"\$HOMEBREW_PREFIX/bin/rbenv\" ]; then"
   set_path RBENV_ROOT "\$HOMEBREW_PREFIX/var/rbenv"
