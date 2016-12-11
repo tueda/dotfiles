@@ -139,6 +139,14 @@ brew install lua luajit vim --ignore-dependencies  # Use the installed Python
 # brew install lua luajit vim --without-perl --ignore-dependencies  # Use the installed Python
 ```
 ```
+# Neovim
+brew install msgpack --HEAD  # msgpack/msgpack-c#545
+brew install neovim/neovim/neovim
+pip install neovim
+pip3 install neovim
+gem install neovim
+```
+```
 # Gnuplot
 brew install gnuplot --with-cairo --with-pdflib-lite --with-x11
 ```
