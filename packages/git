@@ -1,0 +1,20 @@
+pkgname=git
+pkgver=2.11.0
+
+do_install() {
+  PATH=/usr/local/bin:/usr/bin:/bin
+  unset LD_LIBRARY_PATH LD_RUN_PATH
+  download https://github.com/git/git/archive/v$pkgver.tar.gz
+  cd $pkgname-$pkgver
+  args=
+  if [ -d $LOCAL_BUILD_ROOT/openssl-1.0.2j ]; then
+    args="$args --with-openssl=$LOCAL_BUILD_ROOT/openssl-1.0.2j"
+  fi
+  make configure
+  ./configure --prefix="$prefix" $args
+  make
+  make install
+  prepend_path PATH "$prefix/bin"
+}
+
+# vim: ft=sh et ts=8 sts=2 sw=2
