@@ -1,5 +1,5 @@
 pkgname=ruby
-pkgver=2.3.1
+pkgver=2.3.3
 
 do_install() {
   PATH=/usr/local/bin:/usr/bin:/bin
@@ -7,8 +7,8 @@ do_install() {
   download https://cache.ruby-lang.org/pub/ruby/2.3/$pkgname-$pkgver.tar.gz
   cd $pkgname-$pkgver
   args=--disable-install-doc
-  if [ -d $LOCAL_BUILD_ROOT/openssl-1.0.2h ]; then
-    args="$args --with-opt-dir=$LOCAL_BUILD_ROOT/openssl-1.0.2h --enable-shared"
+  if [ -d $LOCAL_BUILD_ROOT/openssl-1.0.2j ]; then
+    args="$args --with-opt-dir=$LOCAL_BUILD_ROOT/openssl-1.0.2j --enable-shared"
   fi
   ./configure --prefix="$prefix" $args
   make
