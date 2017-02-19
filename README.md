@@ -93,13 +93,13 @@ Install other software packages via Linuxbrew:
 brew install pyenv --HEAD
 # brew install pyenv
 . $LOCAL_BUILD_ROOT/bashrc.local # set $PYENV_ROOT and initialize pyenv
-brew install berkeley-db4 bzip2 gdbm openssl readline sqlite
-CPPFLAGS="-I$(brew --prefix)/include" LDFLAGS="-L$(brew --prefix)/lib -Wl,-rpath,$(brew --prefix)/lib" pyenv install 2.7.12
-CPPFLAGS="-I$(brew --prefix)/include" LDFLAGS="-L$(brew --prefix)/lib -Wl,-rpath,$(brew --prefix)/lib" pyenv install 3.5.2
-pyenv install pypy-5.4.1
+brew install berkeley-db@4 bzip2 gdbm libffi openssl readline sqlite
+CPPFLAGS="-I$(brew --prefix)/include" LDFLAGS="-L$(brew --prefix)/lib -Wl,-rpath,$(brew --prefix)/lib" pyenv install 2.7.13
+CPPFLAGS="-I$(brew --prefix)/include" LDFLAGS="-L$(brew --prefix)/lib -Wl,-rpath,$(brew --prefix)/lib" pyenv install 3.6.0
+pyenv install pypy-5.6.0
 pyenv install pypy3.3-5.5-alpha
 
-pyenv global 2.7.12 3.5.2 pypy-5.4.1 pypy3.3-5.5-alpha
+pyenv global 2.7.13 3.6.0 pypy-5.6.0 pypy3.3-5.5-alpha
 
 pip install --upgrade pip
 pip3 install --upgrade pip
@@ -109,7 +109,7 @@ pypy3 -m pip install --upgrade pip
 pip install numpy
 pip3 install numpy
 pypy -m pip install numpy
-pypy3 -m pip install numpy
+# pypy3 -m pip install numpy  # version error
 # pypy -m pip install git+https://bitbucket.org/pypy/numpy.git  # alternatively
 
 pip install sympy
@@ -140,7 +140,6 @@ brew install lua luajit vim --ignore-dependencies  # Use the installed Python
 ```
 ```
 # Neovim
-brew install msgpack --HEAD  # msgpack/msgpack-c#545
 brew install neovim/neovim/neovim
 pip install neovim
 pip3 install neovim
@@ -148,6 +147,7 @@ gem install neovim
 ```
 ```
 # Gnuplot
+# brew install fontconfig --without-docs  # If docbook2pdf is not available.
 brew install gnuplot --with-cairo --with-pdflib-lite --with-x11
 ```
 ```
@@ -204,9 +204,6 @@ brewed-`gmp`, so that the brwed-`gcc` does not work. Unlinking `brew unlink gcc`
 is not enough because Linuxbrew checks executables in
 `${HOMEBREW_PREFIX}/opt/gcc/bin`. So this directory has to be temporarily
 renamed, or some code in `developement_tools.rb` has to be modified.
-
-`fontconfig` may need to be configured with `--disable-docs`. See
-https://github.com/Linuxbrew/legacy-linuxbrew/issues/824.
 
 ### SSH URL
 
