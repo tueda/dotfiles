@@ -189,6 +189,15 @@ pip install pplpy
 # pypy3 -m pip install pplpy  # error
 ```
 ```
+# opam
+brew install opam
+. $LOCAL_BUILD_ROOT/bashrc.local  # set $OPAMROOT
+opam init
+eval `opam config env`
+
+opam install cpdf
+```
+```
 # Misc.
 brew install bash-completion
 brew install colordiff
