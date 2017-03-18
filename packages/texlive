@@ -9,7 +9,7 @@ do_install() {
   fi
 
   download http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
-  cd install-tl-$pkgver????
+  cd install-tl-20??????
   echo I | TEXLIVE_INSTALL_PREFIX="$prefix" ./install-tl
 
   prepend_path PATH `echo $prefix/$pkgver/bin/*`
