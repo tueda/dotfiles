@@ -11,7 +11,7 @@ hook_add = '''
   let g:solarized_termcolors = &t_Co
   let g:solarized_termtrans = 1
   let g:solarized_visibility = "low"
-  autocmd vimrc VimEnter * nested colorscheme solarized | highlight link ExtraWhitespace Visual
+  autocmd vimrc VimEnter * nested colorscheme solarized | highlight link ExtraWhitespace Visual | highlight SpellBad cterm=underline ctermbg=224
 '''
 
 [[plugins]]
