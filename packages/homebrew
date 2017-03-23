@@ -59,15 +59,16 @@ do_install() {
   brew doctor || :
   brew install hello && brew test hello || :; brew remove hello || :
 
-  prepend_path PATH "$prefix/bin"
-  prepend_path MANPATH "$prefix/share/man"
-  prepend_path INFOPATH "$prefix/share/info"
   set_path HOMEBREW_PREFIX "$prefix"
-  set_path HOMEBREW_CACHE "$prefix/Cache"
-  set_path HOMEBREW_LOGS "$prefix/Logs"
+  set_path HOMEBREW_CACHE "\$HOMEBREW_PREFIX/Cache"
+  set_path HOMEBREW_LOGS "\$HOMEBREW_PREFIX/Logs"
   set_path HOMEBREW_BUILD_FROM_SOURCE 1
   set_path HOMEBREW_NO_ANALYTICS 1
   set_path HOMEBREW_NO_EMOJI 1
+
+  prepend_path PATH "\$HOMEBREW_PREFIX/bin"
+  prepend_path MANPATH "\$HOMEBREW_PREFIX/share/man"
+  prepend_path INFOPATH "\$HOMEBREW_PREFIX/share/info"
 
   write_rc "if [ -f \"\$HOMEBREW_PREFIX/bin/rbenv\" ]; then"
   set_path RBENV_ROOT "\$HOMEBREW_PREFIX/var/rbenv"
@@ -92,6 +93,11 @@ do_install() {
   write_rc "if [ -f \"\$HOMEBREW_PREFIX/var/opam/config\" ]; then"
   write_rc "eval \"\$(opam config env)\""
   write_rc "fi"
+  write_rc "fi"
+
+  write_rc "if [ -f \"\$HOMEBREW_PREFIX/bin/cargo\" ]; then"
+  set_path CARGO_HOME "\$HOMEBREW_PREFIX/var/cargo"
+  prepend_path PATH "\$HOMEBREW_PREFIX/var/cargo/bin"
   write_rc "fi"
 
   write_rc "if [ -d \"\$HOMEBREW_PREFIX/share/form\" ]; then"

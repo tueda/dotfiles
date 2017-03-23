@@ -198,6 +198,12 @@ eval `opam config env`
 opam install cpdf
 ```
 ```
+# rust
+brew install rust --with-racer
+. $LOCAL_BUILD_ROOT/bashrc.local  # set $CARGO_HOME
+cargo install rustfmt
+```
+```
 # Misc.
 brew install bash-completion
 brew install colordiff
