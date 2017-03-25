@@ -38,6 +38,9 @@ prepend_path PATH /additional/path/to/bin
 
 ### Install Linuxbrew
 
+**NOTE**: The following should work even without the above installation.
+The script `install.sh` is modulalized and independent of the private settings.
+
 Make sure `LOCAL_BUILD_ROOT` is set if you don't want to install software
 in your home directory. Disk usage may become huge.
 ```
