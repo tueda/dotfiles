@@ -86,6 +86,11 @@ autocmd vimrc WinEnter * if (winnr('$') == 1) && (getbufvar(winbufnr(0), '&bufty
 " Automatically change the current directory
 "autocmd BufEnter * silent! lcd %:p:h
 
+" Disable the spell checker for Japanese.
+if v:version > 704 || (v:version == 704 && has('patch89'))
+  set spelllang+=cjk
+endif
+
 "}}}
 " View "{{{
 
@@ -375,4 +380,4 @@ syntax on
 
 set secure
 
-" vim: ft=vim et ts=8 sts=2 sw=2 fdm=marker
+" vim: ft=vim et ts=8 sts=2 sw=2 fdm=marker fmr={{{,}}} fdc=4
