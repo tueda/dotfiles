@@ -52,7 +52,7 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'YankRing.vim'
+repo = 'vim-scripts/YankRing.vim'
 hook_add = '''
   let g:yankring_history_file = ".yankring_history"
 '''
