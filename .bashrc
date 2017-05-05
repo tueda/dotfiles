@@ -130,7 +130,11 @@ shopt -s checkwinsize
 if [ -z "$PROMPT_COMMAND_HISTORY_A" ]; then
   export PROMPT_COMMAND_HISTORY_A=1
   if [ -n "$PROMPT_COMMAND" ]; then
-    export PROMPT_COMMAND="$PROMPT_COMMAND;history -a"
+    if [ ";" = "${PROMPT_COMMAND: -1}" ]; then
+      export PROMPT_COMMAND="${PROMPT_COMMAND}history -a"
+    else
+      export PROMPT_COMMAND="$PROMPT_COMMAND;history -a"
+    fi
   else
     export PROMPT_COMMAND='history -a'
   fi
