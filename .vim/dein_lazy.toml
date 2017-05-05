@@ -37,7 +37,13 @@ on_ft = 'python'
 
 [[plugins]]
 #repo = 'vim-scripts/jpythonfold.vim'
-repo = 'mbadran/jpythonfold.vim'
+#repo = 'mbadran/jpythonfold.vim'
+repo = 'tueda/jpythonfold.vim'
+hook_source = '''
+  let g:jpythonfold_Compact=1
+  let g:jpythonfold_CustomFoldText=1
+  let g:jpythonfold_FoldTextWithoutDocstrings=1
+'''
 on_ft = 'python'
 
 [[plugins]]
