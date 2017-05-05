@@ -1,3 +1,11 @@
+if [ -n "$BASH_STARTUPTIME" ]; then
+  # For profiling. http://stackoverflow.com/a/20855353
+  exec 3>&2 2> >( tee ~/bash-startup.tmp1 |
+                  sed -u 's/^.*$/now/' |
+                  date -f - +%s.%N >~/bash-startup.tmp2)
+  set -x
+fi
+
 # File mode creation mask.
 umask 022
 
@@ -218,3 +226,23 @@ cl() {
 #                           type percol >/dev/null 2>&1; } && {
 #   . ~/bin/enhancd/init.sh
 # }
+
+if [ -n "$BASH_STARTUPTIME" ]; then
+  # For profiling.
+  set +x
+  exec 2>&3 3>&-
+  paste <(
+    while read tim ;do
+      [ -z "$last" ] && last=${tim//.} && first=${tim//.}
+      crt=000000000$((${tim//.}-10#0$last))
+      ctot=000000000$((${tim//.}-10#0$first))
+      printf "%12.9f %12.9f\n" ${crt:0:${#crt}-9}.${crt:${#crt}-9} \
+                               ${ctot:0:${#ctot}-9}.${ctot:${#ctot}-9}
+      last=${tim//.}
+    done <~/bash-startup.tmp2
+  ) <(
+    echo START
+    head -n -1 ~/bash-startup.tmp1
+  ) >~/bash-startup.log
+  rm -f ~/bash-startup.tmp1 ~/bash-startup.tmp2
+fi
