@@ -11,10 +11,13 @@ do_install() {
   download http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
   cd install-tl-20??????
   echo I | TEXLIVE_INSTALL_PREFIX="$prefix" ./install-tl
+}
 
-  prepend_path PATH `echo $prefix/$pkgver/bin/*`
-  prepend_path MANPATH "$prefix/$pkgver/texmf-dist/doc/man"
-  prepend_path INFOPATH "$prefix/$pkgver/texmf-dist/doc/info"
+do_postinstall() {
+  texdir=`echo $prefix/20??`
+  rc_prepend_path PATH `echo $texdir/bin/*`
+  rc_prepend_path MANPATH "$texdir/texmf-dist/doc/man"
+  rc_prepend_path INFOPATH "$texdir/texmf-dist/doc/info"
 }
 
 # vim: ft=sh et ts=8 sts=2 sw=2

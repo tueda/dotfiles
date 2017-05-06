@@ -1,12 +1,31 @@
 #! /bin/bash
-set -e
+set -eu
+set -o pipefail
+
 cd `dirname $0`
 
+# Environment variables.
+
+if [ -z ${LOCAL_BUILD_ROOT+x} ]; then
+  LOCAL_BUILD_ROOT=
+fi
+
+# Check the OS.
+uname=`uname -s`
+if [ "$uname" = Darwin ]; then
+  osname=osx
+elif [ `expr substr "$uname" 1 5` = Linux ]; then
+  osname=linux
+else
+  osname=unknown_os
+fi
+
+# MAKEFLAGS for multi-core machines.
 JOBS=0
 if [ -e /proc/cpuinfo ]; then
   JOBS=`grep -c ^processor /proc/cpuinfo 2>/dev/null`
   if [ $JOBS -ge 1 ]; then
-    MAKEFLAGS="-j $JOBS $MAKEFLAGS"
+    MAKEFLAGS="-j $JOBS ${MAKEFLAGS:-}"
     export MAKEFLAGS
   fi
 fi
@@ -64,7 +83,7 @@ curl_enabled=:
 wget_enabled=:
 
 # Even if curl fails, wget may work.
-[ -n "$INSTALL_SH_DISABLE_CURL" ] && [ "$INSTALL_SH_DISABLE_CURL" == 1 ] && \
+[ -z ${INSTALL_SH_DISABLE_CURL+x} ] || [ "$INSTALL_SH_DISABLE_CURL" == 1 ] && \
   curl_enabled=false
 
 # Wraps "wget $1"
@@ -103,35 +122,72 @@ get_bashrc_local() {
   fi
 }
 
-first_bashrc_local=:
+_rc_first=:
+_rc_indentation=
+_rc_indent_level=0
 
-# Write a line into .bashrc.local.
-write_rc() {
-  if $first_bashrc_local; then
-    first_bashrc_local=false
-    echo "# $prefix" >>`get_bashrc_local`
+_rc_write() {
+  _rc_out=`get_bashrc_local`
+  # _rc_out=/dev/stdout  # for debugging
+  if $_rc_first; then
+    _rc_first=false
+    echo "# $prefix" >>$_rc_out
   fi
-  echo "$1" >>`get_bashrc_local`
+  echo "$_rc_indentation$1" >>$_rc_out
+}
+
+_rc_indent() {
+  _rc_indent_level=$(($_rc_indent_level+1))
+  _rc_update_identation
+}
+
+_rc_dedent() {
+  _rc_indent_level=$(($_rc_indent_level-1))
+  _rc_update_identation
+}
+
+_rc_update_identation() {
+  _rc_indentation=
+  for ((n=1; n<=$_rc_indent_level; n++)); do
+    _rc_indentation="$_rc_indentation  "
+  done
 }
 
 # Appends the given path in .bashrc.local.
-append_path() {
-  write_rc "$1=\"\$$1:$2\"; export $1"
+rc_append_path() {
+  _rc_write "$1=\"\$$1:$2\"; export $1"
 }
 
 # Prepends the given path in .bashrc.local.
-prepend_path() {
-  write_rc "$1=\"$2:\$$1\"; export $1"
+rc_prepend_path() {
+  _rc_write "$1=\"$2:\$$1\"; export $1"
 }
 
 # Sets the given path in .bashrc.local.
-set_path() {
-  write_rc "$1=\"$2\"; export $1"
+rc_set_path() {
+  _rc_write "$1=\"$2\"; export $1"
+}
+
+# Evaluate the result of the command in .bashrc.lcaol.
+rc_eval_cmd() {
+  _rc_write "eval \"\$($1)\""
+}
+
+# "if"-statement in .bashrc.local.
+rc_if() {
+  _rc_write "if $1; then"
+  _rc_indent
+}
+
+# "fi"-statement in .bashrc.local.
+rc_fi() {
+  _rc_dedent
+  _rc_write 'fi'
 }
 
 show_help() {
   cat << END
-Usage: install.sh <package>
+Usage: install.sh [--postinstall] [--overwrite] <packages>...
 
 Available packages:
 END
@@ -148,26 +204,52 @@ install_package() {
   pkgname=$1
   pkgver=
   prefix=
-  overwrite=false
-  . "packages/$1"
+  . "packages/$pkgname"
   if [ -z "$prefix" ]; then
     if [ -n "$LOCAL_BUILD_ROOT" ]; then
       prefix="$LOCAL_BUILD_ROOT/$pkgname"
     else
       prefix="$HOME/opt/$pkgname"
     fi
-    if [ -n "$pkgver" ]; then
+    if [ -n "${pkgver:-}" ]; then
       prefix="$prefix-$pkgver"
     fi
   fi
-  $overwrite || {
-    if [ -e "$prefix" ]; then
+
+  if $opt_postinstall; then :; else
+    if do_install_package; then :; else
+      echo "error: failed to install $pkgname." >&2
+      $opt_overwrite || rm -rf "$prefix"
+      exit 1
+    fi
+  fi
+
+  if [ ! -d "$prefix" ]; then
+    echo "error: empty installation by $pkgname." >&2
+    exit 1
+  fi
+
+  do_postinstall_package
+
+  echo "Succeeded to install $pkgname."
+  bashrc_local=`get_bashrc_local`
+  if [ -f "$bashrc_local" ]; then
+    echo "Run/put the following line in .bashrc:"
+    echo "  . $bashrc_local"
+  fi
+}
+
+do_install_package() {
+  if [ -e "$prefix" ]; then
+    if $opt_overwrite; then
+      echo "warning: $prefix already exists" >&2
+    else
       echo "error: $prefix already exists" >&2
       exit 1
     fi
-  }
+  fi
   cat << END
-This script will install $1 to
+This script will install $pkgname to
   $prefix
 END
   echo_n 'Okay? (y/n) : '
@@ -176,25 +258,23 @@ END
     echo 'Exit. No installation.'
     exit
   fi
+
   tmpdir=`mktemp_d "${TMPDIR:-/tmp}/build-"`
   trap 'rm -rf "$tmpdir"' 0 1 2 13 15
-  if (cd "$tmpdir" && do_install); then
-    echo "Succeeded to install $1."
-    bashrc_local=`get_bashrc_local`
-    if [ -f "$bashrc_local" ]; then
-      echo "Run/Put the following line in .bashrc:"
-      echo "  . $bashrc_local"
-    fi
-  else
-    echo "error: failed to install $1." >&2
-    $overwrite || rm -rf "$prefix"
-    return 1
+  (cd "$tmpdir" && do_install)
+}
+
+do_postinstall_package() {
+  if type do_postinstall >/dev/null 2>&1; then
+    do_postinstall
   fi
 }
 
-if [ $# -eq 0 ]; then
-  show_help
-fi
+# Main entry point.
+
+opt_postinstall=false
+opt_overwrite=false
+opt_packages=
 
 for a; do
   case $a in
@@ -202,9 +282,20 @@ for a; do
       show_help
       exit
       ;;
+    --postinstall)
+      opt_postinstall=:
+      ;;
+    --overwrite)
+      opt_overwrite=:
+      ;;
+    -*)
+      echo "error: unknown option $1" >&2
+      show_help
+      exit 1
+      ;;
     *)
       if [ -f "packages/$a" ]; then
-        install_package "$a"
+        opt_packages="$opt_packages $a"
       else
         echo "error: package $1 not available" >&2
         show_help
@@ -212,6 +303,15 @@ for a; do
       fi
       ;;
   esac
+done
+
+if [ -z "$opt_packages" ]; then
+  show_help
+  exit
+fi
+
+for a in $opt_packages; do
+  install_package "$a"
 done
 
 # vim: ft=sh et ts=8 sts=2 sw=2

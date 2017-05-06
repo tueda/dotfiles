@@ -14,7 +14,10 @@ do_install() {
   make
 # make check
   make install
-  prepend_path PATH "$prefix/bin"
+}
+
+do_postinstall() {
+  rc_prepend_path PATH "$prefix/bin"
 }
 
 # vim: ft=sh et ts=8 sts=2 sw=2

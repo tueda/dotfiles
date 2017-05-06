@@ -1,17 +1,20 @@
 HOMEBREW_REPO_ROOT=https://github.com/Homebrew
 
-uname=`uname -s`
-if [ "$uname" = Darwin ]; then
-  prefix=/usr/local
-  pkgname=homebrew
-elif [ `expr substr "$uname" 1 5` = Linux ]; then
-  HOMEBREW_REPO_ROOT=https://github.com/Linuxbrew
-  prefix="$HOME/.linuxbrew"
-  pkgname=linuxbrew
-else
-  prefix=$HOME/homebrew
-  pkgname=homebrew
-fi
+case $osname in
+  osx)
+    prefix=/usr/local
+    pkgname=homebrew
+    ;;
+  linux)
+    HOMEBREW_REPO_ROOT=https://github.com/Linuxbrew
+    prefix="$HOME/.linuxbrew"
+    pkgname=linuxbrew
+    ;;
+  *)
+    prefix=$HOME/homebrew
+    pkgname=homebrew
+    ;;
+esac
 
 if [ -n "$LOCAL_BUILD_ROOT" ]; then
   prefix="$LOCAL_BUILD_ROOT/$pkgname"
@@ -22,11 +25,14 @@ do_install() {
     echo "error: git required" >&2
     return 1
   fi
-  if [ "$prefix" = "/usr/local" ]; then
-#   TODO
-    echo "error: Darwin is unsupported" >&2
-    return 1
-  fi
+
+  case $osname in
+    osx)
+      # TODO
+      echo "error: $osname unsupported" >&2
+      return 1
+      ;;
+  esac
 
   git clone $HOMEBREW_REPO_ROOT/brew "$prefix" --depth=1
 
@@ -58,51 +64,54 @@ do_install() {
   export PATH="$prefix/bin:$PATH"
   brew doctor || :
   brew install hello && brew test hello || :; brew remove hello || :
+}
 
-  set_path HOMEBREW_PREFIX "$prefix"
-  set_path HOMEBREW_CACHE "\$HOMEBREW_PREFIX/Cache"
-  set_path HOMEBREW_LOGS "\$HOMEBREW_PREFIX/Logs"
-  set_path HOMEBREW_BUILD_FROM_SOURCE 1
-  set_path HOMEBREW_NO_ANALYTICS 1
-  set_path HOMEBREW_NO_EMOJI 1
+do_postinstall() {
+  rc_set_path HOMEBREW_PREFIX "$prefix"
+  rc_set_path HOMEBREW_CACHE '$HOMEBREW_PREFIX/Cache'
+  rc_set_path HOMEBREW_LOGS '$HOMEBREW_PREFIX/Logs'
+  rc_set_path HOMEBREW_BUILD_FROM_SOURCE 1
+  rc_set_path HOMEBREW_NO_ANALYTICS 1
+  rc_set_path HOMEBREW_NO_EMOJI 1
 
-  prepend_path PATH "\$HOMEBREW_PREFIX/bin"
-  prepend_path MANPATH "\$HOMEBREW_PREFIX/share/man"
-  prepend_path INFOPATH "\$HOMEBREW_PREFIX/share/info"
+  rc_prepend_path PATH '$HOMEBREW_PREFIX/bin'
+  rc_prepend_path MANPATH '$HOMEBREW_PREFIX/share/man'
+  rc_prepend_path INFOPATH '$HOMEBREW_PREFIX/share/info'
 
-  write_rc "if [ -f \"\$HOMEBREW_PREFIX/bin/rbenv\" ]; then"
-  set_path RBENV_ROOT "\$HOMEBREW_PREFIX/var/rbenv"
-  write_rc "eval \"\$(rbenv init - --no-rehash)\""
-  write_rc "fi"
+  rc_if '[ -f "$HOMEBREW_PREFIX/bin/rbenv" ]'
+    rc_set_path RBENV_ROOT '$HOMEBREW_PREFIX/var/rbenv'
+    rc_eval_cmd 'rbenv init - --no-rehash'
+  rc_fi
 
-  write_rc "if [ -f \"\$HOMEBREW_PREFIX/bin/pyenv\" ]; then"
-  set_path PYENV_ROOT "\$HOMEBREW_PREFIX/var/pyenv"
-  write_rc "eval \"\$(pyenv init - --no-rehash)\""
-  write_rc "if [ -f \"\$HOMEBREW_PREFIX/bin/pyenv-virtualenv-init\" ]; then"
-  write_rc "eval \"\$(pyenv virtualenv-init -)\""
-  write_rc "fi"
-  write_rc "fi"
 
-  write_rc "if [ -f \"\$HOMEBREW_PREFIX/bin/plenv\" ]; then"
-  set_path PLENV_ROOT "\$HOMEBREW_PREFIX/var/plenv"
-  write_rc "eval \"\$(plenv init - --no-rehash)\""
-  write_rc "fi"
+  rc_if '[ -f "$HOMEBREW_PREFIX/bin/pyenv" ]'
+    rc_set_path PYENV_ROOT '$HOMEBREW_PREFIX/var/pyenv'
+    rc_eval_cmd 'pyenv init - --no-rehash'
+    rc_if '[ -f "$HOMEBREW_PREFIX/bin/pyenv-virtualenv-init" ]'
+      rc_eval_cmd 'pyenv virtualenv-init -'
+    rc_fi
+  rc_fi
 
-  write_rc "if [ -f \"\$HOMEBREW_PREFIX/bin/opam\" ]; then"
-  set_path OPAMROOT "\$HOMEBREW_PREFIX/var/opam"
-  write_rc "if [ -f \"\$HOMEBREW_PREFIX/var/opam/config\" ]; then"
-  write_rc "eval \"\$(opam config env)\""
-  write_rc "fi"
-  write_rc "fi"
+  rc_if '[ -f "$HOMEBREW_PREFIX/bin/plenv" ]'
+    rc_set_path PLENV_ROOT '$HOMEBREW_PREFIX/var/plenv'
+    rc_eval_cmd 'plenv init - --no-rehash'
+  rc_fi
 
-  write_rc "if [ -f \"\$HOMEBREW_PREFIX/bin/cargo\" ]; then"
-  set_path CARGO_HOME "\$HOMEBREW_PREFIX/var/cargo"
-  prepend_path PATH "\$HOMEBREW_PREFIX/var/cargo/bin"
-  write_rc "fi"
+  rc_if '[ -f "$HOMEBREW_PREFIX/bin/opam" ]'
+    rc_set_path OPAMROOT '$HOMEBREW_PREFIX/var/opam'
+    rc_if '[ -f "$HOMEBREW_PREFIX/var/opam/config" ]'
+      rc_eval_cmd 'opam config env'
+    rc_fi
+  rc_fi
 
-  write_rc "if [ -d \"\$HOMEBREW_PREFIX/share/form\" ]; then"
-  append_path FORMPATH "\$HOMEBREW_PREFIX/share/form"
-  write_rc "fi"
+  rc_if '[ -f "$HOMEBREW_PREFIX/bin/cargo" ]'
+    rc_set_path CARGO_HOME '$HOMEBREW_PREFIX/var/cargo'
+    rc_prepend_path PATH '$HOMEBREW_PREFIX/var/cargo/bin'
+  rc_fi
+
+  rc_if '[ -f "$HOMEBREW_PREFIX/share/form" ]'
+    rc_append_path FORMPATH '$HOMEBREW_PREFIX/share/form'
+  rc_fi
 }
 
 dump_version() {
