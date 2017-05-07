@@ -1,12 +1,15 @@
 pkgname=texlive
-pkgver=2016
 
 do_install() {
-  osname=`uname -s`
-  if [ `expr substr "$osname" 1 5` = Linux ]; then :; else
-    echo "error: only Linux is supported" >&2
-    return 1
-  fi
+  case $osname in
+    linux)
+      ;;
+    *)
+      # TODO
+      echo "error: $osname unsupported" >&2
+      return 1
+      ;;
+  esac
 
   download http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
   cd install-tl-20??????
