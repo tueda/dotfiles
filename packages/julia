@@ -2,24 +2,28 @@ pkgname=julia
 pkgver=0.5.1
 
 do_install() {
-  if type git >/dev/null 2>&1; then :; else
-    echo "error: git required" >&2
-    return 1
+  if [ -n "$LOCAL_BUILD_ROOT" ]; then
+    if type git >/dev/null 2>&1; then :; else
+      echo "error: git required" >&2
+      return 1
+    fi
   fi
 
   case $osname in
     linux)
       download https://julialang.s3.amazonaws.com/bin/linux/x64/0.5/julia-0.5.1-linux-x86_64.tar.gz
       mv julia-6445c82d00 "$prefix"
-      mkdir "$prefix/var"
-      mkdir "$prefix/var/packages"
-      mkdir "$prefix/var/packages/v0.5"
-      (
-        cd "$prefix/var/packages/v0.5"
-        touch REQUIRE
-        echo metadata-v2>META_BRANCH
-        git clone https://github.com/JuliaLang/METADATA.jl.git -b metadata-v2 METADATA
-      )
+      if [ -n "$LOCAL_BUILD_ROOT" ]; then
+        mkdir "$prefix/var"
+        mkdir "$prefix/var/packages"
+        mkdir "$prefix/var/packages/v0.5"
+        (
+          cd "$prefix/var/packages/v0.5"
+          touch REQUIRE
+          echo metadata-v2>META_BRANCH
+          git clone https://github.com/JuliaLang/METADATA.jl.git -b metadata-v2 METADATA
+        )
+      fi
       ;;
     *)
       # TODO
@@ -31,7 +35,9 @@ do_install() {
 
 do_postinstall() {
   rc_prepend_path PATH "$prefix/bin"
-  rc_set_path JULIA_PKGDIR "$prefix/var/packages"
+  if [ -n "$LOCAL_BUILD_ROOT" ]; then
+    rc_set_path JULIA_PKGDIR "$prefix/var/packages"
+  fi
 }
 
 # vim: ft=sh et ts=8 sts=2 sw=2
