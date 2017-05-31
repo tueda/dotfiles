@@ -83,7 +83,6 @@ do_postinstall() {
     rc_eval_cmd 'rbenv init - --no-rehash'
   rc_fi
 
-
   rc_if '[ -f "$HOMEBREW_PREFIX/bin/pyenv" ]'
     rc_set_path PYENV_ROOT '$HOMEBREW_PREFIX/var/pyenv'
     rc_eval_cmd 'pyenv init - --no-rehash'
@@ -104,6 +103,9 @@ do_postinstall() {
     rc_fi
   rc_fi
 
+  rc_if '[ -d "$HOMEBREW_PREFIX/share/rust/rust_src" ]'
+    rc_set_path RUST_SRC_PATH '$HOMEBREW_PREFIX/share/rust/rust_src'
+  rc_fi
   rc_if '[ -f "$HOMEBREW_PREFIX/bin/cargo" ]'
     rc_set_path CARGO_HOME '$HOMEBREW_PREFIX/var/cargo'
     rc_prepend_path PATH '$HOMEBREW_PREFIX/var/cargo/bin'
