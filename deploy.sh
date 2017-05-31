@@ -40,6 +40,16 @@ download() {
   fi
 }
 
+# Check the OS.
+osname=`uname -s`
+if [ `expr substr "$osname" 1 5` = Linux ]; then
+  osname=linux
+elif [ "$osname" = Darwin ]; then
+  osname=osx
+else
+  osname=unknown_os
+fi
+
 # Lists dot files.
 list_dotfiles() {
   for file in .*; do
@@ -141,6 +151,12 @@ mkdir -p "$HOME/bin"
 
   download https://raw.githubusercontent.com/git/git/master/contrib/diff-highlight/diff-highlight
   chmod +x diff-highlight
+
+  if [ $osname = linux ]; then
+    download https://gist.githubusercontent.com/tueda/9529c8d3c06252386c3e9c4ca521f391/raw/open-linux
+    chmod +x open-linux
+    mv open-linux open
+  fi
 
 # download https://gist.githubusercontent.com/tueda/9253579/raw/copyd.sh
 
