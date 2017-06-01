@@ -112,7 +112,7 @@ pypy3 -m pip install --upgrade pip
 pip install numpy
 pip3 install numpy
 pypy -m pip install numpy
-# pypy3 -m pip install numpy  # version error
+pypy3 -m pip install numpy
 # pypy -m pip install git+https://bitbucket.org/pypy/numpy.git  # alternatively
 
 pip install sympy
@@ -123,7 +123,7 @@ pypy3 -m pip install sympy
 pip install matplotlib
 pip3 install matplotlib
 pypy -m pip install matplotlib
-# pypy3 -m pip install matplotlib  # error
+pypy3 -m pip install matplotlib
 
 pip install cython
 pip3 install cython
@@ -181,7 +181,7 @@ brew install snappy
 pip install python-snappy
 pip3 install python-snappy
 pypy -m pip install python-snappy
-# pypy3 -m pip install python-snappy  # error
+pypy3 -m pip install python-snappy
 ```
 ```
 # PPL
@@ -205,6 +205,14 @@ opam install cpdf
 brew install rust --with-racer
 . $LOCAL_BUILD_ROOT/bashrc.local  # set $CARGO_HOME
 cargo install rustfmt
+```
+```
+# PARI/GP
+brew install pari
+pip install cypari
+pip3 install cypari
+# pypy -m pip install pip cypari  # error
+# pypy3 -m pip install pip cypari  # error
 ```
 ```
 # Misc.
