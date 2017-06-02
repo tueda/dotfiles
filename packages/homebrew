@@ -111,7 +111,7 @@ do_postinstall() {
     rc_prepend_path PATH '$HOMEBREW_PREFIX/var/cargo/bin'
   rc_fi
 
-  rc_if '[ -f "$HOMEBREW_PREFIX/share/form" ]'
+  rc_if '[ -d "$HOMEBREW_PREFIX/share/form" ]'
     rc_append_path FORMPATH '$HOMEBREW_PREFIX/share/form'
   rc_fi
 }
