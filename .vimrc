@@ -340,6 +340,9 @@ endfunction
 
 command! AppendModeLine call s:AppendModeLine()
 
+" CD = Change to the directory of the current file
+command! CD cd %:p:h
+
 "}}}
 " Plugins "{{{
 
