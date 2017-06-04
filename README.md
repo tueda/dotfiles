@@ -231,6 +231,25 @@ is not enough because Linuxbrew checks executables in
 `${HOMEBREW_PREFIX}/opt/gcc/bin`. So this directory has to be temporarily
 renamed, or some code in `developement_tools.rb` has to be modified.
 
+```
+# To upgrade a brewed library (e.g., gmp) on which the brewed gcc depends.
+# The library is built with the system gcc.
+brew unlink gcc
+mv $(brew --prefix)/opt/gcc $(brew --prefix)/opt/gcc.bak
+brew upgrade gmp
+mv $(brew --prefix)/opt/gcc.bak $(brew --prefix)/opt/gcc
+brew link gcc
+```
+```
+# To upgrade the brewed ruby with a ruby installed by install.sh.
+PATH=$(echo $LOCAL_BUILD_ROOT/ruby-*/bin):$PATH brew upgrade ruby
+```
+```
+# To upgrade the brewed openssl, on which the brewed ruby depends.
+brew fetch openssl
+brew upgrade openssl
+```
+
 ### SSH URL
 
 ```
