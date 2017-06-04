@@ -78,6 +78,10 @@ do_postinstall() {
   rc_prepend_path MANPATH '$HOMEBREW_PREFIX/share/man'
   rc_prepend_path INFOPATH '$HOMEBREW_PREFIX/share/info'
 
+  rc_if '[ -d "$HOMEBREW_PREFIX/sbin" ]'
+    rc_prepend_path PATH '$HOMEBREW_PREFIX/sbin'
+  rc_fi
+
   rc_if '[ -f "$HOMEBREW_PREFIX/bin/rbenv" ]'
     rc_set_path RBENV_ROOT '$HOMEBREW_PREFIX/var/rbenv'
     rc_eval_cmd 'rbenv init - --no-rehash'
