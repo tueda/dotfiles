@@ -44,6 +44,8 @@ download() {
 osname=`uname -s`
 if [ `expr substr "$osname" 1 5` = Linux ]; then
   osname=linux
+elif [ `expr substr "$osname" 1 6` = CYGWIN ]; then
+  osname=cygwin
 elif [ "$osname" = Darwin ]; then
   osname=osx
 else
@@ -156,6 +158,16 @@ mkdir -p "$HOME/bin"
     download https://gist.githubusercontent.com/tueda/9529c8d3c06252386c3e9c4ca521f391/raw/open-linux
     chmod +x open-linux
     mv open-linux open
+  fi
+
+  if [ $osname = cygwin ]; then
+    download https://gist.githubusercontent.com/tueda/fc8c3eba9606479308d88b6e38c9aeca/raw/open-cygwin
+    chmod +x open-cygwin
+    mv open-cygwin open
+
+    download https://gist.githubusercontent.com/tueda/2be1caa5c8051c2d0ab06cec394d5ed1/raw/dup-cygwin
+    chmod +x dup-cygwin
+    mv dup-cygwin dup
   fi
 
 # download https://gist.githubusercontent.com/tueda/9253579/raw/copyd.sh
