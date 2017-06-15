@@ -7,8 +7,8 @@ do_install() {
   download https://github.com/git/git/archive/v$pkgver.tar.gz
   cd $pkgname-$pkgver
   args=
-  if [ -d $LOCAL_BUILD_ROOT/openssl-1.1.0e ]; then
-    args="$args --with-openssl=$LOCAL_BUILD_ROOT/openssl-1.1.0e"
+  if [ -d $LOCAL_BUILD_ROOT/openssl-1.1.0f ]; then
+    args="$args --with-openssl=$LOCAL_BUILD_ROOT/openssl-1.1.0f"
   fi
   make configure
   ./configure --prefix="$prefix" $args

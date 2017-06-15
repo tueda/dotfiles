@@ -1,5 +1,5 @@
 pkgname=openssl
-pkgver=1.1.0e
+pkgver=1.1.0f
 
 do_install() {
   PATH=/usr/local/bin:/usr/bin:/bin
