@@ -26,6 +26,18 @@ hook_source = '''
 '''
 
 [[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]]
+repo = 'osyo-manga/vim-precious'
+depends = 'context_filetype.vim'
+hook_add = '''
+" Don't save ft for toml for toml-vim.
+  autocmd BufNewFile,BufRead *.toml setlocal viewoptions=cursor,folds,slash,unix
+'''
+on_ft = 'toml'
+
+[[plugins]]
 repo = 'rhysd/vim-clang-format'
 hook_source = '''
   let g:clang_format#detect_style_file = 1

@@ -59,17 +59,6 @@ hook_add = '''
 if = "!has('nvim')"  # clipboard error with nvim
 
 [[plugins]]
-repo = 'Shougo/context_filetype.vim'
-
-[[plugins]]
-repo = 'osyo-manga/vim-precious'
-depends = 'context_filetype.vim'
-hook_add = '''
-" Don't save ft for toml for toml-vim.
-  autocmd BufNewFile,BufRead *.toml setlocal viewoptions=cursor,folds,slash,unix
-'''
-
-[[plugins]]
 repo = 'itchyny/lightline.vim'
 hook_add = '''
   set   laststatus=2
