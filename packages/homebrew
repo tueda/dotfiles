@@ -21,6 +21,10 @@ if [ -n "$LOCAL_BUILD_ROOT" ]; then
 fi
 
 do_install() {
+  if type ruby >/dev/null 2>&1; then :; else
+    echo "error: ruby required" >&2
+    return 1
+  fi
   if type git >/dev/null 2>&1; then :; else
     echo "error: git required" >&2
     return 1
@@ -42,7 +46,7 @@ do_install() {
   sed -i 's/"git", "config", "--local"/"git", "config"/' \
     "$prefix/Library/Homebrew/tap.rb"
 
-  export HOMEBREW_BUILD_FROM_SOURCE=1
+# export HOMEBREW_BUILD_FROM_SOURCE=1
   export HOMEBREW_NO_ANALYTICS=1
 
   for cc in gcc g++ gfortran; do
@@ -70,7 +74,9 @@ do_postinstall() {
   rc_set_path HOMEBREW_PREFIX "$prefix"
   rc_set_path HOMEBREW_CACHE '$HOMEBREW_PREFIX/Cache'
   rc_set_path HOMEBREW_LOGS '$HOMEBREW_PREFIX/Logs'
-  rc_set_path HOMEBREW_BUILD_FROM_SOURCE 1
+  if [ "${HOMEBREW_BUILD_FROM_SOURCE:-}" = 1 ]; then
+    rc_set_path HOMEBREW_BUILD_FROM_SOURCE 1
+  fi
   rc_set_path HOMEBREW_NO_ANALYTICS 1
   rc_set_path HOMEBREW_NO_EMOJI 1
 
