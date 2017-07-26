@@ -71,12 +71,12 @@ Install Linuxbrew:
 Install the latest GCC:
 ```
 # brew install binutils  # if any problem for new CPU instructions
-brew install gcc --without-glibc  # installing glibc always makes a mess
+brew install gcc --without-glibc  # installing glibc may make a mess
 ```
 
-Debugging tools might be also updated:
+Development tools might be also updated:
 ```
-brew install gdb valgrind
+brew install make gdb valgrind
 ```
 
 Reinstall Ruby via Linuxbrew:
@@ -93,53 +93,33 @@ brew install git --without-tcl-tk  # if no Xlib
 Install other software packages via Linuxbrew:
 ```
 # Python via pyenv
-brew install pyenv --HEAD
+brew install pyenv
 # brew install pyenv
 . $LOCAL_BUILD_ROOT/bashrc.local # set $PYENV_ROOT and initialize pyenv
-brew install berkeley-db@4 bzip2 gdbm libffi openssl readline sqlite
+brew install --only-dependencies python python3
 CPPFLAGS="-I$(brew --prefix)/include" LDFLAGS="-L$(brew --prefix)/lib -Wl,-rpath,$(brew --prefix)/lib" pyenv install 2.7.13
-CPPFLAGS="-I$(brew --prefix)/include" LDFLAGS="-L$(brew --prefix)/lib -Wl,-rpath,$(brew --prefix)/lib" pyenv install 3.6.0
-pyenv install pypy-5.6.0
-pyenv install pypy3.3-5.5-alpha
+CPPFLAGS="-I$(brew --prefix)/include" LDFLAGS="-L$(brew --prefix)/lib -Wl,-rpath,$(brew --prefix)/lib" pyenv install 3.6.1
+pyenv install pypy2-5.7.1
+pyenv install pypy3.5-5.8.0
 
-pyenv global 2.7.13 3.6.0 pypy-5.6.0 pypy3.3-5.5-alpha
+pyenv global 2.7.13 3.6.1 pypy2-5.7.1  pypy3.5-5.8.0
 
 pip install --upgrade pip
 pip3 install --upgrade pip
-pypy -m pip install --upgrade pip
-pypy3 -m pip install --upgrade pip
 
-pip install numpy
-pip3 install numpy
-pypy -m pip install numpy
-pypy3 -m pip install numpy
-# pypy -m pip install git+https://bitbucket.org/pypy/numpy.git  # alternatively
-
-pip install sympy
-pip3 install sympy
-pypy -m pip install sympy
-pypy3 -m pip install sympy
-
-pip install matplotlib
-pip3 install matplotlib
-pypy -m pip install matplotlib
-pypy3 -m pip install matplotlib
+pip install numpy sympy matplotlib ipython
+pip3 install numpy sympy matplotlib ipython
+pyenv rehash
 
 pip install cython
 pip3 install cython
-pypy -m pip install cython
-pypy3 -m pip install cython
-
-pip install ipython
-pip3 install ipython
-pyenv rehash
 
 pip install flake8 flake8_docstrings pep8-naming flake8-import-order
+pyenv rehash
 ```
 ```
 # Vim
-brew install lua luajit vim --ignore-dependencies  # Use the installed Python
-# brew install lua luajit vim --without-perl --ignore-dependencies  # Use the installed Python
+brew install vim --with-luajit
 ```
 ```
 # Neovim
@@ -155,7 +135,7 @@ brew install gnuplot --with-cairo --with-pdflib-lite --with-x11
 ```
 ```
 # FORM
-brew install tueda/loops/form --HEAD --with-debug --with-mpi  # Put --ignore-dependencies for preinstalled mpi
+brew install tueda/form/form --HEAD --with-debug --with-mpi  # Put --ignore-dependencies for preinstalled mpi
 pip install python-form
 pip3 install python-form
 pypy -m pip install python-form
