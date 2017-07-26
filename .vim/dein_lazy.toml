@@ -41,6 +41,7 @@ on_ft = 'toml'
 repo = 'rhysd/vim-clang-format'
 hook_source = '''
   let g:clang_format#detect_style_file = 1
+  autocmd FileType c,cpp,objc map <buffer> <F7> :ClangFormat<CR>
 '''
 on_ft = ['c', 'cpp', 'objc']
 
