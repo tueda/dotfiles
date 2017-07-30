@@ -43,7 +43,11 @@ download() {
 # Check the OS.
 osname=`uname -s`
 if [ `expr substr "$osname" 1 5` = Linux ]; then
-  osname=linux
+  if uname -v | grep -q 'Microsoft'; then
+    osname=linux_on_windows
+  else
+    osname=linux
+  fi
 elif [ `expr substr "$osname" 1 6` = CYGWIN ]; then
   osname=cygwin
 elif [ "$osname" = Darwin ]; then
