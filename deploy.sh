@@ -151,7 +151,7 @@ mkdir -p "$HOME/bin"
   download https://gist.githubusercontent.com/hSATAC/1095100/raw/256color.pl
   chmod +x 256color.pl
 
-  download https://raw.githubusercontent.com/git/git/master/contrib/diff-highlight/diff-highlight
+  download https://raw.githubusercontent.com/git/git/3dbfe2b8ae94cbdae5f3d32581aedaa5510fdc87/contrib/diff-highlight/diff-highlight
   chmod +x diff-highlight
 
   if [ $osname = linux ]; then
