@@ -58,7 +58,6 @@ set   hidden
 set   mouse=a
 set   showcmd
 set   showmatch
-set nospell
 set   visualbell t_vb=  " no beep or flash
 set   whichwrap=b,s,<,>,[,]
 
@@ -88,11 +87,6 @@ autocmd vimrc WinEnter * if (winnr('$') == 1) && (getbufvar(winbufnr(0), '&bufty
 
 " Automatically change the current directory
 "autocmd BufEnter * silent! lcd %:p:h
-
-" Disable the spell checker for Japanese.
-if v:version > 704 || (v:version == 704 && has('patch89'))
-  set spelllang+=cjk
-endif
 
 "}}}
 " View "{{{
@@ -161,6 +155,16 @@ command! -nargs=1 SpaceIndent setlocal expandtab shiftwidth=<args> softtabstop=<
 
 " Default indent (SpaceIndent 2)
 set expandtab shiftwidth=2 softtabstop=2 tabstop=8
+
+"}}}
+" Spell checking "{{{
+
+set   spell
+
+" Disable the spell checker for Japanese.
+if v:version > 704 || (v:version == 704 && has('patch89'))
+  set spelllang+=cjk
+endif
 
 "}}}
 " Key mappings "{{{
@@ -246,17 +250,17 @@ endfunction
 augroup vimrc
   autocmd FileType automake execute 'TabIndent 4'
   autocmd FileType fortran setlocal colorcolumn=73
-  autocmd FileType gitcommit setlocal spell | setlocal colorcolumn=73
+  autocmd FileType gitcommit setlocal colorcolumn=73
   autocmd FileType make execute 'TabIndent 4'
   autocmd FileType python execute 'SpaceIndent 4' | setlocal colorcolumn=80 | setlocal foldcolumn=4
   autocmd FileType qf setlocal colorcolumn=0
   autocmd FileType rust setlocal colorcolumn=101
-  autocmd FileType tex setlocal spell | setlocal colorcolumn=81 | setlocal foldcolumn=4
+  autocmd FileType tex setlocal setlocal colorcolumn=81 | setlocal foldcolumn=4
   autocmd FileType unite highlight link ExtraWhitespace Normal
 
   autocmd BufNewFile,BufRead *.tex setlocal filetype=tex
-  autocmd BufNewFile,BufRead *.dtx setlocal spell | setlocal colorcolumn=73
-  autocmd BufNewFile,BufRead *.ins setlocal spell | setlocal colorcolumn=73
+  autocmd BufNewFile,BufRead *.dtx setlocal colorcolumn=73
+  autocmd BufNewFile,BufRead *.ins setlocal colorcolumn=73
 
 " FORM sources
   autocmd BufNewFile,BufRead */form*/sources/*.c  call FORMCSource()
@@ -355,7 +359,7 @@ if v:version >= 704
     if !isdirectory(s:dein_repo_dir)
       execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
     endif
-    execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, ':p')
+    execute 'set runtimepath+=' . fnamemodify(s:dein_repo_dir, ':p')
   endif
 
   if dein#load_state(s:dein_dir)
