@@ -166,6 +166,24 @@ if v:version > 704 || (v:version == 704 && has('patch89'))
   set spelllang+=cjk
 endif
 
+" Sort *.add files.
+function! SpellFileSort()
+  for f in glob('~/.vim/spell/*.add', 1, 1)
+    if filereadable(f)
+      execute '!sort -u -o ' . fnameescape(f) . ' ' . fnameescape(f)
+    endif
+  endfor
+endfunction
+
+" Rebuild *.add.spl files.
+function! SpellFileRebuild()
+  for f in glob('~/.vim/spell/*.add', 1, 1)
+    if filereadable(f) && (!filereadable(f . '.spl') || getftime(f) > getftime(f . '.spl'))
+      execute 'mkspell! ' . fnameescape(f)
+    endif
+  endfor
+endfunction
+
 "}}}
 " Key mappings "{{{
 
