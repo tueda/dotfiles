@@ -273,7 +273,7 @@ augroup vimrc
   autocmd FileType python execute 'SpaceIndent 4' | setlocal colorcolumn=80 | setlocal foldcolumn=4
   autocmd FileType qf setlocal colorcolumn=0
   autocmd FileType rust setlocal colorcolumn=101
-  autocmd FileType tex setlocal setlocal colorcolumn=81 | setlocal foldcolumn=4
+  autocmd FileType tex setlocal colorcolumn=81 | setlocal foldcolumn=4
   autocmd FileType unite highlight link ExtraWhitespace Normal
 
   autocmd BufNewFile,BufRead *.tex setlocal filetype=tex
