@@ -27,6 +27,8 @@ esac
 [ -f ~/.bashrc.local ] && . ~/.bashrc.local
 [ -n "$LOCAL_BUILD_ROOT" ] && [ -d "$LOCAL_BUILD_ROOT" ] && \
   [ -f "$LOCAL_BUILD_ROOT/bashrc.local" ] && . "$LOCAL_BUILD_ROOT/bashrc.local"
+[ -n "$EASYBUILD_PREFIX" ] && [ -d "$EASYBUILD_PREFIX/modules/all" ] && \
+  { module use "$EASYBUILD_PREFIX/modules/all"; module load EasyBuild; }
 
 # PATHs.
 prepend_path_c PATH ~/bin
