@@ -1,5 +1,5 @@
 pkgname=git
-pkgver=2.13.3
+pkgver=2.14.1
 
 do_install() {
   PATH=/usr/local/bin:/usr/bin:/bin
