@@ -132,8 +132,17 @@ _rc_write() {
   if $_rc_first; then
     _rc_first=false
     echo "# $prefix" >>$_rc_out
+    rc_if "[ -d \"$prefix\" ]"
   fi
   echo "$_rc_indentation$1" >>$_rc_out
+}
+
+_rc_end() {
+  if $_rc_first; then :; else
+    rc_fi
+    echo >>$_rc_out
+    _rc_first=:
+  fi
 }
 
 _rc_indent() {
@@ -267,6 +276,7 @@ END
 do_postinstall_package() {
   if type do_postinstall >/dev/null 2>&1; then
     do_postinstall
+    _rc_end
   fi
 }
 
