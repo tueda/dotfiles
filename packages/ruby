@@ -1,5 +1,5 @@
 pkgname=ruby
-pkgver=2.4.1
+pkgver=2.4.2
 
 do_install() {
   PATH=/usr/local/bin:/usr/bin:/bin
