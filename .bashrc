@@ -1,5 +1,5 @@
+# For profiling. http://stackoverflow.com/a/20855353
 if [ -n "$BASH_STARTUPTIME" ]; then
-  # For profiling. http://stackoverflow.com/a/20855353
   exec 3>&2 2> >( tee ~/bash-startup.tmp1 |
                   sed -u 's/^.*$/now/' |
                   date -f - +%s.%N >~/bash-startup.tmp2)
@@ -25,8 +25,8 @@ esac
 # Loading other files.
 [ -f ~/bin/path-manip.bash ] && . ~/bin/path-manip.bash
 [ -f ~/.bashrc.local ] && . ~/.bashrc.local
-[ -n "$LOCAL_BUILD_ROOT" ] && [ -d "$LOCAL_BUILD_ROOT" ] && \
-  [ -f "$LOCAL_BUILD_ROOT/bashrc.local" ] && . "$LOCAL_BUILD_ROOT/bashrc.local"
+[ -n "$LOCAL_BUILD_ROOT" ] && [ -f "$LOCAL_BUILD_ROOT/bashrc.local" ] && \
+  . "$LOCAL_BUILD_ROOT/bashrc.local"
 [ -n "$EASYBUILD_PREFIX" ] && [ -d "$EASYBUILD_PREFIX/modules/all" ] && \
   { module use "$EASYBUILD_PREFIX/modules/all"; module load EasyBuild; }
 
@@ -49,7 +49,7 @@ if [ -z "$BASH_COMPLETION" ]; then
   fi
 fi
 
-# Define __git_ps1.
+# Ensure __git_ps1.
 if __git_ps1 > /dev/null 2>&1; then :;else
   for f in /usr/share/git-core/contrib/completion/git-prompt.sh; do
     if [ -f "$f" ]; then
@@ -62,10 +62,10 @@ if __git_ps1 > /dev/null 2>&1; then :;else
   __git_ps1() { :; }
 fi
 
-# Prompts
+# Prompt.
 #
 # \[...\]              - Sequence for non-printing characters, which allows bash
-#                        to calculate word wapping correctly.
+#                        to calculate word wrapping correctly.
 # \e]2;...\a           - Title bar for xterm.
 # \ek...\e\\           - Screen's title.
 # \e[31;1m             - Red bold.
@@ -105,6 +105,7 @@ case "$TERM" in
     ;;
 esac
 
+# Terminal.
 case "$TERM" in
   xterm)
     case "$COLORTERM" in
@@ -115,6 +116,7 @@ case "$TERM" in
     ;;
 esac
 
+# Light color scheme.
 light() {
   export VIM_BACKGROUND=light
   case "$TERM" in
@@ -124,6 +126,7 @@ light() {
   esac
 }
 
+# Dark color scheme.
 dark() {
   export VIM_BACKGROUND=dark
   case "$TERM" in
@@ -177,9 +180,17 @@ if type vim >/dev/null 2>&1; then
 fi
 
 if type colordiff >/dev/null 2>&1; then
-  alias diff='colordiff -u'
+  if type diff-highlight >/dev/null 2>&1; then
+    function diff() { colordiff -u "$@" | diff-highlight; }
+  else
+    alias diff='colordiff -u'
+  fi
 else
-  alias diff='diff -u'
+  if type diff-highlight >/dev/null 2>&1; then
+    function diff() { diff -u "$@" | diff-highlight; }
+  else
+    alias diff='diff -u'
+  fi
 fi
 
 # Currently "nice" doesn't work on BoUoW (as of April 2017).
@@ -221,16 +232,8 @@ cl() {
   clear
 }
 
-# [ -f ~/bin/copyd.sh ] &&  . ~/bin/copyd.sh
-# 
-# [ -d ~/bin/enhancd ] && { type fzf >/dev/null 2>&1 || \
-#                           type peco >/dev/null 2>&1 || \
-#                           type percol >/dev/null 2>&1; } && {
-#   . ~/bin/enhancd/init.sh
-# }
-
+# For profiling.
 if [ -n "$BASH_STARTUPTIME" ]; then
-  # For profiling.
   set +x
   exec 2>&3 3>&-
   paste <(
