@@ -8,7 +8,7 @@ do_install() {
   cd $pkgname-$pkgver
   args=--disable-install-doc
   if [ -d $LOCAL_BUILD_ROOT/openssl-1.1.0f ]; then
-    args="$args --with-opt-dir=$LOCAL_BUILD_ROOT/openssl-1.1.0f --enable-shared"
+    args="$args --with-opt-dir=$LOCAL_BUILD_ROOT/openssl-1.1.0g --enable-shared"
   fi
   ./configure --prefix="$prefix" $args
   make

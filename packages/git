@@ -8,7 +8,7 @@ do_install() {
   cd $pkgname-$pkgver
   args=
   if [ -d $LOCAL_BUILD_ROOT/openssl-1.1.0f ]; then
-    args="$args --with-openssl=$LOCAL_BUILD_ROOT/openssl-1.1.0f"
+    args="$args --with-openssl=$LOCAL_BUILD_ROOT/openssl-1.1.0g"
   fi
   make configure
   ./configure --prefix="$prefix" $args
