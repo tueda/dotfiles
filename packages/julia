@@ -1,5 +1,5 @@
 pkgname=julia
-pkgver=0.5.1
+pkgver=0.6.1
 
 do_install() {
   if [ -n "$LOCAL_BUILD_ROOT" ]; then
@@ -11,14 +11,12 @@ do_install() {
 
   case $osname in
     linux)
-      download https://julialang.s3.amazonaws.com/bin/linux/x64/0.5/julia-0.5.1-linux-x86_64.tar.gz
-      mv julia-6445c82d00 "$prefix"
+      download https://julialang-s3.julialang.org/bin/linux/x64/0.6/julia-$pkgver-linux-x86_64.tar.gz
+      mv julia-0d7248e2ff "$prefix"
       if [ -n "$LOCAL_BUILD_ROOT" ]; then
-        mkdir "$prefix/var"
-        mkdir "$prefix/var/packages"
-        mkdir "$prefix/var/packages/v0.5"
+        mkdir -p "$prefix/var/packages/v0.6"
         (
-          cd "$prefix/var/packages/v0.5"
+          cd "$prefix/var/packages/v0.6"
           touch REQUIRE
           echo metadata-v2>META_BRANCH
           git clone https://github.com/JuliaLang/METADATA.jl.git -b metadata-v2 METADATA
