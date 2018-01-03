@@ -166,6 +166,11 @@ if v:version > 704 || (v:version == 704 && has('patch89'))
   set spelllang+=cjk
 endif
 
+" Slow, but accurate.
+function! SpellPrecisely()
+  syntax sync fromstart
+endfunction
+
 " Sort *.add files.
 function! SpellFileSort()
   for f in glob('~/.vim/spell/*.add', 1, 1)
