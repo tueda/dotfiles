@@ -38,12 +38,21 @@ hook_add = '''
 on_ft = 'toml'
 
 [[plugins]]
-repo = 'rhysd/vim-clang-format'
+repo = 'Chiel92/vim-autoformat'
 hook_source = '''
-  let g:clang_format#detect_style_file = 1
-  autocmd FileType c,cpp,objc map <buffer> <F7> :ClangFormat<CR>
+  noremap <F8> :Autoformat<CR>
+  let g:formatdef_scalafmt = '"scalafmt --stdin 2>/dev/null"'
+  let g:formatters_scala = ['scalafmt']
 '''
-on_ft = ['c', 'cpp', 'objc']
+on_ft = ['c', 'cpp', 'objc', 'python', 'rust', 'scala']
+
+#[[plugins]]
+#repo = 'rhysd/vim-clang-format'
+#hook_source = '''
+#  let g:clang_format#detect_style_file = 1
+#  autocmd FileType c,cpp,objc map <buffer> <F7> :ClangFormat<CR>
+#'''
+#on_ft = ['c', 'cpp', 'objc']
 
 [[plugins]]
 repo = 'tueda/form.vim'
@@ -63,14 +72,14 @@ hook_source = '''
 '''
 on_ft = 'python'
 
-[[plugins]]
-repo = 'tell-k/vim-autopep8'
-hook_source = '''
-  let g:autopep8_disable_show_diff=1
-  let g:autopep8_aggressive=2
-  autocmd FileType python noremap <buffer> <F8> :call Autopep8()<CR>
-'''
-on_ft = 'python'
+#[[plugins]]
+#repo = 'tell-k/vim-autopep8'
+#hook_source = '''
+#  let g:autopep8_disable_show_diff=1
+#  let g:autopep8_aggressive=2
+#  autocmd FileType python noremap <buffer> <F8> :call Autopep8()<CR>
+#'''
+#on_ft = 'python'
 
 [[plugins]]
 #repo = 'vim-scripts/jpythonfold.vim'
@@ -83,16 +92,15 @@ hook_source = '''
 '''
 on_ft = 'python'
 
-[[plugins]]
-repo =  'tmhedberg/SimpylFold'
-on_ft = 'python'
-if = 0
+#[[plugins]]
+#repo =  'tmhedberg/SimpylFold'
+#on_ft = 'python'
 
 [[plugins]]
 repo = 'rust-lang/rust.vim'
-hook_source = '''
-  let g:rustfmt_autosave = 1
-'''
+#hook_source = '''
+#  let g:rustfmt_autosave = 1
+#'''
 on_ft = 'rust'
 
 [[plugins]]

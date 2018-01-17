@@ -23,12 +23,11 @@ hook_add = '''
   setlocal viewoptions=cursor,folds,options,slash,unix
 '''
 
-[[plugins]]
-repo = 'dietsche/vim-lastplace'
-hook_add = '''
-  let g:lastplace_ignore = 'gitcommit,gitrebase,svn,hgcommit'
-'''
-if = 0
+#[[plugins]]
+#repo = 'dietsche/vim-lastplace'
+#hook_add = '''
+#  let g:lastplace_ignore = 'gitcommit,gitrebase,svn,hgcommit'
+#'''
 
 [[plugins]]
 #repo = 'ConradIrwin/vim-bracketed-paste'
