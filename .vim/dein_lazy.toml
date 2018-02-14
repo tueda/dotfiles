@@ -98,9 +98,11 @@ on_ft = 'python'
 
 [[plugins]]
 repo = 'rust-lang/rust.vim'
-#hook_source = '''
-#  let g:rustfmt_autosave = 1
-#'''
+hook_source = '''
+  let g:rustfmt_autosave = 1
+  let g:rust_fold = 1
+  setlocal foldcolumn=4
+'''
 on_ft = 'rust'
 
 [[plugins]]
