@@ -63,6 +63,10 @@ hook_source = '''
 on_ft = 'form'
 
 [[plugins]]
+repo = 'pest-parser/pest.vim'
+on_ft = 'pest'
+
+[[plugins]]
 repo = 'nvie/vim-flake8'
 hook_source = '''
   let g:flake8_show_quickfix=1
