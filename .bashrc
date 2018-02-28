@@ -159,10 +159,10 @@ export HISTIGNORE='&:fg:bg:exit:history'
 
 # Aliases.
 
-alias ls='ls -hF --show-control-chars --color'
+alias ls='ls --classify --color --group-directories-first --human-readable --show-control-chars'
 alias ll='ls -l'
-alias la='ls -A'
-alias l='ls -CF'
+alias la='ls --almost-all'
+alias l='ls'
 
 alias df='df -h'
 alias du='du -h'
@@ -191,6 +191,11 @@ else
   else
     alias diff='diff -u'
   fi
+fi
+
+if type exa >/dev/null 2>&1; then
+  alias ls='exa --classify --git --group-directories-first --header'
+  alias la='ls --all'
 fi
 
 # Currently "nice" doesn't work on BoUoW (as of April 2017).
