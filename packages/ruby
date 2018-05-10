@@ -1,12 +1,13 @@
 pkgname=ruby
-pkgver=2.4.2
+pkgver=2.5.1
 
+pkg_branch=2.5
 openssl_pkgver=1.1.0h
 
 do_install() {
   PATH=/usr/local/bin:/usr/bin:/bin
   unset LD_LIBRARY_PATH LD_RUN_PATH
-  download https://cache.ruby-lang.org/pub/ruby/2.4/$pkgname-$pkgver.tar.gz
+  download https://cache.ruby-lang.org/pub/ruby/$pkg_branch/$pkgname-$pkgver.tar.gz
   cd $pkgname-$pkgver
   args=--disable-install-doc
   if [ -d $LOCAL_BUILD_ROOT/openssl-$openssl_pkgver ]; then
