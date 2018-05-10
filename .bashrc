@@ -237,6 +237,8 @@ cl() {
   clear
 }
 
+[ -f ~/.bashrc.local-after ] && . ~/.bashrc.local-after
+
 # For profiling.
 if [ -n "$BASH_STARTUPTIME" ]; then
   set +x
