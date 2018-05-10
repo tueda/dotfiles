@@ -1,5 +1,5 @@
 pkgname=git
-pkgver=2.14.1
+pkgver=2.17.0
 
 openssl_pkgver=1.1.0h
 
