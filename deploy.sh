@@ -83,7 +83,7 @@ list_dotfiles() {
 }
 
 # Check submodules.
-if [ -f .gitmodules ]; then
+if [ -d .git ] && [ -f .gitmodules ]; then
   if type git >/dev/null 2>&1; then
     git submodule update --init
   else
