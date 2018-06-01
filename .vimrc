@@ -310,8 +310,8 @@ command! NoList  set nolist
 command! C       setlocal filetype=c
 command! CC      setlocal filetype=cpp
 command! F       setlocal filetype=fortran
-command! F77     let b:fortran_fixed_source=1|setlocal filetype=fortran
-command! F90     let b:fortran_fixed_source=0|setlocal filetype=fortran
+command! F77     let b:fortran_fixed_source=1 | setlocal filetype=fortran | setlocal colorcolumn=73
+command! F90     let b:fortran_fixed_source=0 | setlocal filetype=fortran | setlocal colorcolumn=133
 command! Fortran setlocal filetype=fortran
 command! FORM    setlocal filetype=form
 command! MMA     setlocal filetype=mma
