@@ -1,0 +1,25 @@
+pkgname=curl
+pkgver=7.60.0
+
+openssl_pkgver=1.1.0h
+
+do_install() {
+  PATH=/usr/local/bin:/usr/bin:/bin
+  unset LD_LIBRARY_PATH LD_RUN_PATH
+  download https://curl.haxx.se/download/$pkgname-$pkgver.tar.gz
+  cd $pkgname-$pkgver
+  args=--enable-libcurl-option
+  if [ -d $LOCAL_BUILD_ROOT/openssl-$openssl_pkgver ]; then
+    export OPENSSL_PATH="$LOCAL_BUILD_ROOT/openssl-$openssl_pkgver"
+  fi
+  ./configure --prefix="$prefix" $args
+  make
+# make check
+  make install
+}
+
+do_postinstall() {
+  rc_prepend_path PATH "$prefix/bin"
+}
+
+# vim: ft=sh et ts=8 sts=2 sw=2
