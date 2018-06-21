@@ -44,7 +44,7 @@ hook_source = '''
   let g:formatdef_scalafmt = '"scalafmt --stdin 2>/dev/null"'
   let g:formatters_scala = ['scalafmt']
 '''
-on_ft = ['c', 'cpp', 'objc', 'python', 'rust', 'scala']
+on_ft = ['c', 'cpp', 'java', 'objc', 'python', 'rust', 'scala']
 
 #[[plugins]]
 #repo = 'rhysd/vim-clang-format'
