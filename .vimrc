@@ -274,6 +274,7 @@ augroup vimrc
   autocmd FileType automake execute 'TabIndent 4'
   autocmd FileType fortran setlocal colorcolumn=73
   autocmd FileType gitcommit setlocal colorcolumn=73
+  autocmd FileType java setlocal colorcolumn=101
   autocmd FileType make execute 'TabIndent 4'
   autocmd FileType python execute 'SpaceIndent 4' | setlocal colorcolumn=80 | setlocal foldcolumn=4
   autocmd FileType qf setlocal colorcolumn=0
