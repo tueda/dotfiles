@@ -14,5 +14,9 @@ TAGS
 .python-version
 .ruby-version
 
+# direnv
+.direnv
+.envrc
+
 # silly rename of Linux NFS
 .nfs*

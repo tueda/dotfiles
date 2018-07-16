@@ -34,6 +34,11 @@ esac
 prepend_path_c PATH ~/bin
 clean_path
 
+# direnv
+if type direnv >/dev/null 2>&1; then
+  eval "$(direnv hook bash)"
+fi
+
 # If not running interactively, don't do anything.
 [ -z "$PS1" ] && return
 
@@ -104,6 +109,17 @@ case "$TERM" in
     export PS1='[\u@\h \W$(__git_ps1 " (%s)")]\n\$ '
     ;;
 esac
+
+# Prompt for direnv + virtualenv
+if type direnv >/dev/null 2>&1; then
+  show_virtual_env() {
+    if [ -n "$VIRTUAL_ENV" ]; then
+      echo "($(basename $VIRTUAL_ENV))"
+    fi
+  }
+  export -f show_virtual_env
+  PS1='$(show_virtual_env)'$PS1
+fi
 
 # Terminal.
 case "$TERM" in
@@ -193,6 +209,7 @@ else
   fi
 fi
 
+# "exa" as a modern replacement for "ls".
 if type exa >/dev/null 2>&1; then
   alias ls='exa --classify --git --group-directories-first --header'
   alias la='ls --all'
