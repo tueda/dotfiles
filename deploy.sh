@@ -164,6 +164,12 @@ mkdir -p "$HOME/bin"
     mv open-linux open
   fi
 
+  if [ $osname = linux_on_windows ]; then
+    download https://gist.githubusercontent.com/tueda/eed84b738613761f1146de95ca0817d7/raw/open-wsl
+    chmod +x open-wsl
+    mv open-wsl open
+  fi
+
   if [ $osname = cygwin ]; then
     download https://gist.githubusercontent.com/tueda/fc8c3eba9606479308d88b6e38c9aeca/raw/open-cygwin
     chmod +x open-cygwin
