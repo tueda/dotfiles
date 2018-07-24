@@ -198,6 +198,10 @@ map <C-e> <End>
 map! <C-a> <Home>
 map! <C-e> <End>
 
+" C-S: Save the file.
+nmap <c-s> :update<CR>
+imap <c-s> <Esc>:update<CR>a
+
 "}}}
 " File type detection "{{{
 
