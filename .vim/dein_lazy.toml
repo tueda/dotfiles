@@ -46,6 +46,10 @@ hook_source = '''
 '''
 on_ft = ['c', 'cpp', 'fortran', 'java', 'objc', 'python', 'rust', 'scala']
 
+[[plugins]]
+repo = 'vim-scripts/bats.vim'
+on_ft = 'bats'
+
 #[[plugins]]
 #repo = 'rhysd/vim-clang-format'
 #hook_source = '''
