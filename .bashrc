@@ -55,13 +55,15 @@ if [ -z "$BASH_COMPLETION" ]; then
 fi
 
 # Ensure __git_ps1.
-if __git_ps1 > /dev/null 2>&1; then :;else
-  for f in /usr/share/git-core/contrib/completion/git-prompt.sh; do
-    if [ -f "$f" ]; then
-      . "$f"
-      break
-    fi
-  done
+if __git_ps1 >/dev/null 2>&1; then :;else
+  if type git >/dev/null 2>&1; then
+    for f in $(dirname $(dirname $(command -v git)))/share/git-core/contrib/completion/git-prompt.sh; do
+      if [ -f "$f" ]; then
+        . "$f"
+        break
+      fi
+    done
+  fi
 fi
 if __git_ps1 > /dev/null 2>&1; then :;else
   __git_ps1() { :; }
