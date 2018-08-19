@@ -225,10 +225,6 @@ fi
 #   Usage: pst
 alias pst='ps f -o user,pid,ppid,pgid,tty,stat,stime,time,%cpu,%mem,command'
 
-# Disk Usage Directory: shows file space usage in the current directory.
-#   Usage: dud
-alias dud='du --max-depth=1 --block-size=1M --total | sort -n'
-
 # Screen Directory: sets the starting directory of GNU screen.
 #   Usage: sd [<dir>]
 sd() {

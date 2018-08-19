@@ -146,6 +146,9 @@ mkdir -p "$HOME/bin"
   download https://gist.githubusercontent.com/tueda/d411b7ddc4167c5bb209040b637d5e2d/raw/git-graph
   chmod +x git-graph
 
+  download https://gist.githubusercontent.com/tueda/caeb67bd8d5e3b0697f8fd6e8b8a79ae/raw/disk-blame
+  chmod +x disk-blame
+
   download https://gist.githubusercontent.com/tueda/f44b42a12ac16c1966e9743e344615a1/raw/formset.py
   chmod +x formset.py
 
