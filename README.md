@@ -36,6 +36,9 @@ prepend_path PATH /additional/path/to/bin
     email = myemail@example.com
 ```
 
+**The followings are rather deprecated.**
+
+
 ### Install Linuxbrew
 
 **NOTE**: The following should work even without the above installation.
