@@ -1,12 +1,25 @@
+[user]
+	# git >= 2.8
+	useConfigOnly = true
 [include]
+	# git >= 1.7.10.2
 	path = ~/.gitconfig.local
+[core]
+	editor = vim
+	excludesFile = ~/.gitignore.global
+	pager = less -S -R
 [color]
 	ui = auto
 [pager]
+	# git >= 1.7.4
+	# Disable it when you hit errors with old git, e.g.,
+	# git --no-pager log -- color | less
 	diff = diff-highlight | less -S -R
 	show = diff-highlight | less -S -R
 	log = diff-highlight | less -S -R
-[core]
-	editor = vim
-	excludesfile = ~/.gitignore.global
-	pager = less -S -R
+[diff]
+	# git >= 2.9
+	compactionHeuristic = true
+[interactive]
+	# git >= 2.9
+	diffFilter = diff-highlight
