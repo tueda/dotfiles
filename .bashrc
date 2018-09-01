@@ -57,7 +57,7 @@ fi
 # Ensure __git_ps1.
 if __git_ps1 >/dev/null 2>&1; then :;else
   if type git >/dev/null 2>&1; then
-    for f in $(dirname $(dirname $(command -v git)))/share/git-core/contrib/completion/git-prompt.sh; do
+    for f in $(dirname $(dirname $(command -v git)))/{share/git-core/contrib/completion,etc/bash_completion.d}/git-prompt.sh; do
       if [ -f "$f" ]; then
         . "$f"
         break
