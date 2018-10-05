@@ -233,6 +233,9 @@ sd() {
   \screen -X chdir "`pwd`/$*"
 }
 
+# Screen List: lists sessions of GNU screen.
+alias sl='screen -ls'
+
 # Screen Title: sets the session name in GNU screen.
 #   Usage: st [[<oldname>] <newname>]
 st() {

@@ -7,6 +7,7 @@ shell /bin/bash
 shelltitle "$ |bash"
 startup_message off
 vbell off
+defencoding utf8
 
 #escape ^zz
 escape ^Qq
