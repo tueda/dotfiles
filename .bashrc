@@ -47,11 +47,14 @@ stty stop undef start undef
 
 # Bash completion.
 if [ -z "$BASH_COMPLETION" ]; then
-  if [ -f "$LOCAL_BUILD_ROOT/linuxbrew/etc/bash_completion" ]; then
-    . "$LOCAL_BUILD_ROOT/linuxbrew/etc/bash_completion"
-  elif [ -f "~/.linuxbrew/etc/bash_completion" ]; then
-    . "~/.linuxbrew/etc/bash_completion"
-  fi
+  for f in "$LOCAL_BUILD_ROOT/linuxbrew/etc/bash_completion" \
+           "~/.linuxbrew/etc/bash_completion" \
+           "/etc/bash_completion"; do
+      if [ -f "$f" ]; then
+        . "$f"
+        break
+      fi
+  done
 fi
 
 # Ensure __git_ps1.
