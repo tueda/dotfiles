@@ -38,6 +38,10 @@ hook_add = '''
 on_ft = 'toml'
 
 [[plugins]]
+repo = 'dylon/vim-antlr'
+on_ft = ['antlr3', 'antlr4']
+
+[[plugins]]
 repo = 'Chiel92/vim-autoformat'
 hook_source = '''
   noremap <F8> :Autoformat<CR>
