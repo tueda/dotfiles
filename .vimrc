@@ -51,7 +51,6 @@ endif
 "}}}
 " General behaviour "{{{
 
-set   autoread
 set   backspace=indent,eol,start
 set   fileformats=unix,dos,mac
 set   hidden
@@ -69,6 +68,21 @@ set   wildignore+=CMakeCache.txt,*/CMakefiles/*,CTestTestfile.cmake,cmake_instal
 set   wildignore+=*.aux,*.ax1,*.ax2,*.bbl,*.blg,*.fls,*.spl,*.toc
 set   wildignore+=*.nav,*.spl,*.snm,*.vrb
 set   wildignore+=*.dvi,*.pdf
+
+" Automatically reload files.
+" https://stackoverflow.com/a/50476532/9105334
+" https://stackoverflow.com/a/48296697/9105334
+set   autoread
+
+function! Checktime() abort
+  let l:winview = winsaveview()
+  checktime
+  call winrestview(l:winview)
+endfunction
+
+augroup vimrc
+  autocmd CursorHold,FocusGained,BufEnter * call Checktime() | call feedkeys('lh')
+augroup END
 
 " Prevent a delay when pressing ESC.
 if !has('gui_running')
