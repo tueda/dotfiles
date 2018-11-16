@@ -171,6 +171,10 @@ mkdir -p "$HOME/bin"
     download https://gist.githubusercontent.com/tueda/eed84b738613761f1146de95ca0817d7/raw/open-wsl
     chmod +x open-wsl
     mv open-wsl open
+
+    download https://gist.githubusercontent.com/tueda/dda525296a4a35f857d698af971cd704/raw/dup-wsl
+    chmod +x dup-wsl
+    mv dup-wsl dup
   fi
 
   if [ $osname = cygwin ]; then
