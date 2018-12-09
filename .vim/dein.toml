@@ -35,6 +35,20 @@ hook_add = '''
   autocmd StdinReadPre * let s:std_in=1
   autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | wincmd p | endif
   autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+  let g:NERDTreeIgnore = [
+    \ '\.o$' ,
+    \ '\.pyc$' ,
+    \ '\.pyo$' ,
+    \ '^__pycache__$' ,
+    \ '^CMakeCache\.txt$',
+    \ '^CMakeFiles$',
+    \ '^cmake_install\.cmake$',
+    \ '^CTestTestfile\.cmake$',
+    \ '^Testing$',
+    \ '^gradlew$',
+    \ '^gradlew\.bat$',
+    \ '-eps-converted-to\.pdf$' ,
+    \ '\~$' ]
 '''
 
 [[plugins]]

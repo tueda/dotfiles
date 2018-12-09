@@ -63,8 +63,9 @@ set   whichwrap=b,s,<,>,[,]
 set   wildmenu
 set   wildmode=full
 set   wildignore+=*.o,*.exe
-set   wildignore+=*.pyc,*.pyo
+set   wildignore+=*.pyc,*.pyo,*/__pycache__/*
 set   wildignore+=CMakeCache.txt,*/CMakefiles/*,CTestTestfile.cmake,cmake_install.cmake
+set   wildignore+=gradlew,gradlew.bat
 set   wildignore+=*.aux,*.ax1,*.ax2,*.bbl,*.blg,*.fls,*.spl,*.toc
 set   wildignore+=*.nav,*.spl,*.snm,*.vrb
 set   wildignore+=*.dvi,*.pdf
