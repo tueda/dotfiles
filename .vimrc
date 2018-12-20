@@ -204,6 +204,8 @@ function! SpellFileRebuild()
   endfor
 endfunction
 
+command! SpellCheck call SpellPrecisely()
+
 "}}}
 " Key mappings "{{{
 
