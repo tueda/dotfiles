@@ -340,6 +340,8 @@ command! MMA     setlocal filetype=mma
 command! REDUCE  setlocal filetype=reduce
 command! TeX     setlocal filetype=tex
 
+command! ReopenAsEUCJP e ++enc=euc-jp
+command! ReopenAsSJIS e ++enc=sjis
 command! ReopenAsUTF8 e ++enc=utf-8
 
 " Use FORM foldings.
