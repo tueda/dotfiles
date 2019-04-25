@@ -208,7 +208,7 @@ if type colordiff >/dev/null 2>&1; then
   fi
 else
   if type diff-highlight >/dev/null 2>&1; then
-    function diff() { diff -u "$@" | diff-highlight; }
+    function diff() { command diff -u "$@" | diff-highlight; }
   else
     alias diff='diff -u'
   fi
