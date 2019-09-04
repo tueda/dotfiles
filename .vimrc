@@ -131,18 +131,6 @@ if exists('&breakindent')
   set breakindent
 endif
 
-" Highlight unwanted spaces.
-if v:version > 701 || (v:version == 701 && has('patch40'))
-  highlight link ExtraWhitespace Error
-  match ExtraWhitespace /\s\+$\| \+\ze\t/
-  augroup vimrc
-    autocmd BufWinEnter * match ExtraWhitespace /\s\+$\| \+\ze\t/
-    autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-    autocmd InsertLeave * match ExtraWhitespace /\s\+$\| \+\ze\t/
-    autocmd BufWinLeave * call clearmatches()
-  augroup END
-endif
-
 "}}}
 " Searching "{{{
 

@@ -78,6 +78,9 @@ hook_add = '''
 repo = 'redneb/vim-bracketed-paste'
 
 [[plugins]]
+repo = 'ntpeters/vim-better-whitespace'
+
+[[plugins]]
 repo = 'haya14busa/incsearch.vim'
 hook_add = '''
   map /  <Plug>(incsearch-forward)
