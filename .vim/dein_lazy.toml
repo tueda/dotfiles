@@ -3,6 +3,7 @@ repo = 'Shougo/neco-syntax'
 
 [[plugins]]
 repo = 'roxma/nvim-yarp'
+# NOTE: requires "pip3 install pynvim"
 
 [[plugins]]
 repo = 'roxma/vim-hug-neovim-rpc'
