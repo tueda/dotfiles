@@ -144,4 +144,9 @@ on_ft = 'toml'
 
 [[plugins]]
 repo = 'matze/vim-tex-fold'
+hook_source = '''
+  let g:tex_fold_additional_envs = [
+    \ 'tikzpicture'
+    \ ]
+'''
 on_ft = 'tex'
