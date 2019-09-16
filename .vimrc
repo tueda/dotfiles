@@ -169,6 +169,13 @@ if v:version > 704 || (v:version == 704 && has('patch89'))
   set spelllang+=cjk
 endif
 
+" Disable the spell checker for Japanese.
+function! DisableSpellCheckCJK()
+  if v:version > 704 || (v:version == 704 && has('patch89'))
+    setlocal spelllang+=cjk
+  endif
+endfunction
+
 " Slow, but accurate.
 function! SpellPrecisely()
   syntax sync fromstart
@@ -193,6 +200,14 @@ function! SpellFileRebuild()
 endfunction
 
 command! SpellCheck call SpellPrecisely()
+
+command! SpellCheckGB setlocal spell spelllang=en_gb
+      \ | call DisableSpellCheckCJK()
+      \ | call SpellPrecisely()
+
+command! SpellCheckUS setlocal spell spelllang=en_us
+      \ | call DisableSpellCheckCJK()
+      \ | call SpellPrecisely()
 
 "}}}
 " Key mappings "{{{

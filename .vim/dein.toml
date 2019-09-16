@@ -12,7 +12,11 @@ hook_add = '''
   let g:solarized_termtrans = 1
   let g:solarized_visibility = "low"
   augroup vimrc
-    autocmd ColorScheme solarized highlight SpellBad ctermbg=217 | highlight SpellCap ctermbg=216
+    autocmd ColorScheme *
+          \   highlight SpellBad ctermbg=181
+          \ | highlight SpellCap ctermbg=182
+          \ | highlight SpellRare ctermbg=184
+          \ | highlight SpellLocal ctermbg=180
   augroup END
   colorscheme solarized
 '''
