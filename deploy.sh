@@ -146,10 +146,13 @@ mkdir -p "$HOME/bin"
   download https://gist.githubusercontent.com/tueda/d411b7ddc4167c5bb209040b637d5e2d/raw/git-graph
   chmod +x git-graph
 
+  download https://gist.githubusercontent.com/tueda/f4b13084345cb6576688066d92198a2c/raw/git-recommit
+  chmod +x git-recommit
+
   download https://gist.githubusercontent.com/tueda/caeb67bd8d5e3b0697f8fd6e8b8a79ae/raw/disk-blame
   chmod +x disk-blame
 
-  download https://gist.githubusercontent.com/tueda/f44b42a12ac16c1966e9743e344615a1/raw/formset.py
+  download https://raw.githubusercontent.com/tueda/formset/master/formset.py
   chmod +x formset.py
 
   download https://gist.githubusercontent.com/tueda/3e1b2bec8545c48737c7/raw/formprof.py
