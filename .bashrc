@@ -48,12 +48,13 @@ stty stop undef start undef
 # Bash completion.
 if [ -z "$BASH_COMPLETION" ]; then
   for f in "$LOCAL_BUILD_ROOT/linuxbrew/etc/bash_completion" \
-           "~/.linuxbrew/etc/bash_completion" \
+           "$HOME/.linuxbrew/etc/bash_completion" \
+           "/home/linuxbrew/.linuxbrew/etc/bash_completion" \
            "/etc/bash_completion"; do
-      if [ -f "$f" ]; then
-        . "$f"
-        break
-      fi
+    if [ -f $(echo "$f") ]; then
+      . "$f"
+      break
+    fi
   done
 fi
 
