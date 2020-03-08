@@ -20,3 +20,6 @@ TAGS
 
 # silly rename of Linux NFS
 .nfs*
+
+# vscode
+.vscode/
