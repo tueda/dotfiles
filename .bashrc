@@ -9,16 +9,6 @@ fi
 # File mode creation mask.
 umask 022
 
-# Check the OS.
-is_WSL=false  # Windows Subsystem for Linux
-case `uname -a` in
-  *-Microsoft*)
-    is_WSL=:
-    ;;
-  *)
-    ;;
-esac
-
 # Ensure $TMPDIR.
 [ -z "$TMPDIR" ] && export TMPDIR=/tmp
 
@@ -219,12 +209,6 @@ fi
 if type exa >/dev/null 2>&1; then
   alias ls='exa --classify --git --group-directories-first --header'
   alias la='ls --all'
-fi
-
-# Currently "nice" doesn't work on BoUoW (as of April 2017).
-if $is_WSL; then :; else
-  alias top='nice top'
-  alias htop='nice htop'
 fi
 
 # Process Status Tree: shows the currently-running processes in the tree format.
