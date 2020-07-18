@@ -110,3 +110,6 @@ hook_add = '''
   let g:yankring_history_file = ".yankring_history"
 '''
 if = "!has('nvim')"  # clipboard error with nvim
+
+[[plugins]]
+repo = 'editorconfig/editorconfig-vim'
