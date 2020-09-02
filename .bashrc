@@ -20,9 +20,23 @@ umask 022
 [ -n "$EASYBUILD_PREFIX" ] && [ -d "$EASYBUILD_PREFIX/modules/all" ] && \
   { module use "$EASYBUILD_PREFIX/modules/all"; module load EasyBuild; }
 
-# PATHs.
+# Linuxbrew
+if [ -z "$DISABLE_HOMEBREW" ]; then
+  if [ -d ~/.linuxbrew ]; then
+    eval $(~/.linuxbrew/bin/brew shellenv)
+  elif [ -d /home/linuxbrew/.linuxbrew ]; then
+    eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+  fi
+fi
+
+# cargo
+prepend_path_c PATH ~/.cargo/bin
+
+# pip --user / pipx
+prepend_path_c PATH ~/.local/bin
+
+# bin directory
 prepend_path_c PATH ~/bin
-clean_path
 
 # direnv
 if type direnv >/dev/null 2>&1; then
@@ -34,6 +48,11 @@ fi
 
 # Stop terminal flow controls ^S and ^Q.
 stty stop undef start undef
+
+# pipx
+if command -v register-python-argcomplete pipx >/dev/null; then
+  eval "$(register-python-argcomplete pipx)"
+fi
 
 # Bash completion.
 if [ -z "$BASH_COMPLETION" ]; then
