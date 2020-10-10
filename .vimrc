@@ -5,6 +5,13 @@ augroup vimrc
   autocmd!
 augroup END
 
+" Shell "{{{
+
+if &shell =~# 'fish$'
+  set shell=sh
+endif
+
+" Shell "}}}
 " Terminal "{{{
 
 " Modern terminals must be able to print UTF-8 characters!

@@ -1,4 +1,7 @@
 /backup/
+/.config/fish/*
+!/.config/fish/config.fish
+!/.config/fish/fishfile
 /.vim/bundle/*
 !/.vim/bundle/neobundle.vim
 /.vim/view/

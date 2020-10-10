@@ -49,6 +49,9 @@ fi
 # Stop terminal flow controls ^S and ^Q.
 stty stop undef start undef
 
+# Fish or not.
+[ -n "$I_LIKE_FISH" ] && type fish >/dev/null 2>&1 && exec fish
+
 # pipx
 if command -v register-python-argcomplete pipx >/dev/null; then
   eval "$(register-python-argcomplete pipx)"
@@ -239,6 +242,8 @@ alias pst='ps f -o user,pid,ppid,pgid,tty,stat,stime,time,%cpu,%mem,command'
 sd() {
   \screen -X chdir "`pwd`/$*"
 }
+
+alias s='sd'
 
 # Screen List: lists sessions of GNU screen.
 alias sl='screen -ls'
