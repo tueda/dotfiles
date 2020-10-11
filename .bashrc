@@ -267,6 +267,11 @@ cl() {
   clear
 }
 
+# "nice" for system monitors.
+alias top='nice top'
+alias htop='nice htop'
+alias btm='nice btm'
+
 [ -f ~/.bashrc.local-after ] && . ~/.bashrc.local-after
 
 # For profiling.

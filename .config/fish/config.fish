@@ -57,6 +57,10 @@ alias ll='ls -l'
 alias la='ls --almost-all'
 alias l='ls'
 
+alias top='nice top'
+alias htop='nice htop'
+alias btm='nice btm'
+
 alias screen='screen -D -RR'
 
 function s --description 'sets the starting directory of GNU screen'
