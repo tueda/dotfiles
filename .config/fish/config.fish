@@ -1,5 +1,16 @@
 set fish_greeting
 
+function fish_title
+    # emacs is basically the only term that can't handle it.
+    if not set -q INSIDE_EMACS
+        echo (status current-command) (__fish_pwd)
+    end
+    # See: https://stackoverflow.com/a/63374472/9105334
+    if string match -q 'screen*' $TERM
+        echo -ne "\\ek"(status current-command)"\\e\\" >/dev/tty
+    end
+end
+
 function fish_prompt --description 'Write out the prompt'
     set -l last_pipestatus $pipestatus
     set -l normal (set_color normal)
