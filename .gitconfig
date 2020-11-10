@@ -23,3 +23,5 @@
 [interactive]
 	# git >= 2.9
 	diffFilter = diff-highlight
+[pull]
+	ff = only
