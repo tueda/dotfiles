@@ -76,7 +76,7 @@ alias top='nice top'
 alias htop='nice htop'
 alias btm='nice btm'
 
-alias screen='screen -D -RR'
+alias screen='screen -D -RR -U'
 
 function s --description 'sets the starting directory of GNU screen'
     command screen -X chdir (pwd)

@@ -202,7 +202,7 @@ alias df='df -h'
 alias du='du -h'
 alias grep='grep -n --color'
 alias less='less -R -w -XXX'
-alias screen='screen -D -RR'
+alias screen='screen -D -RR -U'
 alias ssh='ssh -X -2 -C'
 
 if type vim >/dev/null 2>&1; then
