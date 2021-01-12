@@ -22,4 +22,8 @@ TAGS
 .nfs*
 
 # vscode
+.classpath
+.devcontainer/
+.project
+.settings/
 .vscode/
