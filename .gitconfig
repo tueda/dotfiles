@@ -8,6 +8,7 @@
 	editor = vim
 	excludesFile = ~/.gitignore.global
 	pager = less -S -R
+	quotepath = false
 [color]
 	ui = auto
 [pager]
