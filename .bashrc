@@ -50,7 +50,12 @@ fi
 stty stop undef start undef
 
 # Fish or not.
-[ -n "$I_LIKE_FISH" ] && type fish >/dev/null 2>&1 && exec fish
+if [ -n "$FORCE_BASH" ]; then
+  unset FORCE_BASH
+  alias bash='FORCE_BASH=1 command bash'
+else
+  [ -n "$I_LIKE_FISH" ] && type fish >/dev/null 2>&1 && exec fish
+fi
 
 # pipx
 if command -v register-python-argcomplete pipx >/dev/null; then

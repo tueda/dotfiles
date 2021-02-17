@@ -64,6 +64,8 @@ function fish_right_prompt --description 'Write out the right prompt'
         (set_color $fish_color_autosuggestion) ' ' $duration
 end
 
+alias bash='FORCE_BASH=1 command bash'
+
 # Possible alternative:
 #   https://github.com/fish-shell/fish-shell/issues/5076#issuecomment-401551763
 alias c='command'
