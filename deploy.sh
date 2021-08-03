@@ -44,7 +44,9 @@ download() {
 osname=`uname -s`
 if [ `expr substr "$osname" 1 5` = Linux ]; then
   if uname -v | grep -q 'Microsoft'; then
-    osname=linux_on_windows
+    osname=linux_on_windows  # WSL1
+  elif uname -r | grep -q 'microsoft'; then
+    osname=linux_on_windows  # WSL2
   else
     osname=linux
   fi
