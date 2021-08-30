@@ -21,6 +21,9 @@ TAGS
 # silly rename of Linux NFS
 .nfs*
 
+# ZoneId on Windows
+*:Zone.Identifier
+
 # vscode
 .classpath
 .devcontainer/
