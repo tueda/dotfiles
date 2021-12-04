@@ -198,6 +198,8 @@ export HISTIGNORE='&:fg:bg:exit:history'
 
 # Aliases.
 
+alias c='command'
+
 alias ls='ls --classify --color --group-directories-first --human-readable --show-control-chars'
 alias ll='ls -l'
 alias la='ls --almost-all'
