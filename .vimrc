@@ -22,12 +22,16 @@ endif
 
 " T_RBG passing though screen/tmux.
 if exists('&t_RB')
-  if $TERM =~ "screen"
+  if exists('$TMUX')
+    " https://github.com/vim/vim/issues/7867#issuecomment-781799099
+    let &t_RB = "\ePtmux;\e\e]11;?\007\e\\"
+  elseif $TERM =~ "screen"
     let &t_RB = "\eP\e]11;?\x07\e\\"
-  elseif exists('$TMUX')
-    let &t_RB = "\eP\e\e]11;?\e\e\\\\\e\\"
   endif
 endif
+
+" Usually, the color mode and background color are guessed correctly, but when
+" it doesn't work, we use $VIM_256COLOR and $VIM_BACKGROUND to adjust them.
 
 if exists('$VIM_256COLOR')
   set t_Co=256
