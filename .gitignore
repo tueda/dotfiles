@@ -1,4 +1,5 @@
 /backup/
+.byobu/
 /.config/fish/*
 !/.config/fish/config.fish
 !/.config/fish/fishfile
