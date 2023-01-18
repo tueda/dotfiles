@@ -25,4 +25,8 @@
 	# git >= 2.9
 	diffFilter = diff-highlight
 [pull]
+	# git >= 2.0
 	ff = only
+[init]
+	# git >= 2.28
+	defaultBranch = main
