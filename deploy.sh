@@ -151,6 +151,9 @@ mkdir -p "$HOME/bin"
   download https://gist.githubusercontent.com/tueda/f4b13084345cb6576688066d92198a2c/raw/git-recommit
   chmod +x git-recommit
 
+  download https://raw.githubusercontent.com/tueda/git-onedrive/main/git-onedrive
+  chmod +x git-onedrive
+
   download https://gist.githubusercontent.com/tueda/caeb67bd8d5e3b0697f8fd6e8b8a79ae/raw/disk-blame
   chmod +x disk-blame
 
