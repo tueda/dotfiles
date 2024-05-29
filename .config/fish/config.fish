@@ -108,10 +108,12 @@ else
     end
 end
 
-if command -q exa
+if command -q eza
+    alias ls='eza --classify --git --group-directories-first --header'
+else if command -q exa
     alias ls='exa --classify --git --group-directories-first --header'
-    alias la='ls --all'
 end
+alias la='ls --all'
 
 if command -q vim
     alias vi='vim'

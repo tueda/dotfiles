@@ -234,11 +234,13 @@ else
   fi
 fi
 
-# "exa" as a modern replacement for "ls".
-if type exa >/dev/null 2>&1; then
+# "eza" as a modern replacement for "ls".
+if type eza >/dev/null 2>&1; then
+  alias ls='eza --classify --git --group-directories-first --header'
+elif type exa >/dev/null 2>&1; then
   alias ls='exa --classify --git --group-directories-first --header'
-  alias la='ls --all'
 fi
+alias la='ls --all'
 
 # Process Status Tree: shows the currently-running processes in the tree format.
 #   Usage: pst
