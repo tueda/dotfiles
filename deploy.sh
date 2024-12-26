@@ -148,6 +148,9 @@ mkdir -p "$HOME/bin"
   download https://gist.githubusercontent.com/tueda/d411b7ddc4167c5bb209040b637d5e2d/raw/git-graph
   chmod +x git-graph
 
+  download https://gist.githubusercontent.com/tueda/ce103cd8f5288c1bd1b4ce37e56ef84c/raw/git-latest
+  chmod +x git-latest
+
   download https://gist.githubusercontent.com/tueda/f4b13084345cb6576688066d92198a2c/raw/git-recommit
   chmod +x git-recommit
 
