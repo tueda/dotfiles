@@ -82,9 +82,9 @@ hook_source = '''
 '''
 on_ft = 'form'
 
-[[plugins]]
-repo = 'chadversary/vim-meson'
-on_ft = 'meson'
+#[[plugins]]
+#repo = 'chadversary/vim-meson'
+#on_ft = 'meson'
 
 [[plugins]]
 repo = 'pest-parser/pest.vim'
