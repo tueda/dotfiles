@@ -58,7 +58,7 @@ else
 fi
 
 # pipx
-if command -v register-python-argcomplete pipx >/dev/null; then
+if command -v register-python-argcomplete >/dev/null; then
   eval "$(register-python-argcomplete pipx)"
 fi
 
