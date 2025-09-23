@@ -1,5 +1,5 @@
 #! /bin/sh
-set -e
+set -eu
 cd `dirname $0`
 
 backupdir=backup/`date +'%Y%m%d%H%M%S'`
@@ -27,7 +27,7 @@ case `echo -n x` in
     ;;
 esac
 
-# Wraps "wget $1"
+# Wraps "wget $1" and optionally "chmod $2 ...".
 download() {
   echo "downloading `basename "$1"...`"
   if type curl >/dev/null 2>&1; then
@@ -37,6 +37,9 @@ download() {
   else
     echo "error: curl or wget required" >&2
     return 1
+  fi
+  if [ $# -ge 2 ]; then
+    chmod "$2" "$(basename "$1")"
   fi
 }
 
@@ -134,43 +137,19 @@ mkdir -p "$HOME/bin"
 (
   cd "$HOME/bin"
 
+  download https://gist.githubusercontent.com/hSATAC/1095100/raw/256color.pl +x
+  download https://gist.githubusercontent.com/tueda/3e1b2bec8545c48737c7/raw/formprof.py +x
   download https://gist.githubusercontent.com/tueda/6718638/raw/path-manip.bash
-
-  download https://gist.githubusercontent.com/tueda/8146d9a44b5b1ec18fee/raw/ndiff
-  chmod +x ndiff
-
-  download https://gist.githubusercontent.com/tueda/7777291/raw/tarb
-  chmod +x tarb
-
-  download https://gist.githubusercontent.com/tueda/6744aadd5b423c838b44/raw/git-wc
-  chmod +x git-wc
-
-  download https://gist.githubusercontent.com/tueda/d411b7ddc4167c5bb209040b637d5e2d/raw/git-graph
-  chmod +x git-graph
-
-  download https://gist.githubusercontent.com/tueda/ce103cd8f5288c1bd1b4ce37e56ef84c/raw/git-latest
-  chmod +x git-latest
-
-  download https://gist.githubusercontent.com/tueda/f4b13084345cb6576688066d92198a2c/raw/git-recommit
-  chmod +x git-recommit
-
-  download https://raw.githubusercontent.com/tueda/git-onedrive/main/git-onedrive
-  chmod +x git-onedrive
-
-  download https://gist.githubusercontent.com/tueda/caeb67bd8d5e3b0697f8fd6e8b8a79ae/raw/disk-blame
-  chmod +x disk-blame
-
-  download https://raw.githubusercontent.com/tueda/formset/master/formset.py
-  chmod +x formset.py
-
-  download https://gist.githubusercontent.com/tueda/3e1b2bec8545c48737c7/raw/formprof.py
-  chmod +x formprof.py
-
-  download https://gist.githubusercontent.com/hSATAC/1095100/raw/256color.pl
-  chmod +x 256color.pl
-
-  download https://raw.githubusercontent.com/git/git/3dbfe2b8ae94cbdae5f3d32581aedaa5510fdc87/contrib/diff-highlight/diff-highlight
-  chmod +x diff-highlight
+  download https://gist.githubusercontent.com/tueda/6744aadd5b423c838b44/raw/git-wc +x
+  download https://gist.githubusercontent.com/tueda/7777291/raw/tarb +x
+  download https://gist.githubusercontent.com/tueda/8146d9a44b5b1ec18fee/raw/ndiff +x
+  download https://gist.githubusercontent.com/tueda/caeb67bd8d5e3b0697f8fd6e8b8a79ae/raw/disk-blame +x
+  download https://gist.githubusercontent.com/tueda/ce103cd8f5288c1bd1b4ce37e56ef84c/raw/git-latest +x
+  download https://gist.githubusercontent.com/tueda/d411b7ddc4167c5bb209040b637d5e2d/raw/git-graph +x
+  download https://gist.githubusercontent.com/tueda/f4b13084345cb6576688066d92198a2c/raw/git-recommit +x
+  download https://raw.githubusercontent.com/git/git/3dbfe2b8ae94cbdae5f3d32581aedaa5510fdc87/contrib/diff-highlight/diff-highlight +x
+  download https://raw.githubusercontent.com/tueda/formset/master/formset.py +x
+  download https://raw.githubusercontent.com/tueda/git-onedrive/main/git-onedrive +x
 
   if [ $osname = linux ]; then
     download https://gist.githubusercontent.com/tueda/9529c8d3c06252386c3e9c4ca521f391/raw/open-linux
