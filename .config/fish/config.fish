@@ -121,3 +121,7 @@ if command -q vim
     set -x EDITOR (which vim)
     set -x GIT_EDITOR $EDITOR
 end
+
+if test -f ~/.config/fish/config.local.fish
+    source ~/.config/fish/config.local.fish
+end
