@@ -143,6 +143,7 @@ mkdir -p "$HOME/bin"
   download https://gist.githubusercontent.com/tueda/6744aadd5b423c838b44/raw/git-wc +x
   download https://gist.githubusercontent.com/tueda/7777291/raw/tarb +x
   download https://gist.githubusercontent.com/tueda/8146d9a44b5b1ec18fee/raw/ndiff +x
+  download https://gist.githubusercontent.com/tueda/bed3f1f5f5ba437b3d1ca4777822faaf/raw/git-phantom +x
   download https://gist.githubusercontent.com/tueda/caeb67bd8d5e3b0697f8fd6e8b8a79ae/raw/disk-blame +x
   download https://gist.githubusercontent.com/tueda/ce103cd8f5288c1bd1b4ce37e56ef84c/raw/git-latest +x
   download https://gist.githubusercontent.com/tueda/d411b7ddc4167c5bb209040b637d5e2d/raw/git-graph +x
