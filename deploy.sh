@@ -153,28 +153,25 @@ mkdir -p "$HOME/bin"
   download https://raw.githubusercontent.com/tueda/git-onedrive/main/git-onedrive +x
 
   if [ $osname = linux ]; then
-    download https://gist.githubusercontent.com/tueda/9529c8d3c06252386c3e9c4ca521f391/raw/open-linux
-    chmod +x open-linux
+    download https://gist.githubusercontent.com/tueda/9529c8d3c06252386c3e9c4ca521f391/raw/open-linux +x
     mv open-linux open
   fi
 
   if [ $osname = linux_on_windows ]; then
-    download https://gist.githubusercontent.com/tueda/eed84b738613761f1146de95ca0817d7/raw/open-wsl
-    chmod +x open-wsl
+    download https://gist.githubusercontent.com/tueda/eed84b738613761f1146de95ca0817d7/raw/open-wsl +x
     mv open-wsl open
 
-    download https://gist.githubusercontent.com/tueda/dda525296a4a35f857d698af971cd704/raw/dup-wsl
-    chmod +x dup-wsl
+    download https://gist.githubusercontent.com/tueda/dda525296a4a35f857d698af971cd704/raw/dup-wsl +x
     mv dup-wsl dup
+
+    download https://gist.githubusercontent.com/tueda/16d646cb3650b9b65c87e75462096024/raw/unzone +x
   fi
 
   if [ $osname = cygwin ]; then
-    download https://gist.githubusercontent.com/tueda/fc8c3eba9606479308d88b6e38c9aeca/raw/open-cygwin
-    chmod +x open-cygwin
+    download https://gist.githubusercontent.com/tueda/fc8c3eba9606479308d88b6e38c9aeca/raw/open-cygwin +x
     mv open-cygwin open
 
-    download https://gist.githubusercontent.com/tueda/2be1caa5c8051c2d0ab06cec394d5ed1/raw/dup-cygwin
-    chmod +x dup-cygwin
+    download https://gist.githubusercontent.com/tueda/2be1caa5c8051c2d0ab06cec394d5ed1/raw/dup-cygwin +x
     mv dup-cygwin dup
   fi
 
