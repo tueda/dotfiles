@@ -77,6 +77,8 @@ alias l='ls'
 alias top='nice top'
 alias htop='nice htop'
 alias btm='nice btm'
+alias nvtop='nice nvtop'
+alias watch='nice watch'
 
 alias screen='screen -D -RR -U'
 

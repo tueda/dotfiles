@@ -280,6 +280,8 @@ cl() {
 alias top='nice top'
 alias htop='nice htop'
 alias btm='nice btm'
+alias nvtop='nice nvtop'
+alias watch='nice watch'
 
 [ -f ~/.bashrc.local-after ] && . ~/.bashrc.local-after
 
