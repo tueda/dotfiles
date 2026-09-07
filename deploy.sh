@@ -68,7 +68,7 @@ list_dotfiles() {
       .|..|.git|.gitignore|.gitmodules|*.swp|.nfs*)
         continue
         ;;
-      .config)
+      .codex|.config)
         (
           cd $file
           for subfile in *; do
