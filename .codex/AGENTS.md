@@ -30,3 +30,16 @@ container builds:
   it safely. Report the issue. Do not delete unrelated data to make room.
 
 Skip these checks for routine work unless substantial disk growth is expected.
+
+## Git Commit Messages
+
+Follow any commit message requirements explicitly given in the task prompt.
+Otherwise, follow the project's conventions if specified. If neither specifies
+a format, use Conventional Commits and the line limits below.
+
+- Use `type(scope): description`, omitting the scope when it adds no useful
+  context.
+- Keep the subject on one line. Aim for 50 characters or fewer, including the
+  prefix, and do not exceed 72.
+- Separate the subject and body with a blank line.  Wrap body prose at 72
+  characters. Do not break URLs or Git trailers just to fit the limit.
