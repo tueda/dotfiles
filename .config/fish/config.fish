@@ -127,3 +127,7 @@ end
 if test -f ~/.config/fish/config.local.fish
     source ~/.config/fish/config.local.fish
 end
+
+if command -q micro
+  alias codex='command env VISUAL=micro EDITOR=micro codex'
+end

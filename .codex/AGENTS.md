@@ -1,11 +1,21 @@
 ## Plan Revisions
 
-- Compare revisions with the immediately preceding plan.
-- Start with `Changes from the previous plan`, summarizing all changes.
-- In both the summary and full plan, prefix changes with `🟩 **Added:**`,
-  `🟨 **Updated:**`, or `🟥 **Removed:**`; leave unchanged items unmarked.
-- Keep removed items in context but inactive.
+These rules apply only to chat replies that present a revised plan.
+
+- Compare the revised plan with the immediately preceding version.
+- Begin the reply with `Changes from the previous plan` and summarize all
+  changes.
+- In both the change summary and the full plan shown in chat, prefix changed
+  items with `🟩 **Added:**`, `🟨 **Updated:**`, or `🟥 **Removed:**`. Leave
+  unchanged items unmarked.
+- In chat, retain removed items for context only and clearly mark them as
+  inactive.
 - Keep the revised plan complete and self-contained.
+
+Do not carry this revision markup into deliverables, including saved plan
+files, reports, or repository documents. Deliverables should contain only the
+current, complete version, with no revision summary, change markers, or removed
+items unless explicitly requested.
 
 ## Disk Space Management
 
